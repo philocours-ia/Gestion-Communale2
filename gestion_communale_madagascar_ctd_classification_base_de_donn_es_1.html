@@ -11681,6 +11681,159 @@ ${getEcAdminConfig().officierNom}`);
       });
     }
 
+    // --- SERVICE INDÉPENDANT : ACTE D'ÉTAT CIVIL EXPRESS ---
+    function openEcPublicModal() {
+      document.getElementById('ecPubFeedback')?.classList.add('hidden');
+      document.getElementById('etatCivilPublicModal')?.classList.remove('hidden');
+      if (window.lucide) lucide.createIcons();
+    }
+    document.getElementById('btnOpenEtatCivilPublic')?.addEventListener('click', openEcPublicModal);
+    document.getElementById('btnOpenEtatCivilPublic2')?.addEventListener('click', openEcPublicModal);
+    document.getElementById('btnCloseEcPublicModal')?.addEventListener('click', () => {
+      document.getElementById('etatCivilPublicModal')?.classList.add('hidden');
+    });
+    document.getElementById('btnCancelEcPublicModal')?.addEventListener('click', () => {
+      document.getElementById('etatCivilPublicModal')?.classList.add('hidden');
+    });
+
+    document.getElementById('ecPublicForm')?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const typeActe = document.getElementById('ecPubTypeActe').value;
+      const commune = document.getElementById('ecPubCommune').value.trim();
+      const demandeur = document.getElementById('ecPubDemandeur').value.trim();
+      const tel = document.getElementById('ecPubTel').value.trim();
+      const email = document.getElementById('ecPubEmail').value.trim();
+      const numActe = document.getElementById('ecPubNumActe').value.trim();
+      const mvolaRef = document.getElementById('ecPubMvolaRef').value.trim();
+      const origFile = document.getElementById('ecPubOriginalFile')?.files?.[0];
+      const proofFile = document.getElementById('ecPubProofFile')?.files?.[0];
+      const fb = document.getElementById('ecPubFeedback');
+
+      if (!origFile || !proofFile) {
+        fb.className = 'p-3.5 rounded-xl border bg-rose-50 border-rose-200 text-rose-800';
+        fb.textContent = 'Veuillez joindre l\'original de l\'acte (Image/PDF) ET la preuve de paiement MVola de 2 000 Ar.';
+        fb.classList.remove('hidden');
+        return;
+      }
+
+      const readAsData = (file) => new Promise(res => {
+        const fr = new FileReader();
+        fr.onload = () => res(typeof fr.result === 'string' && fr.result.length < 1500000 ? fr.result : '');
+        fr.onerror = () => res('');
+        fr.readAsDataURL(file);
+      });
+
+      Promise.all([readAsData(origFile), readAsData(proofFile)]).then(([originalDataUrl, proofDataUrl]) => {
+        const list = getEcDemandes();
+        const refCode = 'EC-' + new Date().getFullYear() + '-' + String(list.length + 1).padStart(4, '0');
+        list.unshift({
+          id: 'ec_' + Date.now(),
+          refCode,
+          typeActe,
+          commune,
+          demandeur,
+          tel,
+          email,
+          numActe,
+          mvolaRef,
+          montant: 2000,
+          originalName: origFile.name,
+          originalDataUrl,
+          proofName: proofFile.name,
+          proofDataUrl,
+          status: 'EN_ATTENTE',
+          createdAt: new Date().toISOString().slice(0, 10)
+        });
+        saveEcDemandes(list);
+        document.getElementById('ecPublicForm').reset();
+        fb.className = 'p-3.5 rounded-xl border bg-emerald-50 border-emerald-200 text-emerald-900 space-y-1';
+        fb.innerHTML = `<div class="font-bold">Demande enregistrée avec succès (Récépissé : <span class="mono">${refCode}</span>)</div>
+          <div>Type : <strong>${typeActe}</strong> • Commune : <strong>${commune}</strong> • Renvoi par e-mail : <strong>${email}</strong> • Droit : <strong>2 000 Ar</strong> (Réf. MVola : ${mvolaRef}).</div>`;
+        fb.classList.remove('hidden');
+      });
+    });
+
+    // --- AJOUT D'UNE 2ÈME COMMUNE (15 000 AR MVOLA) ---
+    function openSecondCommuneModal() {
+      const sel = document.getElementById('secondCommuneSelect');
+      if (sel) {
+        sel.innerHTML = state.communes
+          .filter(com => com.id !== state.activeCommuneId)
+          .map(com => `<option value="${com.id}">${com.soa_libelle} (${com.district} — ${CATEGORIES[com.categorie_code]?.short || com.categorie_code})</option>`)
+          .join('');
+      }
+      document.getElementById('secondCommuneFeedback')?.classList.add('hidden');
+      document.getElementById('secondCommuneModal')?.classList.remove('hidden');
+      if (window.lucide) lucide.createIcons();
+    }
+
+    document.getElementById('btnAddSecondCommune')?.addEventListener('click', openSecondCommuneModal);
+    document.getElementById('btnCloseSecondCommuneModal')?.addEventListener('click', () => {
+      document.getElementById('secondCommuneModal')?.classList.add('hidden');
+    });
+    document.getElementById('btnCancelSecondCommune')?.addEventListener('click', () => {
+      document.getElementById('secondCommuneModal')?.classList.add('hidden');
+    });
+
+    document.getElementById('secondCommuneForm')?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const comId = document.getElementById('secondCommuneSelect')?.value;
+      const mvolaRef = document.getElementById('secondCommuneMvolaRef')?.value.trim();
+      const fileInp = document.getElementById('secondCommuneProofFile');
+      const fb = document.getElementById('secondCommuneFeedback');
+      const com = state.communes.find(x => x.id === comId);
+      if (!com || !fileInp?.files?.[0]) {
+        if (fb) {
+          fb.className = 'p-3 rounded-lg bg-rose-50 border border-rose-200 text-rose-800';
+          fb.textContent = 'Veuillez sélectionner la commune et joindre la preuve de paiement MVola (15 000 Ar).';
+          fb.classList.remove('hidden');
+        }
+        return;
+      }
+
+      const file = fileInp.files[0];
+      const reader = new FileReader();
+      reader.onload = () => {
+        const sess = getCurrentSession();
+        const isAdmin = sess && sess.role === 'ADMIN';
+        const subs = getSubscriptions();
+        subs.unshift({
+          id: 'sub2_' + Date.now(),
+          type: '2EME_COMMUNE',
+          fullName: sess?.fullName || 'Utilisateur',
+          fonction: 'Extension 2ème Commune',
+          collectivite: com.soa_libelle,
+          email: sess?.email || '',
+          password: '',
+          mvolaRef,
+          montant: 15000,
+          proofName: file.name,
+          proofDataUrl: typeof reader.result === 'string' && reader.result.length < 1500000 ? reader.result : '',
+          status: isAdmin ? 'VALIDE' : 'EN_ATTENTE',
+          createdAt: new Date().toISOString().slice(0, 10),
+          expiresAt: isAdmin ? (() => { const d = new Date(); d.setDate(d.getDate() + 15); return d.toISOString().slice(0, 10); })() : ''
+        });
+        saveSubscriptions(subs);
+
+        if (isAdmin) {
+          state.activeCommuneId = com.id;
+          state.activeLevel = com.categorie_code;
+          saveCommuneAndProgress(false);
+          renderAll();
+          document.getElementById('secondCommuneModal')?.classList.add('hidden');
+          showToast(`2ème Commune (${com.soa_libelle}) ajoutée et enregistrée !`);
+        } else {
+          document.getElementById('secondCommuneForm').reset();
+          if (fb) {
+            fb.className = 'p-3 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-800';
+            fb.textContent = `Demande d'ajout de la 2ème Commune (${com.soa_libelle}) et preuve MVola (15 000 Ar) envoyées à l'administrateur pour validation.`;
+            fb.classList.remove('hidden');
+          }
+        }
+      };
+      reader.readAsDataURL(file);
+    });
+
     document.getElementById('btnOpenAdminPanel')?.addEventListener('click', () => {
       renderAdminModal();
       document.getElementById('adminSubscriptionsModal')?.classList.remove('hidden');
