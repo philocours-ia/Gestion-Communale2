@@ -83,6 +83,29 @@
       50% { opacity: 0.9; transform: scale(1.06); }
     }
     .electric-orb { animation: pulseGlow 5s ease-in-out infinite; }
+    @media screen and (max-width: 1023px) {
+      #appSidebar:not(.hidden) { display: flex; flex-direction: column; width: min(19rem, 90vw); padding-top: env(safe-area-inset-top, 0px); }
+      #moduleMenuList { min-height: 0; overscroll-behavior: contain; }
+      #appShellWrapper > header { position: static; }
+    }
+    @media screen and (max-width: 639px) {
+      #loginLandingPage > .max-w-7xl { padding-inline: 1rem; }
+      #loginLandingPage .landing-header { flex-direction: column; align-items: stretch; gap: 1rem; }
+      #loginLandingPage .landing-header > :first-child > :first-child { flex-shrink: 0; }
+      #loginLandingPage .landing-header > :last-child { display: grid; grid-template-columns: minmax(0, 1fr) auto; }
+      #btnOpenEtatCivilPublic { justify-content: center; flex-wrap: wrap; gap: .35rem; padding: .5rem; }
+      #loginLandingPage .grid > *, #appShellWrapper main .grid > * { min-width: 0; }
+      #loginLandingPage .electric-card, #ecPublicForm { padding: 1rem; }
+      #loginLandingPage button, #etatCivilPublicModal button, #appSidebar button, #appShellWrapper > header button { min-height: 44px; }
+      #btnCloseEcPublicModal, #btnToggleSidebar, #btnCloseSidebar { min-width: 44px; }
+      #loginLandingPage :is(input:not([type=checkbox]):not([type=radio]),select,textarea), #appShellWrapper :is(input:not([type=checkbox]):not([type=radio]),select,textarea), #ecPublicForm :is(input,select) { max-width: 100%; font-size: 16px; }
+      #etatCivilPublicModal { max-height: 100dvh; padding: .5rem; }
+      #etatCivilPublicModal > div { max-height: calc(100dvh - 1rem); }
+      #ecPublicForm { overscroll-behavior: contain; }
+      #appShellWrapper main { min-width: 0; }
+      #appShellWrapper main :is(div,section):has(> table) { max-width: 100%; overflow-x: auto; }
+      #appShellWrapper main table { min-width: max-content; }
+    }
   </style>
 </head>
 <body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col">
@@ -93,7 +116,7 @@
     <div id="electricMouseGlow" class="pointer-events-none absolute w-[480px] h-[480px] rounded-full blur-3xl opacity-30 transition-transform duration-300" style="background: radial-gradient(circle, rgba(14,165,233,0.45) 0%, rgba(37,99,235,0.1) 50%, transparent 75%); left: -120px; top: -120px;"></div>
 
     <!-- Top bar accueil -->
-    <div class="relative z-10 max-w-7xl w-full mx-auto px-6 pt-6 flex items-center justify-between gap-4">
+    <div class="landing-header relative z-10 max-w-7xl w-full mx-auto px-6 pt-6 flex items-center justify-between gap-4">
       <div class="flex items-center gap-3.5">
         <!-- Logo Administratif Vectoriel -->
         <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-600/30 to-cyan-500/20 border border-cyan-400/40 flex items-center justify-center shadow-[0_0_20px_rgba(56,189,248,0.3)]">
@@ -128,6 +151,7 @@
           <span>Acte d'État Civil Express</span>
           <span class="px-1.5 py-0.5 rounded bg-slate-950/60 text-[10px] text-cyan-200">2 000 Ar</span>
         </button>
+        <a href="#acces-compte" class="sm:hidden inline-flex min-h-11 items-center justify-center rounded-xl border border-cyan-400/40 px-3 text-sm font-semibold text-cyan-100">Mon compte</a>
         <div class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-950/70 border border-cyan-500/30 text-xs text-cyan-200">
           <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
           Portail Sécurisé • CTD
@@ -207,7 +231,7 @@
       </div>
 
       <!-- Colonne Droite : Connexion & Inscription Payante -->
-      <div class="lg:col-span-5">
+      <div id="acces-compte" tabindex="-1" class="lg:col-span-5 scroll-mt-3">
         <div class="electric-card rounded-2xl p-6 sm:p-7 space-y-5 relative overflow-hidden">
           <div class="electric-orb absolute -top-16 -right-16 w-40 h-40 rounded-full bg-cyan-500/20 blur-2xl pointer-events-none"></div>
 
@@ -547,7 +571,7 @@
     <aside id="appSidebar" class="hidden lg:flex lg:flex-col w-64 shrink-0 bg-white border-r border-slate-200 fixed lg:static inset-y-0 left-0 z-40 pt-16 lg:pt-0 shadow-lg lg:shadow-none">
       <div class="px-4 py-3 border-b border-slate-100 flex items-center justify-between">
         <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Modules CTD</span>
-        <button id="btnCloseSidebar" type="button" class="lg:hidden text-slate-400 hover:text-slate-700 p-1">
+        <button id="btnCloseSidebar" type="button" aria-label="Fermer le menu des modules" class="lg:hidden text-slate-400 hover:text-slate-700 p-1">
           <i data-lucide="x" class="w-4 h-4"></i>
         </button>
       </div>
