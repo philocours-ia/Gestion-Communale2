@@ -1604,14 +1604,14 @@
 
   <!-- MODAL: AJOUTER / MODIFIER / RECLASSER UNE COMMUNE -->
   <!-- MODALE INDÉPENDANTE : DEMANDE DE RENOUVELLEMENT / DÉLIVRANCE ACTE D'ÉTAT CIVIL -->
-  <div id="etatCivilPublicModal" class="hidden fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-xs flex items-center justify-center p-4 no-print">
+  <dialog id="etatCivilPublicModal" aria-labelledby="ecPublicTitle" class="m-auto w-full max-w-xl bg-transparent p-4 text-slate-800 backdrop:bg-slate-950/80 no-print">
     <div class="bg-white rounded-2xl border border-slate-200 shadow-2xl w-full max-w-xl max-h-[92vh] flex flex-col overflow-hidden">
       <div class="bg-slate-900 text-white px-6 py-4 flex items-center justify-between">
         <div>
-          <h3 class="text-base font-bold">Acte d'État Civil Express — Demande de délivrance</h3>
+          <h3 id="ecPublicTitle" class="text-base font-bold">Acte d'État Civil Express — Demande de délivrance</h3>
           <p class="text-xs text-cyan-300">Service indépendant • Droit fixe : 2 000 Ar (MVola 0385528349 — Nasandratriniaina Julio)</p>
         </div>
-        <button id="btnCloseEcPublicModal" type="button" class="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white">
+        <button id="btnCloseEcPublicModal" type="button" aria-label="Fermer la demande d’acte" class="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white">
           <i data-lucide="x" class="w-5 h-5"></i>
         </button>
       </div>
@@ -1684,7 +1684,7 @@
         </div>
       </form>
     </div>
-  </div>
+  </dialog>
 
   <!-- MODALE AJOUT 2ÈME COMMUNE (15 000 AR MVOLA) -->
   <div id="secondCommuneModal" class="hidden fixed inset-0 z-50 bg-slate-950/75 backdrop-blur-xs flex items-center justify-center p-4 no-print">
@@ -11682,18 +11682,20 @@ ${getEcAdminConfig().officierNom}`);
     }
 
     // --- SERVICE INDÉPENDANT : ACTE D'ÉTAT CIVIL EXPRESS ---
+    const ecPublicDialog = document.getElementById('etatCivilPublicModal');
+    // Le formulaire citoyen doit rester accessible quand l’espace connecté est masqué.
+    document.body.append(ecPublicDialog);
     function openEcPublicModal() {
       document.getElementById('ecPubFeedback')?.classList.add('hidden');
-      document.getElementById('etatCivilPublicModal')?.classList.remove('hidden');
+      ecPublicDialog.showModal();
       if (window.lucide) lucide.createIcons();
     }
     document.getElementById('btnOpenEtatCivilPublic')?.addEventListener('click', openEcPublicModal);
     document.getElementById('btnOpenEtatCivilPublic2')?.addEventListener('click', openEcPublicModal);
-    document.getElementById('btnCloseEcPublicModal')?.addEventListener('click', () => {
-      document.getElementById('etatCivilPublicModal')?.classList.add('hidden');
-    });
-    document.getElementById('btnCancelEcPublicModal')?.addEventListener('click', () => {
-      document.getElementById('etatCivilPublicModal')?.classList.add('hidden');
+    document.getElementById('btnCloseEcPublicModal').addEventListener('click', () => ecPublicDialog.close());
+    document.getElementById('btnCancelEcPublicModal').addEventListener('click', () => ecPublicDialog.close());
+    ecPublicDialog.addEventListener('click', event => {
+      if (event.target === ecPublicDialog) ecPublicDialog.close();
     });
 
     document.getElementById('ecPublicForm')?.addEventListener('submit', (e) => {
@@ -12287,7 +12289,7 @@ ${getEcAdminConfig().officierNom}`);
     renderStep1CommuneSelector();
 
     // --- FERMETURE UNIVERSELLE DES MODALES (X, BOUTONS FERMER/ANNULER, CLIC EXTÉRIEUR, TOUCHE ÉCHAP) ---
-    const ALL_MODAL_IDS = ['communeModal', 'etatCivilPublicModal', 'secondCommuneModal', 'adminSubscriptionsModal'];
+    const ALL_MODAL_IDS = ['communeModal', 'secondCommuneModal', 'adminSubscriptionsModal'];
     ALL_MODAL_IDS.forEach(mid => {
       const mEl = document.getElementById(mid);
       if (mEl) {
