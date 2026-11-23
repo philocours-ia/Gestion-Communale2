@@ -206,7 +206,9 @@ export function getAssistantProfileInstructions(
   if (assistantId === "mia" && assistantIntent === "civil") {
     return MIA_CIVIL_RESPONSE_PROFILE;
   }
-  return ASSISTANT_RESPONSE_PROFILES[assistantId] ?? ASSISTANT_RESPONSE_PROFILES.workspace;
+  // The T12 reference area is part of FELIX and must share its educator identity.
+  const profileId = assistantId === "education" ? "felix" : assistantId;
+  return ASSISTANT_RESPONSE_PROFILES[profileId] ?? ASSISTANT_RESPONSE_PROFILES.workspace;
 }
 
 export function getExpertiseForRequest(
