@@ -8,16 +8,14 @@
     "start": "next start"
   },
   "dependencies": {
+    "@google/genai": "3.3.0",
     "@supabase/ssr": "0.12.7",
     "@supabase/supabase-js": "2.119.2",
     "next": "16.4.6",
     "react": "19.3.1",
     "react-dom": "19.3.1",
     "ai": "latest",
-    "@ai-sdk/react": "latest",
-    "@ai-sdk/openai": "latest",
-    "@ai-sdk/anthropic": "latest",
-    "@ai-sdk/deepseek": "latest"
+    "@ai-sdk/react": "latest"
   },
   "devDependencies": {
     "@types/node": "22.15.30",
