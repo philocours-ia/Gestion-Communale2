@@ -1,17 +1,15 @@
 import { NextResponse } from "next/server";
 
-const SUPPORTED_PROVIDERS = ["deepseek", "openai", "anthropic"] as const;
+const SUPPORTED_PROVIDERS = ["google"] as const;
 
 export function GET() {
   const supabaseConfigured = Boolean(
     process.env.NEXT_PUBLIC_SUPABASE_URL &&
     process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
   );
-  const provider = (process.env.MIA_PROVIDER || "deepseek").toLowerCase();
+  const provider = (process.env.MIA_PROVIDER || "google").toLowerCase();
   const providerConfigured =
-    provider === "deepseek" ? Boolean(process.env.DEEPSEEK_API_KEY) :
-    provider === "openai" ? Boolean(process.env.OPENAI_API_KEY) :
-    provider === "anthropic" ? Boolean(process.env.ANTHROPIC_API_KEY) :
+    provider === "google" ? Boolean(process.env.GOOGLE_API_KEY) :
     false;
   const validProvider = SUPPORTED_PROVIDERS.includes(provider as typeof SUPPORTED_PROVIDERS[number]);
 
@@ -23,6 +21,6 @@ export function GET() {
       ai: providerConfigured ? "configured" : "pending"
     },
     provider: validProvider ? provider : "invalid",
-    model: process.env.MIA_MODEL || (provider === "deepseek" ? "deepseek-flash" : "provider-default")
+    model: process.env.MIA_MODEL || "gemini-4-carbon"
   });
 }
