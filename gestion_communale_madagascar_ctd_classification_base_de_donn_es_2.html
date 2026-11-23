@@ -130,6 +130,39 @@
       #appShellWrapper main :is(div,section):has(> table) { max-width: 100%; overflow-x: auto; }
       #appShellWrapper main table { min-width: max-content; }
     }
+  
+    /* OMNIA — lisibilité de l'assistante et ergonomie des menus */
+    #assistantWidgetRoot { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; line-height: 1.55; letter-spacing: 0; }
+    #assistantDrawer { width: min(92vw, 520px) !important; max-height: min(86dvh, 900px) !important; min-height: min(560px, 72dvh); }
+    #assistantDrawer > header, #assistantDrawer > div:first-child { font-size: 14px; }
+    #assistantSubtitle { font-size: 13px !important; line-height: 1.4 !important; }
+    #assistantModeBadge { font-size: 11px !important; line-height: 1.3 !important; }
+    #assistantMessages { font-size: 14px !important; line-height: 1.65 !important; padding: 16px !important; overflow-wrap: anywhere; }
+    #assistantMessages p, #assistantMessages li, #assistantMessages blockquote, #assistantMessages .text-sm { font-size: 14px !important; line-height: 1.65 !important; }
+    #assistantMessages .text-xs, #assistantMessages [class~="text-[11px]"], #assistantMessages [class~="text-[10px]"], #assistantMessages [class~="text-[9px]"] { font-size: 13px !important; line-height: 1.55 !important; }
+    #assistantMessages h1, #assistantMessages h2, #assistantMessages h3, #assistantMessages .font-bold, #assistantMessages strong { line-height: 1.45; }
+    #assistantMessages button { min-height: 38px; font-size: 13px !important; }
+    #assistantSettingsPane { font-size: 13px !important; line-height: 1.5 !important; }
+    #assistantSettingsPane .text-xs, #assistantSettingsPane [class~="text-[11px]"], #assistantSettingsPane [class~="text-[10px]"] { font-size: 12px !important; line-height: 1.5 !important; }
+    #assistantSettingsPane input, #assistantSettingsPane select { min-height: 42px; font-size: 14px !important; }
+    #assistantQuickChips .asst-chip { min-height: 36px; padding: 7px 11px; font-size: 12px !important; }
+    #assistantForm { gap: 8px; padding: 10px !important; }
+    #assistantInput { min-height: 46px; font-size: 16px !important; line-height: 1.4 !important; }
+    #assistantForm button { min-height: 46px; padding-inline: 16px; font-size: 14px !important; }
+    #btnAssistantFab { min-height: 48px; font-size: 14px !important; padding: 12px 18px; }
+    #budgetMenuControl { position: relative; }
+    #budgetMenuTrigger { min-height: 44px; }
+    .budget-type-menu { position: absolute; z-index: 60; top: calc(100% + 8px); left: 0; width: min(92vw, 360px); max-width: calc(100vw - 24px); }
+    .budget-type-menu .budget-sub-btn { min-height: 44px; }
+    #budgetWorkspaceView, #bpInputSelector, #brMcOperationSelect { max-width: min(78vw, 420px); }
+    @media (max-width: 639px) {
+      #assistantWidgetRoot { right: 10px; bottom: 10px; }
+      #assistantDrawer { width: calc(100vw - 20px) !important; max-height: 82dvh !important; min-height: 0; }
+      #assistantMessages { padding: 13px !important; }
+      #budgetWorkspaceNav label, #bpInputBar label, #brMcHeaderBar label { width: 100%; align-items: flex-start; flex-direction: column; }
+      #budgetWorkspaceView, #bpInputSelector, #brMcOperationSelect { width: 100%; max-width: 100%; }
+    }
+
   </style>
 </head>
 <body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col">
@@ -142,115 +175,59 @@
     <!-- Top bar accueil -->
     <div class="landing-header relative z-10 max-w-7xl w-full mx-auto px-6 pt-6 flex items-center justify-between gap-4">
       <div class="flex items-center gap-3.5">
-        <!-- Logo Administratif Vectoriel -->
         <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-600/30 to-cyan-500/20 border border-cyan-400/40 flex items-center justify-center shadow-[0_0_20px_rgba(56,189,248,0.3)]">
-          <svg viewBox="0 0 64 64" class="w-8 h-8" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Logo Administratif CTD">
-            <defs>
-              <linearGradient id="adminLogoGrad" x1="8" y1="6" x2="56" y2="58" gradientUnits="userSpaceOnUse">
-                <stop offset="0%" stop-color="#38bdf8"/>
-                <stop offset="55%" stop-color="#3b82f6"/>
-                <stop offset="100%" stop-color="#06b6d4"/>
-              </linearGradient>
-            </defs>
-            <!-- Bouclier institutionnel -->
+          <svg viewBox="0 0 64 64" class="w-8 h-8" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Logo SYGEC-IA OMNIA">
+            <defs><linearGradient id="adminLogoGrad" x1="8" y1="6" x2="56" y2="58" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#38bdf8"/><stop offset="55%" stop-color="#3b82f6"/><stop offset="100%" stop-color="#06b6d4"/></linearGradient></defs>
             <path d="M32 5L54 13V30C54 44.5 44.4 54.6 32 59C19.6 54.6 10 44.5 10 30V13L32 5Z" stroke="url(#adminLogoGrad)" stroke-width="2.5" fill="rgba(15, 23, 42, 0.75)"/>
-            <!-- Fronton & colonnes administratives -->
             <path d="M18 25L32 16L46 25H18Z" fill="url(#adminLogoGrad)"/>
-            <rect x="20" y="27" width="4" height="14" rx="1" fill="#e0f2fe"/>
-            <rect x="30" y="27" width="4" height="14" rx="1" fill="#e0f2fe"/>
-            <rect x="40" y="27" width="4" height="14" rx="1" fill="#e0f2fe"/>
-            <!-- Socle & sceau -->
-            <rect x="17" y="42" width="30" height="3.2" rx="1.5" fill="url(#adminLogoGrad)"/>
-            <circle cx="32" cy="11.5" r="2.2" fill="#38bdf8"/>
+            <rect x="20" y="27" width="4" height="14" rx="1" fill="#e0f2fe"/><rect x="30" y="27" width="4" height="14" rx="1" fill="#e0f2fe"/><rect x="40" y="27" width="4" height="14" rx="1" fill="#e0f2fe"/>
+            <rect x="17" y="42" width="30" height="3.2" rx="1.5" fill="url(#adminLogoGrad)"/><circle cx="32" cy="11.5" r="2.2" fill="#38bdf8"/>
           </svg>
         </div>
         <div>
-          <div class="text-xs font-bold uppercase tracking-[0.2em] text-cyan-400">Administration Territoriale • Madagascar</div>
-          <div class="text-lg font-extrabold tracking-tight text-white">SYSTÈME DE GESTION COMMUNALE (CTD)</div>
+          <div class="text-xs font-bold uppercase tracking-[0.2em] text-cyan-400">Intelligence artificielle • Gestion • Formation • État civil</div>
+          <div class="text-lg font-extrabold tracking-tight text-white">SYGEC-IA <span class="text-cyan-300">•</span> OMNIA</div>
         </div>
       </div>
       <div class="flex items-center gap-2.5 flex-wrap">
-        <button id="btnOpenEtatCivilPublic" type="button" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white text-xs font-extrabold transition shadow-[0_0_22px_rgba(6,182,212,0.5)]">
-          <i data-lucide="zap" class="w-4 h-4 text-cyan-100"></i>
-          <span>Acte d'État Civil Express</span>
-          <span class="px-1.5 py-0.5 rounded bg-slate-950/60 text-[10px] text-cyan-200">2 000 Ar</span>
-        </button>
+        <button type="button" onclick="window.askMioraAI && window.askMioraAI('Présente-moi tes trois missions : gestion communale, enseignement et actes d\'état civil.', false)" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-blue-950/80 hover:bg-blue-900 border border-cyan-400/50 text-cyan-200 text-xs font-bold transition"><i data-lucide="sparkles" class="w-3.5 h-3.5 text-cyan-300"></i><span>Découvrir OMNIA</span></button>
+        <button id="btnOpenEtatCivilPublic" type="button" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white text-xs font-extrabold transition shadow-[0_0_22px_rgba(6,182,212,0.5)]"><i data-lucide="zap" class="w-4 h-4 text-cyan-100"></i><span>Acte d'État Civil Express</span><span class="px-1.5 py-0.5 rounded bg-slate-950/60 text-[10px] text-cyan-200">2 000 Ar</span></button>
         <a href="#acces-compte" class="sm:hidden inline-flex min-h-11 items-center justify-center rounded-xl border border-cyan-400/40 px-3 text-sm font-semibold text-cyan-100">Mon compte</a>
-        <div class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-950/70 border border-cyan-500/30 text-xs text-cyan-200">
-          <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
-          Portail Sécurisé • CTD
-        </div>
+        <div class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-950/70 border border-cyan-500/30 text-xs text-cyan-200"><span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>OMNIA Active • Gestion • Formation • État civil</div>
       </div>
     </div>
 
     <!-- Contenu central Accueil + Connexion -->
     <div class="relative z-10 max-w-7xl w-full mx-auto px-6 py-10 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-      <!-- Colonne Gauche : Présentation interactive -->
+      <!-- Colonne Gauche : Les trois missions d'OMNIA -->
       <div class="lg:col-span-7 space-y-6">
-        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-400/30 text-cyan-300 text-xs font-semibold">
-          <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
-          Gouvernance Locale • Finances Publiques • Actes Officiels
+        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-400/30 text-cyan-300 text-xs font-semibold"><i data-lucide="sparkles" class="w-3.5 h-3.5"></i>Gestion des CTD • Transmission des savoirs • Service citoyen</div>
+        <h2 class="text-3xl sm:text-5xl font-black tracking-tight leading-tight text-white">Une même intelligence pour <span class="bg-gradient-to-r from-cyan-300 via-sky-400 to-blue-500 bg-clip-text text-transparent">gérer, apprendre et servir</span>.</h2>
+        <p class="text-sm sm:text-base text-slate-300 max-w-2xl leading-relaxed"><strong>OMNIA</strong> ne se limite pas à une assistante administrative : elle accompagne la gestion et la comptabilité communales, <strong>enseigne</strong> les notions et procédures utiles pas à pas, et aide à préparer, rédiger et renouveler les actes d'état civil selon les modèles malagasy.</p>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
+          <button type="button" data-pillar="0" class="pillar-card text-left p-4 rounded-xl border border-cyan-400/40 bg-blue-950/60 hover:bg-blue-900/50 transition group min-h-[132px]"><div class="flex items-center gap-2.5 text-cyan-300 font-bold text-sm"><i data-lucide="landmark" class="w-4 h-4"></i>Gestion &amp; Comptabilité</div><p class="text-xs text-slate-300 mt-1">Budgets BP, BA, BR, CA, PCOP CTD, procédures et contrôles financiers.</p></button>
+          <button type="button" data-pillar="1" class="pillar-card text-left p-4 rounded-xl border border-slate-700/80 bg-slate-900/60 hover:border-cyan-400/40 hover:bg-blue-950/50 transition group min-h-[132px]"><div class="flex items-center gap-2.5 text-sky-300 font-bold text-sm"><i data-lucide="graduation-cap" class="w-4 h-4"></i>Enseignement &amp; Formation</div><p class="text-xs text-slate-300 mt-1">Comprendre les règles, apprendre les méthodes et progresser avec des explications pas à pas.</p></button>
+          <button type="button" data-pillar="2" class="pillar-card text-left p-4 rounded-xl border border-slate-700/80 bg-slate-900/60 hover:border-cyan-400/40 hover:bg-blue-950/50 transition group min-h-[132px]"><div class="flex items-center gap-2.5 text-cyan-200 font-bold text-sm"><i data-lucide="file-check-2" class="w-4 h-4"></i>Actes &amp; État civil</div><p class="text-xs text-slate-300 mt-1">Préparer, rédiger et renouveler les actes de naissance, mariage, décès et adoption.</p></button>
         </div>
-        <h2 class="text-3xl sm:text-5xl font-black tracking-tight leading-tight text-white">
-          Pilotez votre Collectivité avec
-          <span class="bg-gradient-to-r from-cyan-300 via-sky-400 to-blue-500 bg-clip-text text-transparent">précision et conformité</span>.
-        </h2>
-        <p class="text-sm sm:text-base text-slate-300 max-w-2xl leading-relaxed">
-          Élaborez le Budget Primitif, le Budget Additionnel, les Budgets Rectificatifs et le Compte Administratif, tout en assurant la gestion administrative, RH, comptable et patrimoniale selon les modèles officiels malagasy.
-        </p>
-
-        <!-- 4 cartes interactives des pôles -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
-          <button type="button" data-pillar="0" class="pillar-card text-left p-4 rounded-xl border border-cyan-400/40 bg-blue-950/60 hover:bg-blue-900/50 transition group">
-            <div class="flex items-center gap-2.5 text-cyan-300 font-bold text-sm">
-              <i data-lucide="layers" class="w-4 h-4"></i>
-              Référentiel &amp; Paramétrage
-            </div>
-            <p class="text-xs text-slate-300 mt-1">1 695 communes, 5 niveaux réglementaires et simulateur de seuils.</p>
-          </button>
-          <button type="button" data-pillar="1" class="pillar-card text-left p-4 rounded-xl border border-slate-700/80 bg-slate-900/60 hover:border-cyan-400/40 hover:bg-blue-950/50 transition group">
-            <div class="flex items-center gap-2.5 text-sky-300 font-bold text-sm">
-              <i data-lucide="file-spreadsheet" class="w-4 h-4"></i>
-              Budget &amp; Opérations
-            </div>
-            <p class="text-xs text-slate-300 mt-1">BP, Budget Additionnel, Budget Rectificatif, Modif. Crédit &amp; Annexes.</p>
-          </button>
-          <button type="button" data-pillar="2" class="pillar-card text-left p-4 rounded-xl border border-slate-700/80 bg-slate-900/60 hover:border-cyan-400/40 hover:bg-blue-950/50 transition group">
-            <div class="flex items-center gap-2.5 text-blue-300 font-bold text-sm">
-              <i data-lucide="clipboard-check" class="w-4 h-4"></i>
-              Compte Administratif
-            </div>
-            <p class="text-xs text-slate-300 mt-1">Modèle 29, délibération Modèle 30, rapport de performance &amp; annexes.</p>
-          </button>
-          <button type="button" data-pillar="3" class="pillar-card text-left p-4 rounded-xl border border-slate-700/80 bg-slate-900/60 hover:border-cyan-400/40 hover:bg-blue-950/50 transition group">
-            <div class="flex items-center gap-2.5 text-cyan-200 font-bold text-sm">
-              <i data-lucide="landmark" class="w-4 h-4"></i>
-              Gouvernance Admin. &amp; Fin.
-            </div>
-            <p class="text-xs text-slate-300 mt-1">Actes, RH &amp; Indemnités (6032), exécution budgétaire et patrimoine.</p>
-          </button>
+        <div id="pillarDetailBanner" class="p-4 rounded-2xl bg-slate-950/80 border border-cyan-400/40 text-xs text-cyan-100 space-y-3 shadow-[0_0_24px_rgba(6,182,212,0.16)]">
+          <div class="flex items-center justify-between gap-2 flex-wrap">
+            <div class="flex items-center gap-2 font-bold text-cyan-300"><span class="w-6 h-6 rounded-full bg-cyan-500/20 border border-cyan-400/50 flex items-center justify-center"><i data-lucide="sparkles" class="w-3.5 h-3.5 text-cyan-300"></i></span><span>Trois missions, une intelligence : OMNIA</span></div>
+            <button type="button" onclick="window.askMioraAI && window.askMioraAI('Explique-moi comment tu peux m’aider à gérer, apprendre et traiter les actes d’état civil.', false)" class="px-2.5 py-1 rounded-lg bg-cyan-500/20 hover:bg-cyan-500/30 border border-cyan-400/40 text-[11px] font-bold text-cyan-200 transition">Échanger avec OMNIA →</button>
+          </div>
+          <p id="pillarDetailText" class="text-slate-200 leading-relaxed">Bonjour ! Je suis <strong>OMNIA</strong>. Je vous accompagne dans trois domaines complémentaires : <strong>gérer</strong> votre collectivité et sa comptabilité, <strong>apprendre</strong> les règles et les méthodes grâce à des explications progressives, et <strong>préparer ou renouveler</strong> les actes d'état civil. Choisissez une mission pour la découvrir.</p>
+          <div class="flex flex-wrap gap-1.5">
+            <button type="button" data-ai-explain="ia" class="landing-ai-explain px-2.5 py-1.5 rounded-lg bg-blue-950 hover:bg-blue-900 border border-cyan-500/30 text-[11px] font-semibold text-cyan-200 transition">✨ Les 3 missions d'OMNIA</button>
+            <button type="button" data-ai-explain="budget" class="landing-ai-explain px-2.5 py-1.5 rounded-lg bg-blue-950 hover:bg-blue-900 border border-cyan-500/30 text-[11px] font-semibold text-cyan-200 transition">📊 Gestion &amp; comptabilité</button>
+            <button type="button" data-ai-explain="formation" class="landing-ai-explain px-2.5 py-1.5 rounded-lg bg-blue-950 hover:bg-blue-900 border border-cyan-500/30 text-[11px] font-semibold text-cyan-200 transition">🎓 Apprendre avec OMNIA</button>
+            <button type="button" data-ai-explain="actes" class="landing-ai-explain px-2.5 py-1.5 rounded-lg bg-blue-950 hover:bg-blue-900 border border-cyan-500/30 text-[11px] font-semibold text-cyan-200 transition">📄 Actes &amp; État civil</button>
+          </div>
         </div>
-
-        <div id="pillarDetailBanner" class="p-3.5 rounded-xl bg-blue-950/50 border border-cyan-500/25 text-xs text-cyan-100 flex items-center gap-3">
-          <i data-lucide="sparkles" class="w-4 h-4 text-cyan-400 shrink-0"></i>
-          <span id="pillarDetailText">Référentiel complet des Collectivités Territoriales Décentralisées avec bascule dynamique des régimes CR2, CR1 et CU.</span>
-        </div>
-
         <div class="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-cyan-950/90 via-blue-950/90 to-slate-900/90 border-2 border-cyan-400/70 shadow-[0_0_28px_rgba(6,182,212,0.28)] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div class="space-y-1">
-            <div class="flex items-center gap-2 flex-wrap">
-              <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-cyan-400 text-slate-950 text-[10px] font-black uppercase tracking-wider">
-                <i data-lucide="zap" class="w-3 h-3"></i>
-                Service Express
-              </span>
-              <span class="text-sm sm:text-base font-extrabold text-white">Acte d'État Civil Express</span>
-            </div>
-            <div class="text-xs text-cyan-100/90">Renouvellement &amp; délivrance sans connexion : Naissance, Mariage, Décès, Adoption • Droit : <strong class="text-cyan-300">2 000 Ar</strong> (renvoi par e-mail)</div>
+            <div class="flex items-center gap-2 flex-wrap"><span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-cyan-400 text-slate-950 text-[10px] font-black uppercase tracking-wider"><i data-lucide="zap" class="w-3 h-3"></i>Service citoyen</span><span class="text-sm sm:text-base font-extrabold text-white">Renouveler un acte d'état civil</span></div>
+            <div class="text-xs text-cyan-100/90">Demande en ligne sans compte : Naissance, Mariage, Décès ou Adoption • Frais : <strong class="text-cyan-300">2 000 Ar</strong> • Transmission après vérification et validation par la commune.</div>
           </div>
-          <button id="btnOpenEtatCivilPublic2" type="button" class="shrink-0 inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-gradient-to-r from-cyan-400 to-sky-400 hover:from-cyan-300 hover:to-sky-300 text-slate-950 font-black text-xs shadow-lg transition">
-            <span>Demander un acte</span>
-            <i data-lucide="arrow-right" class="w-4 h-4"></i>
-          </button>
+          <button id="btnOpenEtatCivilPublic2" type="button" class="shrink-0 inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-gradient-to-r from-cyan-400 to-sky-400 hover:from-cyan-300 hover:to-sky-300 text-slate-950 font-black text-xs shadow-lg transition"><span>Faire une demande</span><i data-lucide="arrow-right" class="w-4 h-4"></i></button>
         </div>
       </div>
 
@@ -528,7 +505,7 @@
               Régime CR1 / CU
             </span>
           </div>
-          <p class="text-xs text-slate-400">Plateforme de Gestion Budgétaire, Comptable &amp; Administrative des CTD</p>
+          <p class="text-xs text-slate-400">Gestion communale • Apprentissage assisté par IA • Actes d’état civil</p>
         </div>
       </div>
 
@@ -11195,10 +11172,9 @@ CREATE TABLE communes (
     const AUTH_PASS = '317250041';
 
     const PILLAR_DETAILS = [
-      'Référentiel complet des 1 695 Collectivités Territoriales Décentralisées avec bascule dynamique CR2, CR1 et CU.',
-      'Élaboration intégrale du Budget Primitif, Budget Additionnel, Budget Rectificatif et Modification de Crédit avec affichettes A4.',
-      'Clôture de l\'exercice : Tableau d\'Équilibre (Modèle 29), Délibération (Modèle 30) et Annexes 1 à 5 automatisées.',
-      'Actes administratifs, Indemnités des Élus (6032), Paie & IRSA, Exécution budgétaire et Comptabilité Matières.'
+      'Je vous accompagne dans la gestion communale : préparation des budgets BP, BA et BR, Compte Administratif, comptabilité PCOP CTD, procédures DGFAG et contrôles de cohérence.',
+      'Je suis aussi une IA enseignante : je vous explique les notions, les règles et les démarches, étape par étape, avec des exemples concrets pour vous aider à apprendre et à devenir autonome.',
+      'Je facilite le travail d’état civil : préparation, rédaction et renouvellement des actes de naissance, mariage, décès et adoption, avec vérification par les agents communaux habilités.'
     ];
 
     function getSubscriptions() {
@@ -12570,7 +12546,7 @@ ${getEcAdminConfig().officierNom}`);
     <button id="btnAssistantFab" type="button" class="inline-flex items-center gap-2 px-4 py-3 rounded-full bg-gradient-to-r from-slate-900 via-blue-900 to-teal-700 hover:from-slate-800 hover:to-teal-600 text-white shadow-xl border border-cyan-400/40 text-xs font-bold transition transform hover:scale-[1.02]">
       <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
       <i data-lucide="message-circle-question" class="w-4 h-4 text-cyan-300"></i>
-      <span>Assistante Administrative</span>
+      <span>OMNIA • Gestion, Formation &amp; État civil</span>
     </button>
   </div>
 
@@ -13093,6 +13069,30 @@ ${getEcAdminConfig().officierNom}`);
       });
 
       closeBtn?.addEventListener('click', () => drawer.classList.add('hidden'));
+      const landingExplainTexts = {
+        ia: "<strong>OMNIA, trois missions complémentaires :</strong> j'accompagne la gestion et la comptabilité des collectivités, je transmets les connaissances en expliquant les règles et les méthodes, et j'aide à préparer ou renouveler les actes d'état civil. Je ne remplace pas la responsabilité des agents et autorités habilités.",
+        budget: "<strong>Gestion &amp; comptabilité communales :</strong> je vous accompagne dans les budgets (BP, BA, BR), le Compte Administratif, le PCOP CTD, les procédures DGFAG, les contrôles et la préparation des documents de gestion.",
+        formation: "<strong>Enseignement &amp; formation :</strong> je peux expliquer une notion, décomposer une procédure, présenter un exemple et vous guider pas à pas pour comprendre la comptabilité publique, le budget communal et les règles administratives.",
+        actes: "<strong>Actes &amp; État civil :</strong> je facilite la préparation, la rédaction et le renouvellement des actes de naissance, mariage, décès et adoption. Les demandes citoyennes sont instruites et validées par les agents communaux compétents avant transmission."
+      };
+      document.querySelectorAll('.landing-ai-explain').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const el = document.getElementById('pillarDetailText');
+          const key = btn.dataset.aiExplain;
+          if (el && landingExplainTexts[key]) el.innerHTML = landingExplainTexts[key];
+        });
+      });
+      window.askOmniaAI = function(promptText, autoSend = true) {
+        if (drawer.classList.contains('hidden')) {
+          drawer.classList.remove('hidden');
+          updateAssistantContextUI();
+          if (!initialized) { initialized = true; runDiagnostic(); }
+          if (window.lucide) lucide.createIcons();
+        }
+        if (autoSend && promptText) handleUserQuery(promptText);
+        else if (promptText && input) { input.value = promptText; input.focus(); }
+      };
+      window.askMioraAI = window.askOmniaAI;
       diagBtn?.addEventListener('click', runDiagnostic);
       form.addEventListener('submit', (e) => {
         e.preventDefault();
