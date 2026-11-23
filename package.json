@@ -16,7 +16,8 @@
     "ai": "latest",
     "@ai-sdk/react": "latest",
     "@ai-sdk/openai": "latest",
-    "@ai-sdk/anthropic": "latest"
+    "@ai-sdk/anthropic": "latest",
+    "@ai-sdk/deepseek": "latest"
   },
   "devDependencies": {
     "@types/node": "22.15.30",

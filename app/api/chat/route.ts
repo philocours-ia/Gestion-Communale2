@@ -1,6 +1,7 @@
 import { convertToModelMessages, streamText, UIMessage } from "ai";
 import { createOpenAI } from "@ai-sdk/openai";
 import { createAnthropic } from "@ai-sdk/anthropic";
+import { createDeepSeek } from "@ai-sdk/deepseek";
 import { createClient } from "@/lib/supabase/server";
 import { getExpertiseForRequest } from "@/lib/agents/expertise-modules";
 
@@ -26,18 +27,32 @@ function makeSearchTerms(text: string) {
 }
 
 function getConfiguredModel() {
-  const provider = (process.env.MIA_PROVIDER || "openai").toLowerCase();
-  const modelId = process.env.MIA_MODEL || (provider === "anthropic" ? "claude-opus-5-5" : "gpt-6-astra");
+  const provider = (process.env.MIA_PROVIDER || "deepseek").toLowerCase();
+  const defaultModels: Record<string, string> = {
+    deepseek: "deepseek-flash",
+    openai: "gpt-6-astra",
+    anthropic: "claude-opus-5-5",
+  };
+  const modelId = process.env.MIA_MODEL || defaultModels[provider];
 
+  if (provider === "deepseek") {
+    if (!process.env.DEEPSEEK_API_KEY) {
+      throw new Error("DEEPSEEK_API_KEY manquante : ajoutez-la dans les variables d’environnement Vercel.");
+    }
+    if (!modelId) throw new Error("MIA_MODEL est manquant pour DeepSeek.");
+    return createDeepSeek({ apiKey: process.env.DEEPSEEK_API_KEY })(modelId);
+  }
   if (provider === "openai") {
     if (!process.env.OPENAI_API_KEY) throw new Error("OPENAI_API_KEY manquante.");
+    if (!modelId) throw new Error("MIA_MODEL est manquant pour OpenAI.");
     return createOpenAI({ apiKey: process.env.OPENAI_API_KEY })(modelId);
   }
   if (provider === "anthropic") {
     if (!process.env.ANTHROPIC_API_KEY) throw new Error("ANTHROPIC_API_KEY manquante.");
+    if (!modelId) throw new Error("MIA_MODEL est manquant pour Anthropic.");
     return createAnthropic({ apiKey: process.env.ANTHROPIC_API_KEY })(modelId);
   }
-  throw new Error("MIA_PROVIDER doit être openai ou anthropic.");
+  throw new Error("MIA_PROVIDER doit être deepseek, openai ou anthropic.");
 }
 
 export async function POST(req: Request) {
@@ -160,6 +175,9 @@ Extrait: ${chunk.content}`;
     messages: await convertToModelMessages(messages),
     maxOutputTokens: 1200,
     temperature: 0.2,
+    ...(process.env.MIA_PROVIDER?.toLowerCase() === "deepseek" || !process.env.MIA_PROVIDER
+      ? { providerOptions: { deepseek: { thinking: { type: "disabled" } } } }
+      : {}),
   });
 
   return result.toUIMessageStreamResponse();
