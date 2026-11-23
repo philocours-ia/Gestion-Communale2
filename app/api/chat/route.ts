@@ -16,7 +16,8 @@ Distinguez clairement les textes officiels, les manuels, les modèles fournis, l
 Quand le contexte documentaire fourni contient des sources, citez leurs titres et, si disponibles, les références d'articles ou de pages. Si les extraits ne suffisent pas, dites-le et recommandez de vérifier le texte complet.
 Les projets d'actes et documents sont des brouillons soumis à la vérification et validation d'un agent habilité. Vous ne délivrez, numérotez, authentifiez, signez ni validez officiellement aucun acte.
 Protégez les données personnelles : demandez uniquement les informations nécessaires et évitez de reproduire des données sensibles. Les informations relatives aux apprenants sont confidentielles. Le suivi doit être explicite, pédagogique, proportionné et transparent; aucune surveillance cachée, inférence sensible ou divulgation des données d'un autre élève.
-Répondez de manière claire, structurée et concise. Répondez dans la langue utilisée par l'utilisateur.`;
+Répondez de manière claire, structurée et concise. Répondez dans la langue utilisée par l'utilisateur.
+Cette plateforme peut être utilisée par des lycéens mineurs. Gardez un langage et des contenus adaptés à leur âge. N'orientez pas vers des contenus sexuels explicites, des substances dangereuses, des activités à risque ou des services interdits aux mineurs. Ne donnez pas d'instructions qui pourraient mettre une personne en danger ou faciliter un acte nuisible. Sur les sujets sensibles, répondez sobrement, sans détails graphiques, et encouragez le recours à un adulte de confiance ou à un professionnel compétent lorsque cela est nécessaire.`;
 
 function makeSearchTerms(text: string) {
   return text.toLocaleLowerCase("fr")
@@ -25,6 +26,39 @@ function makeSearchTerms(text: string) {
     .filter((word) => word.length >= 3)
     .slice(-12);
 }
+
+// Active le contrôle de sécurité DeepSeek sur les entrées et les sorties du modèle.
+const deepSeekSafetyFetch: typeof fetch = async (input, init) => {
+  const request = new Request(input, init);
+  const contentType = request.headers.get("content-type") ?? "";
+
+  if (request.method !== "POST" || !contentType.includes("application/json")) {
+    return fetch(request);
+  }
+
+  let payload: unknown;
+  try {
+    payload = await request.clone().json();
+  } catch {
+    return fetch(request);
+  }
+
+  if (!payload || typeof payload !== "object" || Array.isArray(payload)) {
+    return fetch(request);
+  }
+
+  const headers = new Headers(request.headers);
+  headers.delete("content-length");
+  const securedPayload = {
+    ...(payload as Record<string, unknown>),
+    safety_check: { level: "high" },
+  };
+
+  return fetch(new Request(request, {
+    headers,
+    body: JSON.stringify(securedPayload),
+  }));
+};
 
 function getConfiguredModel() {
   const provider = (process.env.MIA_PROVIDER || "deepseek").toLowerCase();
@@ -40,7 +74,10 @@ function getConfiguredModel() {
       throw new Error("DEEPSEEK_API_KEY manquante : ajoutez-la dans les variables d’environnement Vercel.");
     }
     if (!modelId) throw new Error("MIA_MODEL est manquant pour DeepSeek.");
-    return createDeepSeek({ apiKey: process.env.DEEPSEEK_API_KEY })(modelId);
+    return createDeepSeek({
+      apiKey: process.env.DEEPSEEK_API_KEY,
+      fetch: deepSeekSafetyFetch,
+    })(modelId);
   }
   if (provider === "openai") {
     if (!process.env.OPENAI_API_KEY) throw new Error("OPENAI_API_KEY manquante.");
