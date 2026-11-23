@@ -3,8 +3,8 @@ import type { ReactNode } from "react";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "SYGEC-IA • OMNIA — Gérer, enseigner et rédiger.",
-  description: "Un écosystème d'intelligences spécialisées pour la gestion des CTD, l'enseignement, la recherche et la rédaction.",
+  title: "SYGEC-IA • OMNIA — Gestion CTD, enseignement et accompagnement citoyen.",
+  description: "OMNIA oriente les visiteurs vers la gestion des CTD avec MIORA, l’enseignement avec MIORA Maths et les demandes d’état civil avec MIA.",
   applicationName: "OMNIA"
 };
 export const viewport: Viewport = { themeColor: "#1d1d37", width: "device-width", initialScale: 1 };

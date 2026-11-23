@@ -95,7 +95,7 @@ export default function WorkspaceClient({ userEmail, userRole, initialAgent = "w
   const [language, setLanguage] = useState<"FR" | "MG">("FR");
   const [input, setInput] = useState("");
   const { messages, sendMessage: sendAIMessage, status, error } = useChat({ transport: new DefaultChatTransport({ api: "/api/chat" }) });
-  const copy = activeSection === "mia" && initialIntent === "civil" ? { eyebrow: "ACCOMPAGNEMENT CITOYEN · MIA", title: "MIA — Demande d’acte d’état civil", text: "Je vous accompagne pour préciser votre demande, identifier les informations utiles et préparer les points à vérifier auprès de la commune." } : sectionCopy[activeSection];
+  const copy = activeSection === "mia" && initialIntent === "civil" ? { eyebrow: "ACCOMPAGNEMENT CITOYEN · MIA", title: "MIA — Demande d’acte d’état civil", text: "Bonjour, je suis MIA. Je vous accompagne pour préciser votre demande d’acte, identifier les informations utiles et préparer les points à vérifier auprès de la commune." } : sectionCopy[activeSection];
   const currentAgent = agents.find((a) => a.id === selectedAgent) ?? agents[0];
 
   async function handleSignOut() {

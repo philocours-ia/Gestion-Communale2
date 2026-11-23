@@ -12934,40 +12934,12 @@ MIORA • Gestion des CTD
           return;
         }
 
-        if (ecFlow && ecFlow.mode === 'draft' && !t.includes('renouvel') && !t.includes('checklist')) {
-          advanceDraftFlow(q);
-          return;
-        }
-
-        if (t.includes('renouvel')) {
-          startRenewalFlow('');
-          return;
-        }
-
-        if (t.includes('rédig') || t.includes('redig') || t.includes('nouvel acte') || t.includes('créer un acte') || t.includes('creer un acte')) {
-          startDraftingFlow();
-          return;
-        }
-
-        if (t.includes('acte') || t.includes('état civil') || t.includes('etat civil') || t.includes('naissance') || t.includes('mariage') || t.includes('décès')) {
-          appendMessage('bot', `
-            <div class="font-bold text-slate-900">Service Actes d'État Civil</div>
-            <p>Je peux <strong>rédiger un nouvel acte</strong> (après cumul des données), <strong>renouveler un acte existant</strong>, ou vous guider vers la demande Express (<strong>2 000 Ar</strong>, MVola <strong>0385528349</strong>).</p>
-          `, [
-            { label: 'Rédiger un Acte →', primary: true, onClick: startDraftingFlow },
-            { label: 'Renouveler un Acte →', onClick: () => startRenewalFlow('') },
-            { label: 'Demander un Acte Express →', onClick: () => { drawer.classList.add('hidden'); if (typeof openEcPublicModal === 'function') openEcPublicModal(); } }
-          ]);
-          return;
-        }
-
         if (t.includes('inscri') || t.includes('abonne') || t.includes('tarif') || t.includes('mvola') || t.includes('40 000') || t.includes('2ème') || t.includes('deuxième')) {
           appendMessage('bot', `
             <div class="font-bold text-slate-900">Inscription & Paiement MVola</div>
             <ul class="list-disc pl-4 space-y-1 text-slate-700">
               <li><strong>Session budgétaire (15 jours, Art. 74 Loi 2014-020)</strong> : <strong>40 000 Ar</strong>.</li>
               <li><strong>Extension 2ème Commune</strong> : <strong>15 000 Ar</strong>.</li>
-              <li><strong>Acte d'État Civil Express</strong> : <strong>2 000 Ar</strong>.</li>
               <li><strong>Compte MVola</strong> : <span class="font-mono font-bold">0385528349</span> — Titulaire : <strong>Nasandratriniaina Julio</strong>.</li>
             </ul>
           `, isLandingVisible() ? [
@@ -13019,13 +12991,9 @@ MIORA • Gestion des CTD
         appendMessage('bot', `
           <div class="font-bold text-slate-900">Je peux vous accompagner sur :</div>
           <ul class="list-disc pl-4 space-y-1 text-slate-700">
-            <li>La <strong>rédaction d'un acte d'état civil</strong> (collecte progressive puis génération A4 Portrait).</li>
-            <li>Le <strong>renouvellement d'un acte</strong> existant à partir des données déjà enregistrées.</li>
             <li>La préparation du <strong>BP, BA, BR, CA</strong>, les <strong>indemnités 6032</strong> et l'<strong>impression PDF</strong>.</li>
           </ul>
         `, [
-          { label: 'Rédiger un Acte →', primary: true, onClick: startDraftingFlow },
-          { label: 'Renouveler un Acte →', onClick: () => startRenewalFlow('') }
         ]);
       }
 
