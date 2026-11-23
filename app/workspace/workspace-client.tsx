@@ -115,6 +115,7 @@ export default function WorkspaceClient({ userEmail, userRole, initialAgent = "w
     if (historyReadyFor !== selectedAgent) return;
     conversationHistory.current[selectedAgent] = messages;
   }, [messages, selectedAgent, historyReadyFor]);
+  const isCivilContext = initialIntent === "civil";
   const copy = activeSection === "mia" && isCivilContext
     ? {
         eyebrow: "ACCOMPAGNEMENT CITOYEN · MIA",
@@ -122,7 +123,6 @@ export default function WorkspaceClient({ userEmail, userRole, initialAgent = "w
         text: "Bonjour, je suis MIA. Je vous accompagne pour préparer une copie conforme, un nouvel acte de naissance ou la transcription d’un jugement supplétif."
       }
     : sectionCopy[activeSection];
-  const isCivilContext = initialIntent === "civil";
   const displayedAgents = agents.map((agent) =>
     isCivilContext && agent.id === "mia"
       ? { ...agent, specialty: "Actes de naissance · État civil", status: "Accompagnement citoyen" }
