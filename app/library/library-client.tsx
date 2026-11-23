@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import PageNavigation from "@/components/navigation/page-navigation";
 
 type Source = {
   id: string;
@@ -116,7 +117,7 @@ export default function LibraryClient({
     <main style={{ minHeight: "100vh", background: "#f5f7f4", color: "#1d3027", padding: "28px clamp(18px, 4vw, 58px) 56px" }}>
       <div style={{ maxWidth: "1180px", margin: "0 auto" }}>
         <header style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "14px", marginBottom: "30px" }}>
-          <a href="/workspace" style={{ color: "#2c624a", background: "#e7efe9", borderRadius: "999px", padding: "11px 16px", textDecoration: "none", fontWeight: 700 }}>← Retour à MIA</a>
+          <PageNavigation />
           <div style={{ color: "#6b7970", fontSize: "13px" }}>Bibliothèque partagée · Connecté : {userEmail}</div>
         </header>
 

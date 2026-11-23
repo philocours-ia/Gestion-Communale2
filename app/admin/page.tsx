@@ -1,6 +1,6 @@
-import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import PageNavigation from "@/components/navigation/page-navigation";
 
 export const dynamic = "force-dynamic";
 
@@ -41,9 +41,7 @@ export default async function AdminPage() {
             <h1 style={{ fontSize: "clamp(30px, 4vw, 44px)", lineHeight: 1.1, margin: "12px 0 8px" }}>Administration</h1>
             <p style={{ margin: 0, color: "#66736c" }}>Centre de contrôle de votre écosystème d’intelligences spécialisées.</p>
           </div>
-          <Link href="/workspace" style={{ color: "#285c49", background: "#e7efe9", borderRadius: "999px", padding: "12px 18px", textDecoration: "none", fontWeight: 650 }}>
-            ← Retour à MIA
-          </Link>
+          <PageNavigation />
         </header>
 
         <section style={{ ...cardStyle, background: "linear-gradient(120deg, #183d31, #28644d)", color: "#ffffff", border: 0, padding: "30px", marginBottom: "22px" }}>

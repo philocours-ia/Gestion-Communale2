@@ -1,7 +1,10 @@
+import PageNavigation from "@/components/navigation/page-navigation";
+
 export default function SetupPage() {
   return (
     <main className="auth-page">
       <section className="auth-card setup-card">
+        <div className="auth-navigation-row"><PageNavigation /></div>
         <div className="brand auth-brand">
           <span className="brand-mark omnia-auth-mark"><img src="/omnia-logo.svg" alt="" /></span>
           <span className="brand-copy"><strong>OMNIA</strong><small>INTELLIGENCE EN SYNERGIE</small></span>

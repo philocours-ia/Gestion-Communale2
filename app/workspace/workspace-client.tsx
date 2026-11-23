@@ -6,6 +6,7 @@ import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import MioraWorkspace from "@/components/miora/miora-workspace";
+import PageNavigation from "@/components/navigation/page-navigation";
 
 type Section = "workspace" | "miora" | "maths" | "mia" | "research" | "education" | "accounting" | "civil" | "library" | "documents" | "history";
 type Agent = { id: Section; name: string; specialty: string; color: string; symbol: string; status: string };
@@ -146,7 +147,7 @@ export default function WorkspaceClient({ userEmail, userRole }: { userEmail: st
     </aside>
 
     <section className="main-panel">
-      <header className="topbar"><div className="breadcrumb"><span>OMNIA</span><b>/</b><strong>{navigation.find((n) => n.id === activeSection)?.label ?? currentAgent.name}</strong></div><div className="topbar-right"><span className="status-pill"><i/> Écosystème actif</span><button className="language-toggle" type="button" onClick={() => setLanguage(language === "FR" ? "MG" : "FR")}>{language === "FR" ? "FR  ↔  MG" : "MG  ↔  FR"}</button><button className="help-button" type="button" onClick={() => setActiveSection("workspace")} aria-label="Aide">?</button></div></header>
+      <header className="topbar"><div className="breadcrumb"><span>OMNIA</span><b>/</b><strong>{navigation.find((n) => n.id === activeSection)?.label ?? currentAgent.name}</strong></div><div className="topbar-right"><PageNavigation compact/><span className="status-pill"><i/> Écosystème actif</span><button className="language-toggle" type="button" onClick={() => setLanguage(language === "FR" ? "MG" : "FR")}>{language === "FR" ? "FR  ↔  MG" : "MG  ↔  FR"}</button><button className="help-button" type="button" onClick={() => setActiveSection("workspace")} aria-label="Aide">?</button></div></header>
       <div className="content-wrap">
         <div className="welcome-row"><div><p className="eyebrow">{copy.eyebrow}</p><h1>{language === "FR" ? copy.title : "Tongasoa eto OMNIA."}</h1><p className="welcome-text">{language === "FR" ? copy.text : "Faharanitan-tsaina maro, sehatra iray."}</p></div><div className="welcome-badge"><OmniaMark size={38}/><div className="badge-caption"><strong>{currentAgent.name}</strong><small>{currentAgent.status}</small></div></div></div>
 

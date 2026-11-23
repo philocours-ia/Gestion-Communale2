@@ -3,6 +3,7 @@
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import PageNavigation from "@/components/navigation/page-navigation";
 
 type Mode = "signin" | "signup";
 
@@ -73,6 +74,7 @@ export default function LoginPage() {
   return (
     <main className="auth-page">
       <section className="auth-card">
+        <div className="auth-navigation-row"><PageNavigation /></div>
         <a className="brand auth-brand" href="/" aria-label="OMNIA, accueil">
           <span className="brand-mark omnia-auth-mark"><img src="/omnia-logo.svg" alt="" /></span>
           <span className="brand-copy"><strong>OMNIA</strong><small>INTELLIGENCES EN SYNERGIE</small></span>
