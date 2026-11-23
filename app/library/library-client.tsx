@@ -114,14 +114,14 @@ export default function LibraryClient({
   }
 
   return (
-    <main style={{ minHeight: "100vh", background: "#f5f7f4", color: "#1d3027", padding: "28px clamp(18px, 4vw, 58px) 56px" }}>
+    <main className="library-page">
       <div style={{ maxWidth: "1180px", margin: "0 auto" }}>
-        <header style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "14px", marginBottom: "30px" }}>
+        <header className="library-header">
           <PageNavigation />
           <div style={{ color: "#6b7970", fontSize: "13px" }}>Bibliothèque partagée · Connecté : {userEmail}</div>
         </header>
 
-        <section style={{ ...cardStyle, background: "linear-gradient(120deg, #183d31, #2b644d)", color: "white", border: 0, padding: "clamp(24px, 4vw, 38px)", marginBottom: "22px" }}>
+        <section className="library-hero">
           <div style={{ fontSize: "12px", letterSpacing: ".16em", color: "#cfe0d4", fontWeight: 750 }}>MIA · CONNAISSANCES DOCUMENTAIRES</div>
           <h1 style={{ fontSize: "clamp(30px, 4vw, 42px)", lineHeight: 1.1, margin: "12px 0" }}>Bibliothèque juridique et administrative</h1>
           <p style={{ maxWidth: "760px", color: "#e1ebe4", lineHeight: 1.7, margin: 0 }}>
@@ -134,7 +134,7 @@ export default function LibraryClient({
               ["Manuels", counts.manual],
               ["Comptabilité", counts.accounting_reference]
             ].map(([label, count]) => (
-              <div key={String(label)} style={{ background: "rgba(255,255,255,.11)", border: "1px solid rgba(255,255,255,.18)", borderRadius: "12px", padding: "10px 14px" }}>
+              <div key={String(label)} className="library-stat">
                 <strong style={{ fontSize: "20px", marginRight: "8px" }}>{count}</strong>
                 <span style={{ fontSize: "12px", color: "#e2ebe5" }}>{label}</span>
               </div>
@@ -142,7 +142,7 @@ export default function LibraryClient({
           </div>
         </section>
 
-        <section style={{ ...cardStyle, marginBottom: "22px" }}>
+        <section className="library-search-card">
           <label htmlFor="library-search" style={{ display: "block", fontWeight: 700, marginBottom: "8px" }}>Rechercher dans les textes et les procédures</label>
           <input
             id="library-search"
@@ -178,7 +178,7 @@ export default function LibraryClient({
           </div>
         </section>
 
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "14px", gap: "12px", flexWrap: "wrap" }}>
+        <div className="library-results-heading">
           <h2 style={{ margin: 0, fontSize: "22px" }}>Références disponibles</h2>
           <span style={{ color: "#708077", fontSize: "13px" }}>{filtered.length} résultat(s) · {chunks.length} extraits indexés</span>
         </div>
@@ -195,7 +195,7 @@ export default function LibraryClient({
               const isExpanded = expanded.includes(source.id);
               const kind = palette[source.source_type] || palette.manual;
               return (
-                <article key={source.id} style={{ ...cardStyle, display: "flex", flexDirection: "column", gap: "12px" }}>
+                <article key={source.id} className="library-source-card">
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "10px", flexWrap: "wrap" }}>
                     <span style={{ background: kind.background, color: kind.color, fontSize: "11px", fontWeight: 800, letterSpacing: ".07em", padding: "7px 10px", borderRadius: "999px" }}>{labels[source.source_type] || source.source_type}</span>
                     <span style={{ color: "#7b776d", background: "#f4f3ef", fontSize: "11px", fontWeight: 700, padding: "7px 10px", borderRadius: "999px" }}>{labels[source.verification_status] || source.verification_status}</span>
@@ -209,7 +209,7 @@ export default function LibraryClient({
                   </div>
                   {source.applicability && <p style={{ color: "#46584d", fontSize: "13px", lineHeight: 1.65, margin: 0 }}><strong>Champ :</strong> {source.applicability}</p>}
                   {sourceChunks.length > 0 && (
-                    <div style={{ background: "#f6f8f5", borderRadius: "12px", padding: "13px 14px" }}>
+                    <div className="library-chunks">
                       <div style={{ color: "#55705f", fontSize: "11px", letterSpacing: ".08em", fontWeight: 800, marginBottom: "7px" }}>CONNAISSANCES INDEXÉES</div>
                       {sourceChunks.slice(0, isExpanded ? 12 : 2).map((chunk) => (
                         <div key={chunk.id} style={{ marginTop: "10px" }}>
@@ -225,7 +225,7 @@ export default function LibraryClient({
                       )}
                     </div>
                   )}
-                  {source.caution && <div style={{ background: "#fff7e9", borderLeft: "3px solid #d4a14c", padding: "10px 12px", borderRadius: "0 10px 10px 0", color: "#71572c", fontSize: "12px", lineHeight: 1.6 }}>{source.caution}</div>}
+                  {source.caution && <div className="library-caution">{source.caution}</div>}
                   <div style={{ marginTop: "auto", display: "flex", flexWrap: "wrap", gap: "10px", paddingTop: "4px" }}>
                     <a href={source.official_url} target="_blank" rel="noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: "8px", color: "#ffffff", background: "#285f47", borderRadius: "10px", padding: "10px 14px", textDecoration: "none", fontWeight: 700, fontSize: "13px" }}>Ouvrir le texte / manuel ↗</a>
                     {source.source_portal && <a href={source.source_portal} target="_blank" rel="noreferrer" style={{ display: "inline-flex", alignItems: "center", color: "#37634d", background: "#edf3ee", borderRadius: "10px", padding: "10px 14px", textDecoration: "none", fontWeight: 700, fontSize: "13px" }}>Portail officiel</a>}
@@ -236,7 +236,7 @@ export default function LibraryClient({
           </div>
         )}
 
-        <section style={{ ...cardStyle, marginTop: "22px", background: "#eef3ef" }}>
+        <section className="library-reading-rule">
           <h3 style={{ margin: "0 0 8px", fontSize: "17px" }}>Règle de lecture de MIA</h3>
           <p style={{ color: "#56645b", lineHeight: 1.7, margin: 0, fontSize: "13px" }}>
             Un texte officiel prime sur un manuel de procédure. Un manuel sert de guide et peut devenir obsolète lorsque le droit évolue. Les modèles communaux et les habitudes locales sont conservés séparément et ne deviennent jamais une règle de droit par eux-mêmes.
