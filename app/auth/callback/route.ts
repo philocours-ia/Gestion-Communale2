@@ -16,5 +16,9 @@ export async function GET(request: NextRequest) {
     return NextResponse.redirect(new URL("/login?auth=confirmation_failed", APP_URL));
   }
 
-  return NextResponse.redirect(new URL("/workspace", APP_URL));
+  const requested = request.nextUrl.searchParams.get("next") || "/workspace";
+  const safeNext = requested.startsWith("/") && !requested.startsWith("//") && !requested.includes("\\")
+    ? requested
+    : "/workspace";
+  return NextResponse.redirect(new URL(safeNext, APP_URL));
 }

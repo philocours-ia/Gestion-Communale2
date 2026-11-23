@@ -7,6 +7,18 @@ import PageNavigation from "@/components/navigation/page-navigation";
 
 type Mode = "signin" | "signup";
 
+function getPostLoginPath() {
+  const raw = new URLSearchParams(window.location.search).get("next") || "/workspace";
+  try {
+    const target = new URL(raw, window.location.origin);
+    return target.origin === window.location.origin
+      ? `${target.pathname}${target.search}${target.hash}`
+      : "/workspace";
+  } catch {
+    return "/workspace";
+  }
+}
+
 export default function LoginPage() {
   const router = useRouter();
   const [mode, setMode] = useState<Mode>("signin");
@@ -38,14 +50,14 @@ export default function LoginPage() {
       if (mode === "signin") {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
-        router.replace("/workspace");
+        router.replace(getPostLoginPath());
         router.refresh();
       } else {
         const { data, error } = await supabase.auth.signUp({
           email,
           password,
           options: {
-            emailRedirectTo: `${window.location.origin}/auth/callback`,
+            emailRedirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(getPostLoginPath())}`,
             data: { display_name: displayName.trim() || null }
           }
         });
@@ -57,7 +69,7 @@ export default function LoginPage() {
             display_name: displayName.trim() || null,
             preferred_language: "fr"
           });
-          router.replace("/workspace");
+          router.replace(getPostLoginPath());
           router.refresh();
         } else {
           setNotice("Votre demande de compte a été enregistrée. Consultez votre messagerie pour confirmer votre adresse avant de vous connecter.");
