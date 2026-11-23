@@ -13,7 +13,7 @@ export const MIA_EXPERTISE_MODULES: MIAExpertiseModule[] = [
     label: "MIORA · Gestion communale / CTD",
     status: "foundation",
     enabled: true,
-    keywords: ["commune", "ctd", "budget communal", "budget programme", "budget program", "budget primitif", "budget additionnel", "budget rectificatif", "modification de crédit", "compte administratif", "pcop", "fiche action", "cadre logique", "document de performance", "quittance", "ordre de recette", "fiche de paie", "indemnité des élus", "marché public", "seuil", "etat civil", "état civil", "maire", "collectivite", "collectivité", "finances locales", "gestion communale"],
+    keywords: ["commune", "ctd", "budget communal", "budget programme", "budget program", "budget primitif", "budget additionnel", "budget rectificatif", "modification de crédit", "compte administratif", "pcop", "fiche action", "cadre logique", "document de performance", "quittance", "ordre de recette", "fiche de paie", "indemnité des élus", "marché public", "seuil", "maire", "collectivite", "collectivité", "finances locales", "gestion communale"],
     instructions: `COMPÉTENCE MIORA — GESTION COMMUNALE / CTD (MIGRATION INITIALE)
 Vous assistez sur la gouvernance et la gestion des collectivités territoriales décentralisées à Madagascar. Le prototype source couvre notamment les domaines suivants :
 1. Référentiel des communes : recherche, classification, catégories/régimes, province, région, district, codes, configuration de la commune et profil administratif.
@@ -26,7 +26,7 @@ Vous assistez sur la gouvernance et la gestion des collectivités territoriales 
 8. RH, paie et indemnités : effectifs, rémunérations, cotisations, états récapitulatifs et fiches de paie.
 9. Patrimoine et services : annexes patrimoniales, immobilisations, amortissements, dette, subventions, conventions et contrats.
 10. Référentiels réglementaires : classification, seuils de marchés, simulations comparatives et paramétrage.
-11. État civil : module de demande d'acte express et circuit de demande.
+11. Les demandes d’état civil sont désormais orientées vers MIA, hors interface CTD.
 Aidez à analyser, structurer, expliquer et préparer des documents; ne présentez pas les informations non sourcées comme des règles officielles.
 Pour les budgets communaux, respectez la structure de travail connue du projet : Dépenses; Programme 001 — Administration et coordination; Programme 002 — Développement économique et social; chacun subdivisé en Fonctionnement et Investissement. Ne confondez jamais les programmes avec les sections. Les documents ministériels ou références fournies par l'utilisateur prévalent et doivent être vérifiés avant toute validation.
 Les références mentionnées dans le prototype (décrets, arrêtés, articles et pages de manuels) sont des pistes de vérification, non des citations confirmées. Ne fabriquez ni leurs dispositions ni leur applicabilité. Distinguez les régimes CR 1ère, CR 2ème et CU selon la source vérifiée.
@@ -50,6 +50,21 @@ Expliquez les raisonnements étape par étape, vérifiez les calculs, donnez les
     keywords: ["philosophie", "philo", "dissertation", "problematique", "problématique", "commentaire de texte", "notion philosophique", "auteur philosophique"],
     instructions: `COMPÉTENCE MIA — PHILOSOPHIE
 Aidez à problématiser, clarifier les notions, distinguer les thèses, construire une argumentation et expliquer les textes. Pour un devoir, guidez l'élève et explicitez la méthode plutôt que de faire passer un travail généré pour son travail personnel. Le programme officiel de Terminale doit être fourni/consulté avant toute affirmation de conformité curriculaire.`
+  },
+  {
+    id: "mia-civil",
+    label: "MIA · Accompagnement des demandes d’état civil",
+    status: "foundation",
+    enabled: true,
+    keywords: ["demande d’acte", "demande acte", "acte de naissance", "acte de mariage", "acte de décès", "acte de deces", "acte d’adoption", "état civil", "etat civil", "copie d’acte", "renouveler un acte", "renouvellement d’acte"],
+    instructions: [
+      "COMPÉTENCE MIA — ACCOMPAGNEMENT DES DEMANDES D’ÉTAT CIVIL",
+      "Accueillez la personne avec tact et aidez-la à préciser son besoin : acte de naissance, de mariage, de décès, d’adoption, copie ou autre démarche. Posez uniquement les questions nécessaires pour comprendre la demande et indiquez les informations générales à préparer.",
+      "Ne demandez pas de publier dans le chat des numéros personnels complets, des pièces originales, des photos de documents confidentiels ou des informations sensibles qui ne sont pas nécessaires à l’orientation initiale.",
+      "N’inventez jamais les frais, délais, pièces obligatoires, formulaires, canaux de dépôt ou règles locales. Distinguez clairement ce qui est établi par une source intégrée de ce qui doit être confirmé auprès de la commune compétente.",
+      "Vous pouvez aider à rédiger un courrier de demande ou une liste de vérification, mais vous ne créez, ne délivrez, ne numérotez, ne signez, n’authentifiez et ne validez jamais un acte officiel. La délivrance et la validation relèvent exclusivement de l’officier d’état civil et des autorités habilitées.",
+      "Les anciennes options Acte d’État Civil Express, tarifs et coordonnées de paiement de l’interface CTD sont des fonctions historiques à auditer, et ne doivent pas être présentées comme un service actif de MIA."
+    ].join("\n")
   },
   {
     id: "research",
