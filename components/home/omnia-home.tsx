@@ -108,7 +108,7 @@ export default function OmniaHome() {
 
       <section className="omnia-lower-grid">
         <div className="omnia-intelligences"><div className="omnia-lower-heading"><span>✦</span><div><p>LES INTELLIGENCES SPÉCIALISÉES</p><h2>Chacune a sa mission.</h2></div></div>
-          <div className="omnia-agent-row"><div><i className="agent-omnia">✦</i><strong>OMNIA</strong><small>Accueil et orchestration</small></div><div><i className="agent-miora">⌂</i><strong>MIORA</strong><small>Gestion communale</small></div><div><i className="agent-felix">F</i><strong>FELIX</strong><small>Terminale T12</small></div><div><i className="agent-mia">◈</i><strong>MIA</strong><small>Philosophie et accompagnement</small></div></div>
+          <div className="omnia-agent-row"><div><i className="agent-omnia">✦</i><strong>OMNIA</strong><small>Accueil et orchestration</small></div><div><i className="agent-miora">⌂</i><strong>MIORA</strong><small>Gestion communale</small></div><div><i className="agent-felix">F</i><strong>FELIX</strong><small>Terminale T12</small></div><div><i className="agent-mia">◈</i><strong>MIA</strong><small>Actes de naissance · accompagnement citoyen</small></div></div>
         </div>
         <div className="omnia-assistant-teaser"><div className="omnia-assistant-avatar"><Icon name="spark"/></div><div><p>VOTRE GUIDE NUMÉRIQUE</p><h2>Besoin d’être orienté ?</h2><span>OMNIA vous aide à identifier l’espace adapté à votre demande.</span><Link href="/login?next=%2Fworkspace">Discuter avec OMNIA <b>→</b></Link></div></div>
       </section>
@@ -118,7 +118,7 @@ export default function OmniaHome() {
     {aboutOpen && <div className="omnia-modal-backdrop" role="presentation" onClick={()=>setAboutOpen(false)}><section className="omnia-about-modal" role="dialog" aria-modal="true" aria-labelledby="omnia-about-title" onClick={e=>e.stopPropagation()}>
       <button type="button" className="omnia-modal-close" onClick={()=>setAboutOpen(false)} aria-label="Fermer">×</button>
       <p className="omnia-eyebrow"><Icon name="spark"/> À PROPOS DE SYGEC-IA</p><h2 id="omnia-about-title">Un portail. Plusieurs compétences.</h2>
-      <p>OMNIA accueille les visiteurs et oriente chaque demande vers une intelligence spécialisée : MIORA pour la gestion des CTD, FELIX pour l’espace pédagogique Terminale T12, et MIA pour la philosophie, la rédaction et l’accompagnement citoyen.</p>
+      <p>OMNIA accueille les visiteurs et oriente chaque demande vers une intelligence spécialisée : MIORA pour la gestion des CTD, FELIX pour l’espace pédagogique Terminale T12, et MIA pour l’accompagnement citoyen et les demandes d’actes de naissance.</p>
       <p>Les assistants aident à organiser, expliquer et préparer. Les documents et actes officiels restent soumis au contrôle des autorités habilitées.</p>
       <Link href="/login" className="omnia-primary-action">Accéder à la plateforme <b>→</b></Link>
     </section></div>}
