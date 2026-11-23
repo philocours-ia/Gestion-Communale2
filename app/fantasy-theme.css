@@ -60,7 +60,7 @@ button { transition: transform .2s ease, background .2s ease, box-shadow .2s eas
 .app-shell::before {
   content: "";
   position: fixed;
-  z-index: -1;
+  z-index: 0;
   inset: 0;
   pointer-events: none;
   opacity: .58;
@@ -814,7 +814,7 @@ button { transition: transform .2s ease, background .2s ease, box-shadow .2s eas
 .felix-workspace .felix-success { color: #b8ffe5 !important; background: rgba(25,118,90,.2) !important; border-color: rgba(113,234,193,.25) !important; }
 
 /* MIA — amethyst library of ideas and civic guidance */
-.specialist-panel:has(.agent-mark.mia), .specialist-panel:has(.specialist-focus strong) {
+.specialist-panel:has(.agent-mark.mia) {
   background:
     radial-gradient(ellipse at 90% 0%, rgba(176, 110, 224, .25), transparent 38%),
     radial-gradient(ellipse at 12% 90%, rgba(75, 109, 192, .15), transparent 36%),
@@ -892,8 +892,8 @@ button { transition: transform .2s ease, background .2s ease, box-shadow .2s eas
 }
 .library-source-card:hover { border-color: rgba(129, 221, 255, .4) !important; box-shadow: 0 18px 38px rgba(0,0,0,.27), 0 0 19px rgba(106,183,255,.1) !important; transform: translateY(-2px); }
 .library-source-card h3 { color: #fff !important; }
-.library-source-card p, .library-source-card > div { color: #b9c6e5; }
-.library-source-card strong { color: #eaf1ff; }
+.library-source-card p, .library-source-card > div { color: #b9c6e5 !important; }
+.library-source-card strong { color: #eaf1ff !important; }
 .library-chunks {
   border: 1px solid rgba(145, 169, 235, .17) !important;
   border-radius: 13px !important;
