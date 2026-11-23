@@ -185,15 +185,15 @@
           </svg>
         </div>
         <div>
-          <div class="text-xs font-bold uppercase tracking-[0.2em] text-cyan-400">Intelligence artificielle • Gestion • Formation • État civil</div>
+          <div class="text-xs font-bold uppercase tracking-[0.2em] text-cyan-400">Intelligence plurielle • Gestion communale • Enseignement • État civil</div>
           <div class="text-lg font-extrabold tracking-tight text-white">SYGEC-IA <span class="text-cyan-300">•</span> OMNIA</div>
         </div>
       </div>
       <div class="flex items-center gap-2.5 flex-wrap">
-        <button type="button" onclick="window.askMioraAI && window.askMioraAI('Présente-moi tes trois missions : gestion communale, enseignement et actes d\'état civil.', false)" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-blue-950/80 hover:bg-blue-900 border border-cyan-400/50 text-cyan-200 text-xs font-bold transition"><i data-lucide="sparkles" class="w-3.5 h-3.5 text-cyan-300"></i><span>Découvrir OMNIA</span></button>
+        <button type="button" onclick="window.askOmniaAI && window.askOmniaAI('Présente-moi tes trois missions : gestion communale, enseignement et actes d\'état civil.', false)" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-blue-950/80 hover:bg-blue-900 border border-cyan-400/50 text-cyan-200 text-xs font-bold transition"><i data-lucide="sparkles" class="w-3.5 h-3.5 text-cyan-300"></i><span>Découvrir OMNIA</span></button>
         <button id="btnOpenEtatCivilPublic" type="button" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white text-xs font-extrabold transition shadow-[0_0_22px_rgba(6,182,212,0.5)]"><i data-lucide="zap" class="w-4 h-4 text-cyan-100"></i><span>Acte d'État Civil Express</span><span class="px-1.5 py-0.5 rounded bg-slate-950/60 text-[10px] text-cyan-200">2 000 Ar</span></button>
         <a href="#acces-compte" class="sm:hidden inline-flex min-h-11 items-center justify-center rounded-xl border border-cyan-400/40 px-3 text-sm font-semibold text-cyan-100">Mon compte</a>
-        <div class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-950/70 border border-cyan-500/30 text-xs text-cyan-200"><span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>OMNIA Active • Gestion • Formation • État civil</div>
+        <div class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-950/70 border border-cyan-500/30 text-xs text-cyan-200"><span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>OMNIA Active • Administrer • Enseigner • Rédiger</div>
       </div>
     </div>
 
@@ -201,24 +201,24 @@
     <div class="relative z-10 max-w-7xl w-full mx-auto px-6 py-10 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
       <!-- Colonne Gauche : Les trois missions d'OMNIA -->
       <div class="lg:col-span-7 space-y-6">
-        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-400/30 text-cyan-300 text-xs font-semibold"><i data-lucide="sparkles" class="w-3.5 h-3.5"></i>Gestion des CTD • Transmission des savoirs • Service citoyen</div>
-        <h2 class="text-3xl sm:text-5xl font-black tracking-tight leading-tight text-white">Une même intelligence pour <span class="bg-gradient-to-r from-cyan-300 via-sky-400 to-blue-500 bg-clip-text text-transparent">gérer, apprendre et servir</span>.</h2>
-        <p class="text-sm sm:text-base text-slate-300 max-w-2xl leading-relaxed"><strong>OMNIA</strong> ne se limite pas à une assistante administrative : elle accompagne la gestion et la comptabilité communales, <strong>enseigne</strong> les notions et procédures utiles pas à pas, et aide à préparer, rédiger et renouveler les actes d'état civil selon les modèles malagasy.</p>
+        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-400/30 text-cyan-300 text-xs font-semibold"><i data-lucide="sparkles" class="w-3.5 h-3.5"></i>Gestion des CTD • Enseignement • Rédaction des actes</div>
+        <h2 class="text-3xl sm:text-5xl font-black tracking-tight leading-tight text-white">Une intelligence plurielle pour <span class="bg-gradient-to-r from-cyan-300 via-sky-400 to-blue-500 bg-clip-text text-transparent">gérer, enseigner et rédiger</span>.</h2>
+        <p class="text-sm sm:text-base text-slate-300 max-w-2xl leading-relaxed"><strong>OMNIA</strong> réunit trois expertises complémentaires : elle accompagne les communes dans la gestion et la comptabilité des CTD, agit comme une <strong>intelligence enseignante</strong> pour expliquer les notions, structurer les apprentissages et guider la formation, puis aide à préparer, rédiger et renouveler les actes d'état civil selon les modèles applicables. Les actes restent soumis à la vérification et à la validation des agents habilités.</p>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
-          <button type="button" data-pillar="0" class="pillar-card text-left p-4 rounded-xl border border-cyan-400/40 bg-blue-950/60 hover:bg-blue-900/50 transition group min-h-[132px]"><div class="flex items-center gap-2.5 text-cyan-300 font-bold text-sm"><i data-lucide="landmark" class="w-4 h-4"></i>Gestion &amp; Comptabilité</div><p class="text-xs text-slate-300 mt-1">Budgets BP, BA, BR, CA, PCOP CTD, procédures et contrôles financiers.</p></button>
-          <button type="button" data-pillar="1" class="pillar-card text-left p-4 rounded-xl border border-slate-700/80 bg-slate-900/60 hover:border-cyan-400/40 hover:bg-blue-950/50 transition group min-h-[132px]"><div class="flex items-center gap-2.5 text-sky-300 font-bold text-sm"><i data-lucide="graduation-cap" class="w-4 h-4"></i>Enseignement &amp; Formation</div><p class="text-xs text-slate-300 mt-1">Comprendre les règles, apprendre les méthodes et progresser avec des explications pas à pas.</p></button>
+          <button type="button" data-pillar="0" class="pillar-card text-left p-4 rounded-xl border border-cyan-400/40 bg-blue-950/60 hover:bg-blue-900/50 transition group min-h-[132px]"><div class="flex items-center gap-2.5 text-cyan-300 font-bold text-sm"><i data-lucide="landmark" class="w-4 h-4"></i>Gestion &amp; Comptabilité</div><p class="text-xs text-slate-300 mt-1">Budgets BP, BA, BR, CA, comptabilité CTD, procédures et contrôles financiers.</p></button>
+          <button type="button" data-pillar="1" class="pillar-card text-left p-4 rounded-xl border border-slate-700/80 bg-slate-900/60 hover:border-cyan-400/40 hover:bg-blue-950/50 transition group min-h-[132px]"><div class="flex items-center gap-2.5 text-sky-300 font-bold text-sm"><i data-lucide="graduation-cap" class="w-4 h-4"></i>Enseignement &amp; Formation</div><p class="text-xs text-slate-300 mt-1">Une intelligence enseignante : explications, cours structurés, exemples et exercices pour apprendre et se former.</p></button>
           <button type="button" data-pillar="2" class="pillar-card text-left p-4 rounded-xl border border-slate-700/80 bg-slate-900/60 hover:border-cyan-400/40 hover:bg-blue-950/50 transition group min-h-[132px]"><div class="flex items-center gap-2.5 text-cyan-200 font-bold text-sm"><i data-lucide="file-check-2" class="w-4 h-4"></i>Actes &amp; État civil</div><p class="text-xs text-slate-300 mt-1">Préparer, rédiger et renouveler les actes de naissance, mariage, décès et adoption.</p></button>
         </div>
         <div id="pillarDetailBanner" class="p-4 rounded-2xl bg-slate-950/80 border border-cyan-400/40 text-xs text-cyan-100 space-y-3 shadow-[0_0_24px_rgba(6,182,212,0.16)]">
           <div class="flex items-center justify-between gap-2 flex-wrap">
-            <div class="flex items-center gap-2 font-bold text-cyan-300"><span class="w-6 h-6 rounded-full bg-cyan-500/20 border border-cyan-400/50 flex items-center justify-center"><i data-lucide="sparkles" class="w-3.5 h-3.5 text-cyan-300"></i></span><span>Trois missions, une intelligence : OMNIA</span></div>
-            <button type="button" onclick="window.askMioraAI && window.askMioraAI('Explique-moi comment tu peux m’aider à gérer, apprendre et traiter les actes d’état civil.', false)" class="px-2.5 py-1 rounded-lg bg-cyan-500/20 hover:bg-cyan-500/30 border border-cyan-400/40 text-[11px] font-bold text-cyan-200 transition">Échanger avec OMNIA →</button>
+            <div class="flex items-center gap-2 font-bold text-cyan-300"><span class="w-6 h-6 rounded-full bg-cyan-500/20 border border-cyan-400/50 flex items-center justify-center"><i data-lucide="sparkles" class="w-3.5 h-3.5 text-cyan-300"></i></span><span>OMNIA : gérer • enseigner • rédiger</span></div>
+            <button type="button" onclick="window.askOmniaAI && window.askOmniaAI('Explique-moi comment tu peux m’aider à gérer, enseigner et rédiger les actes d’état civil.', false)" class="px-2.5 py-1 rounded-lg bg-cyan-500/20 hover:bg-cyan-500/30 border border-cyan-400/40 text-[11px] font-bold text-cyan-200 transition">Échanger avec OMNIA →</button>
           </div>
-          <p id="pillarDetailText" class="text-slate-200 leading-relaxed">Bonjour ! Je suis <strong>OMNIA</strong>. Je vous accompagne dans trois domaines complémentaires : <strong>gérer</strong> votre collectivité et sa comptabilité, <strong>apprendre</strong> les règles et les méthodes grâce à des explications progressives, et <strong>préparer ou renouveler</strong> les actes d'état civil. Choisissez une mission pour la découvrir.</p>
+          <p id="pillarDetailText" class="text-slate-200 leading-relaxed">Bonjour ! Je suis <strong>OMNIA</strong>. Je réunis trois expertises : <strong>gérer</strong> la collectivité et sa comptabilité, <strong>enseigner et former</strong> grâce à des explications structurées, des exemples et des exercices, puis <strong>préparer, rédiger ou renouveler</strong> les actes d'état civil. Choisissez une mission pour la découvrir.</p>
           <div class="flex flex-wrap gap-1.5">
             <button type="button" data-ai-explain="ia" class="landing-ai-explain px-2.5 py-1.5 rounded-lg bg-blue-950 hover:bg-blue-900 border border-cyan-500/30 text-[11px] font-semibold text-cyan-200 transition">✨ Les 3 missions d'OMNIA</button>
             <button type="button" data-ai-explain="budget" class="landing-ai-explain px-2.5 py-1.5 rounded-lg bg-blue-950 hover:bg-blue-900 border border-cyan-500/30 text-[11px] font-semibold text-cyan-200 transition">📊 Gestion &amp; comptabilité</button>
-            <button type="button" data-ai-explain="formation" class="landing-ai-explain px-2.5 py-1.5 rounded-lg bg-blue-950 hover:bg-blue-900 border border-cyan-500/30 text-[11px] font-semibold text-cyan-200 transition">🎓 Apprendre avec OMNIA</button>
+            <button type="button" data-ai-explain="formation" class="landing-ai-explain px-2.5 py-1.5 rounded-lg bg-blue-950 hover:bg-blue-900 border border-cyan-500/30 text-[11px] font-semibold text-cyan-200 transition">🎓 Enseignement &amp; formation</button>
             <button type="button" data-ai-explain="actes" class="landing-ai-explain px-2.5 py-1.5 rounded-lg bg-blue-950 hover:bg-blue-900 border border-cyan-500/30 text-[11px] font-semibold text-cyan-200 transition">📄 Actes &amp; État civil</button>
           </div>
         </div>
@@ -12515,10 +12515,10 @@ ${getEcAdminConfig().officierNom}`);
           </div>
           <div class="min-w-0">
             <div class="flex items-center gap-1.5">
-              <span class="font-bold text-sm truncate">Miora — Assistante CTD</span>
+              <span class="font-bold text-sm truncate">OMNIA — Intelligence plurielle</span>
               <span class="w-2 h-2 rounded-full bg-emerald-400 shrink-0" title="En ligne"></span>
             </div>
-            <div id="assistantSubtitle" class="text-[11px] text-cyan-200/90 truncate">Accompagnement, rédaction &amp; renouvellement d'actes</div>
+            <div id="assistantSubtitle" class="text-[11px] text-cyan-200/90 truncate">Gestion • Enseignement &amp; formation • Actes d'état civil</div>
           </div>
         </div>
         <div class="flex items-center gap-1 shrink-0">
@@ -12536,7 +12536,7 @@ ${getEcAdminConfig().officierNom}`);
       <div id="assistantQuickChips" class="px-3 py-2 bg-white border-t border-slate-100 flex flex-wrap gap-1.5"></div>
 
       <form id="assistantForm" class="p-2.5 bg-white border-t border-slate-200 flex items-center gap-2">
-        <input id="assistantInput" type="text" placeholder="Posez une question ou répondez à Miora..." class="flex-1 px-3 py-2 text-xs border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500" />
+        <input id="assistantInput" type="text" placeholder="Posez votre question à OMNIA..." class="flex-1 px-3 py-2 text-xs border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500" />
         <button type="submit" class="px-3 py-2 rounded-xl bg-teal-700 hover:bg-teal-800 text-white text-xs font-bold transition shrink-0">
           Envoyer
         </button>
@@ -12909,8 +12909,8 @@ ${getEcAdminConfig().officierNom}`);
         updateAssistantContextUI();
         if (isLandingVisible()) {
           appendMessage('bot', `
-            <div class="font-bold text-slate-900">Bonjour ! Je suis Miora, votre Assistante Administrative CTD.</div>
-            <p>Je peux vous accompagner pour vos démarches et rédiger ou renouveler vos actes d'état civil :</p>
+            <div class="font-bold text-slate-900">Bonjour ! Je suis OMNIA, votre intelligence d'accompagnement.</div>
+            <p>Je vous accompagne dans trois domaines : la gestion et la comptabilité communales, l'enseignement et la formation, ainsi que la préparation, la rédaction et le renouvellement des actes d'état civil :</p>
             <ul class="list-disc pl-4 space-y-1 text-slate-700">
               <li><strong>Rédiger / Renouveler un Acte</strong> : je collecte vos informations étape par étape puis je génère l'acte officiel A4 Portrait.</li>
               <li><strong>Acte d'État Civil Express (2 000 Ar)</strong> : préparez votre e-mail, la photo/PDF de l'acte original et la preuve MVola au <strong>0385528349</strong>.</li>
@@ -13070,9 +13070,9 @@ ${getEcAdminConfig().officierNom}`);
 
       closeBtn?.addEventListener('click', () => drawer.classList.add('hidden'));
       const landingExplainTexts = {
-        ia: "<strong>OMNIA, trois missions complémentaires :</strong> j'accompagne la gestion et la comptabilité des collectivités, je transmets les connaissances en expliquant les règles et les méthodes, et j'aide à préparer ou renouveler les actes d'état civil. Je ne remplace pas la responsabilité des agents et autorités habilités.",
+        ia: "<strong>OMNIA, trois expertises complémentaires :</strong> j'accompagne la gestion et la comptabilité des CTD, j'enseigne et je forme en expliquant les notions et les méthodes, puis j'aide à préparer ou renouveler les actes d'état civil. Je ne remplace pas la responsabilité des agents et autorités habilités.",
         budget: "<strong>Gestion &amp; comptabilité communales :</strong> je vous accompagne dans les budgets (BP, BA, BR), le Compte Administratif, le PCOP CTD, les procédures DGFAG, les contrôles et la préparation des documents de gestion.",
-        formation: "<strong>Enseignement &amp; formation :</strong> je peux expliquer une notion, décomposer une procédure, présenter un exemple et vous guider pas à pas pour comprendre la comptabilité publique, le budget communal et les règles administratives.",
+        formation: "<strong>Enseignement &amp; formation :</strong> en tant qu'intelligence enseignante, je peux expliquer une notion, structurer un cours, décomposer une procédure, proposer des exemples et exercices, puis guider l'apprentissage de la comptabilité publique, du budget communal et des règles administratives.",
         actes: "<strong>Actes &amp; État civil :</strong> je facilite la préparation, la rédaction et le renouvellement des actes de naissance, mariage, décès et adoption. Les demandes citoyennes sont instruites et validées par les agents communaux compétents avant transmission."
       };
       document.querySelectorAll('.landing-ai-explain').forEach(btn => {
