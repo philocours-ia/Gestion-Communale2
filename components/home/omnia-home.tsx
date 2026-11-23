@@ -104,9 +104,9 @@ export default function OmniaHome() {
 
           <article className="omnia-home-card teaching">
             <span className="omnia-home-icon" aria-hidden="true">F</span>
-            <small>FELIX · Gestionnaire de cours</small>
+            <small>FELIX · Terminale T12</small>
             <h2>Enseignement</h2>
-            <p>Inscriptions, choix des séries, organisation des cours, publication du calendrier, comptabilité pédagogique et suivi transparent des progrès des apprenants.</p>
+            <p>Espace consacré exclusivement à la classe de Terminale T12 : parcours L, S et OSE, cours, calendrier, suivi pédagogique et comptabilité de la plateforme.</p>
             <Link href="/login?next=%2Fworkspace%3Fagent%3Dfelix">Accéder à l’espace FELIX <span aria-hidden="true">↗</span></Link>
           </article>
 
@@ -126,7 +126,7 @@ export default function OmniaHome() {
           <div className="omnia-home-ai-grid">
             <article className="omnia-home-ai omnia"><strong>OMNIA</strong><small>Orientation & orchestration</small><p>Accueille votre demande, identifie le besoin et vous dirige vers l’espace spécialisé approprié.</p></article>
             <article className="omnia-home-ai miora"><strong>MIORA · Gestion CTD</strong><small>Administration communale</small><p>Budgets BP, BA, BR et CA, comptabilité CTD, procédures, ressources humaines, patrimoine et performance.</p></article>
-            <article className="omnia-home-ai"><strong>FELIX</strong><small>Gestion pédagogique · Comptabilité</small><p>Organisation des cours, séries et calendriers, suivi pédagogique transparent des apprenants, gestion des abonnements et comptabilité de la plateforme.</p></article>
+            <article className="omnia-home-ai"><strong>FELIX</strong><small>Terminale T12 · Gestion pédagogique</small><p>Gestion des parcours T12 L, T12 S et T12 OSE, des cours, du calendrier, du suivi transparent des apprenants et de la comptabilité de la plateforme.</p></article>
             <article className="omnia-home-ai mia"><strong>MIA</strong><small>Philosophie, rédaction & état civil</small><p>Problématisation, argumentation, écriture structurée et accompagnement des demandes d’actes civils.</p></article>
           </div>
         </section>
