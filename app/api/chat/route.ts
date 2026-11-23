@@ -56,7 +56,7 @@ export async function POST(req: Request) {
     .filter((part) => part.type === "text").map((part) => part.text).join(" ") ?? "";
 
   // FELIX reçoit les références officielles MEN intégrées; les autres espaces gardent la recherche lexicale MIA.
-  const isFelixRequest = /\\[Assistant demandé\\s*:\\s*FELIX/i.test(latestUserText);
+  const isFelixRequest = latestUserText.includes("[Assistant demandé : FELIX");
   let knowledgeContext = "";
   let chunks: any[] | null = null;
   if (isFelixRequest) {
