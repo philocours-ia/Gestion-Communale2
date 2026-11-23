@@ -4,7 +4,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "SYGEC-IA • OMNIA — Gestion CTD, enseignement et accompagnement citoyen.",
-  description: "OMNIA oriente les visiteurs vers la gestion des CTD avec MIORA, l’enseignement avec MIORA Maths et les demandes d’état civil avec MIA.",
+  description: "OMNIA oriente les visiteurs vers la gestion CTD avec MIORA, l’enseignement avec FELIX et les demandes d’actes d’état civil avec MIA.",
   applicationName: "OMNIA"
 };
 export const viewport: Viewport = { themeColor: "#1d1d37", width: "device-width", initialScale: 1 };

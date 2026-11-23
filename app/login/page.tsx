@@ -95,7 +95,7 @@ export default function LoginPage() {
         <div className="auth-intro">
           <p className="eyebrow">MALAGASY INTELLIGENT ASSISTANT</p>
           <h1>{mode === "signin" ? "Bienvenue de nouveau." : "Bienvenue dans votre espace."}</h1>
-          <p>{mode === "signin" ? "Connectez-vous pour retrouver votre espace de travail OMNIA, MIA et MIORA." : "Créez votre compte pour ouvrir votre espace de travail OMNIA."}</p>
+          <p>{mode === "signin" ? "Connectez-vous pour retrouver vos espaces OMNIA, MIORA, FELIX et MIA." : "Créez votre compte pour ouvrir votre espace de travail OMNIA."}</p>
         </div>
 
         <div className="auth-tabs" role="tablist" aria-label="Accès au compte">

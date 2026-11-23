@@ -126,7 +126,7 @@ export default function OmniaHome() {
           <div className="omnia-home-ai-grid">
             <article className="omnia-home-ai omnia"><strong>OMNIA</strong><small>Orientation & orchestration</small><p>Accueille votre demande, identifie le besoin et vous dirige vers l’espace spécialisé approprié.</p></article>
             <article className="omnia-home-ai miora"><strong>MIORA · Gestion CTD</strong><small>Administration communale</small><p>Budgets BP, BA, BR et CA, comptabilité CTD, procédures, ressources humaines, patrimoine et performance.</p></article>
-            <article className="omnia-home-ai"><strong>MIORA Maths</strong><small>Enseignement mathématique</small><p>Explications progressives, calculs, démonstrations, méthodes et exercices, avec un démarrage centré sur la Terminale.</p></article>
+            <article className="omnia-home-ai"><strong>FELIX</strong><small>Gestion pédagogique · Comptabilité</small><p>Organisation des cours, séries et calendriers, suivi pédagogique transparent des apprenants, gestion des abonnements et comptabilité de la plateforme.</p></article>
             <article className="omnia-home-ai mia"><strong>MIA</strong><small>Philosophie, rédaction & état civil</small><p>Problématisation, argumentation, écriture structurée et accompagnement des demandes d’actes civils.</p></article>
           </div>
         </section>
