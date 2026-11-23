@@ -126,8 +126,8 @@ export default function LoginPage() {
         <div className="auth-side-orbit orbit-b" />
         <div className="auth-side-content">
           <span className="auth-side-star">✦</span>
-          <p>UNE ASSISTANCE ADMINISTRATIVE, EN DEUX LANGUES</p>
-          <h2>La bonne information.<br />Au bon moment.</h2>
+          <p>UNE INTELLIGENCE PLURIELLE, EN DEUX LANGUES</p>
+          <h2>Gérer.<br />Enseigner. Rédiger.</h2>
           <span className="auth-side-tag">FRANÇAIS · MALAGASY</span>
         </div>
         <div className="auth-side-bottom">OMNIA · MALAGASY INTELLIGENT ASSISTANT</div>
