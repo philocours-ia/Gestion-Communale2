@@ -1,8 +1,8 @@
 "use client";
 
 import { useChat } from "@ai-sdk/react";
-import { DefaultChatTransport } from "ai";
-import { FormEvent, useState } from "react";
+import { DefaultChatTransport, type UIMessage } from "ai";
+import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import MioraWorkspace from "@/components/miora/miora-workspace";
@@ -96,7 +96,25 @@ export default function WorkspaceClient({ userEmail, userRole, initialAgent = "w
   const [selectedAgent, setSelectedAgent] = useState<Section>(startingSection);
   const [language, setLanguage] = useState<"FR" | "MG">("FR");
   const [input, setInput] = useState("");
-  const { messages, sendMessage: sendAIMessage, status, error } = useChat({ transport: new DefaultChatTransport({ api: "/api/chat" }) });
+  const conversationHistory = useRef<Record<string, UIMessage[]>>({});
+  const [historyReadyFor, setHistoryReadyFor] = useState<Section>(startingSection);
+  const chatTransport = useMemo(
+    () => new DefaultChatTransport({ api: "/api/chat" }),
+    []
+  );
+  const { messages, sendMessage: sendAIMessage, status, error, setMessages, stop } = useChat({ transport: chatTransport });
+
+  useEffect(() => {
+    if (historyReadyFor === selectedAgent) return;
+    stop();
+    setMessages(conversationHistory.current[selectedAgent] ?? []);
+    setHistoryReadyFor(selectedAgent);
+  }, [selectedAgent, historyReadyFor, setMessages, stop]);
+
+  useEffect(() => {
+    if (historyReadyFor !== selectedAgent) return;
+    conversationHistory.current[selectedAgent] = messages;
+  }, [messages, selectedAgent, historyReadyFor]);
   const copy = activeSection === "mia" && initialIntent === "civil" ? { eyebrow: "ACCOMPAGNEMENT CITOYEN · MIA", title: "MIA — Demande d’acte d’état civil", text: "Bonjour, je suis MIA. Je vous accompagne pour préciser votre demande d’acte, identifier les informations utiles et préparer les points à vérifier auprès de la commune." } : sectionCopy[activeSection];
   const currentAgent = agents.find((a) => a.id === selectedAgent) ?? agents[0];
 
@@ -115,9 +133,12 @@ export default function WorkspaceClient({ userEmail, userRole, initialAgent = "w
     event?.preventDefault();
     const text = (preset ?? input).trim();
     if (!text || status !== "ready") return;
-    const civilGuidance = initialIntent === "civil" && selectedAgent === "mia" ? " CONTEXTE DE CETTE SESSION : la personne a choisi Demande d’Acte d’état civil. Accueillez-la comme MIA, clarifiez d’abord le type de démarche. N’inventez ni frais, ni délais, ni pièces obligatoires. Distinguez les informations vérifiées des points à confirmer auprès de la commune. Vous pouvez aider à préparer une demande et une liste de vérification, mais vous ne délivrez, ne numérotez, ne signez ni n’authentifiez aucun acte officiel." : "";
-    const routedText = selectedAgent === "workspace" ? text : `[Assistant demandé : ${currentAgent.name} — ${currentAgent.specialty}]${civilGuidance} ${text}`;
-    sendAIMessage({ text: routedText });
+    sendAIMessage({ text }, {
+      body: {
+        assistantId: selectedAgent,
+        assistantIntent: selectedAgent === "mia" && initialIntent === "civil" ? "civil" : null
+      }
+    });
     setInput("");
   }
   function openAgent(agent: Agent) {
@@ -163,6 +184,6 @@ export default function WorkspaceClient({ userEmail, userRole, initialAgent = "w
       </div>
     </section>
 
-    <aside className="assistant-panel"><div className="assistant-header"><div className="assistant-heading"><AgentMark agent={currentAgent}/><div><strong>Conversation · {currentAgent.name}</strong><small><i/> Espace connecté</small></div></div><button className="panel-menu" type="button" aria-label="Options">···</button></div><div className="conversation-label"><span>AUJOURD'HUI</span></div><div className="message-list" aria-live="polite">{messages.map(message=><div key={message.id} className={message.role==="assistant"?"message-row mia-message":"message-row user-message"}>{message.role==="assistant"&&<div className="message-avatar"><OmniaMark size={22}/></div>}<div className="message-bubble">{message.role==="assistant"&&<strong className="message-author">{currentAgent.name}</strong>}{message.parts.map((part,index)=>part.type==="text"?<p key={index}>{part.text}</p>:null)}</div></div>)}{(status==="submitted"||status==="streaming")&&<div className="message-row mia-message"><div className="message-avatar"><OmniaMark size={22}/></div><div className="message-bubble"><strong className="message-author">{currentAgent.name}</strong><p>Je prépare votre réponse…</p></div></div>}{error&&<div className="chat-error" role="alert">La réponse n’a pas pu être générée. Vérifiez la configuration du moteur IA puis réessayez.</div>}</div><div className="suggestion-area"><p>POUR VOUS INSPIRER</p><button type="button" onClick={()=>sendMessage(undefined,"Explique-moi comment tu peux m'aider et quelles sont tes limites.")}>Découvrir les capacités de {currentAgent.name}<span>↗</span></button><button type="button" onClick={()=>sendMessage(undefined,"Aide-moi à structurer ma demande et indique les informations manquantes.")}>Structurer ma demande<span>↗</span></button></div><form className="chat-composer" onSubmit={event=>sendMessage(event)}><label className="sr-only" htmlFor="omnia-input">Écrire un message à {currentAgent.name}</label><textarea id="omnia-input" value={input} onChange={event=>setInput(event.target.value)} placeholder={`Écrivez à ${currentAgent.name}…`} rows={2} onKeyDown={event=>{if(event.key==="Enter"&&!event.shiftKey){event.preventDefault();sendMessage();}}}/><div className="composer-footer"><span>FR · MG <i/> Sources et rigueur</span><button className="send-button" type="submit" disabled={!input.trim()||status!=="ready"} aria-label="Envoyer le message">↑</button></div></form><p className="privacy-note"><span>▣</span> Vérifiez toujours les documents avant tout usage officiel.</p></aside>
+    <aside className="assistant-panel"><div className="assistant-header"><div className="assistant-heading"><AgentMark agent={currentAgent}/><div><strong>Conversation · {currentAgent.name}</strong><small><i/> Espace connecté</small></div></div><button className="panel-menu" type="button" aria-label="Options">···</button></div><div className="conversation-label"><span>AUJOURD'HUI</span></div><div className="message-list" aria-live="polite">{messages.map(message=><div key={message.id} className={message.role==="assistant"?"message-row mia-message":"message-row user-message"}>{message.role==="assistant"&&<div className="message-avatar"><OmniaMark size={22}/></div>}<div className="message-bubble">{message.role==="assistant"&&<strong className="message-author">{currentAgent.name}</strong>}{message.parts.map((part,index)=>part.type==="text"?<p key={index}>{part.text}</p>:null)}{message.role==="assistant" && status==="ready" && !message.parts.some(part=>part.type==="text" && part.text.trim()) && <p className="empty-assistant-note">Cette réponse a été bloquée par le contrôle de sécurité ou n’a pas produit de texte. Reformulez votre demande puis réessayez.</p>}</div></div>)}{(status==="submitted"||status==="streaming")&&<div className="message-row mia-message"><div className="message-avatar"><OmniaMark size={22}/></div><div className="message-bubble"><strong className="message-author">{currentAgent.name}</strong><p>Je prépare votre réponse…</p></div></div>}{error&&<div className="chat-error" role="alert">La réponse n’a pas pu être générée. La connexion au moteur conversationnel a échoué. Réessayez dans un instant.</div>}</div><div className="suggestion-area"><p>POUR VOUS INSPIRER</p><button type="button" onClick={()=>sendMessage(undefined,"Explique-moi comment tu peux m'aider et quelles sont tes limites.")}>Découvrir les capacités de {currentAgent.name}<span>↗</span></button><button type="button" onClick={()=>sendMessage(undefined,"Aide-moi à structurer ma demande et indique les informations manquantes.")}>Structurer ma demande<span>↗</span></button></div><form className="chat-composer" onSubmit={event=>sendMessage(event)}><label className="sr-only" htmlFor="omnia-input">Écrire un message à {currentAgent.name}</label><textarea id="omnia-input" value={input} onChange={event=>setInput(event.target.value)} placeholder={`Écrivez à ${currentAgent.name}…`} rows={2} onKeyDown={event=>{if(event.key==="Enter"&&!event.shiftKey){event.preventDefault();sendMessage();}}}/><div className="composer-footer"><span>FR · MG <i/> Sources et rigueur</span><button className="send-button" type="submit" disabled={!input.trim()||status!=="ready"} aria-label="Envoyer le message">↑</button></div></form><p className="privacy-note"><span>▣</span> Vérifiez toujours les documents avant tout usage officiel.</p></aside>
   </main>;
 }

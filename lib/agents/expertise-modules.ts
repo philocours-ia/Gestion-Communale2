@@ -109,10 +109,63 @@ Rédigez des documents clairs, structurés et adaptés au contexte malagasy. N'i
   }
 ];
 
-export function getExpertiseForRequest(text: string) {
+export function getExpertiseForRequest(
+  text: string,
+  assistantId: string = "workspace",
+  assistantIntent?: string
+) {
   const normalized = text.toLocaleLowerCase("fr");
-  return MIA_EXPERTISE_MODULES.filter(module => module.enabled && module.keywords.some(keyword => normalized.includes(keyword)))
-    .map(module => module.instructions);
+  const findModule = (id: string) => MIA_EXPERTISE_MODULES.find(module => module.id === id && module.enabled);
+  const isDrafting = ["rédige", "redige", "rédaction", "redaction", "lettre", "courrier", "rapport", "note de", "compte rendu", "formulaire"].some(term => normalized.includes(term));
+  const isCivil = ["acte de naissance", "acte de mariage", "acte de décès", "acte de deces", "état civil", "etat civil", "acte d’adoption", "acte d'adoption", "renouvellement d’acte"].some(term => normalized.includes(term));
+  const isPhilosophy = ["philosophie", "dissertation", "problématique", "problematique", "notion philosophique", "auteur philosophique", "commentaire de texte"].some(term => normalized.includes(term));
+
+  const selectedIds: string[] = [];
+  switch (assistantId) {
+    case "miora":
+      selectedIds.push("miora-ctd");
+      if (isDrafting) selectedIds.push("admin-drafting");
+      break;
+    case "maths":
+      selectedIds.push("miora-maths");
+      break;
+    case "felix":
+    case "education":
+      selectedIds.push("felix-education-manager");
+      break;
+    case "mia":
+      if (assistantIntent === "civil" || isCivil) selectedIds.push("mia-civil");
+      else if (isPhilosophy) selectedIds.push("mia-philosophy");
+      else if (isDrafting) selectedIds.push("admin-drafting");
+      else selectedIds.push("mia-philosophy");
+      if (isDrafting && !selectedIds.includes("admin-drafting")) selectedIds.push("admin-drafting");
+      break;
+    case "research":
+    case "library":
+      selectedIds.push("research");
+      break;
+    case "documents":
+      selectedIds.push("admin-drafting");
+      break;
+    case "workspace":
+    default: {
+      const ranked = MIA_EXPERTISE_MODULES
+        .filter(module => module.enabled)
+        .map(module => ({
+          module,
+          score: module.keywords.reduce((score, keyword) => score + (normalized.includes(keyword) ? 1 : 0), 0)
+        }))
+        .filter(item => item.score > 0)
+        .sort((a, b) => b.score - a.score);
+      if (ranked.length) selectedIds.push(ranked[0].module.id);
+      if (isDrafting && ranked[0]?.module.id !== "admin-drafting") selectedIds.push("admin-drafting");
+      break;
+    }
+  }
+
+  return [...new Set(selectedIds)]
+    .map(id => findModule(id)?.instructions)
+    .filter((instructions): instructions is string => Boolean(instructions));
 }
 
 export function getModuleStatus() {
