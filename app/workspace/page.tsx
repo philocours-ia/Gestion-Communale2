@@ -4,7 +4,13 @@ import WorkspaceClient from "./workspace-client";
 
 export const dynamic = "force-dynamic";
 
-export default async function WorkspacePage() {
+type WorkspacePageProps = {
+  searchParams: Promise<{ agent?: string | string[]; intent?: string | string[] }>;
+};
+
+const allowedAgents = ["workspace", "miora", "maths", "mia", "research", "education"] as const;
+
+export default async function WorkspacePage({ searchParams }: WorkspacePageProps) {
   const supabase = await createClient();
   if (!supabase) redirect("/setup");
 
@@ -29,10 +35,22 @@ export default async function WorkspacePage() {
     .eq("id", user.id)
     .maybeSingle();
 
+  const params = await searchParams;
+  const agentValue = Array.isArray(params.agent) ? params.agent[0] : params.agent;
+  const intentValue = Array.isArray(params.intent) ? params.intent[0] : params.intent;
+  const initialIntent = intentValue === "civil" ? "civil" : undefined;
+  const initialAgent = initialIntent === "civil"
+    ? "mia"
+    : allowedAgents.includes(agentValue as typeof allowedAgents[number])
+      ? agentValue as typeof allowedAgents[number]
+      : "workspace";
+
   return (
     <WorkspaceClient
       userEmail={user.email ?? ""}
       userRole={profile?.role ?? "user"}
+      initialAgent={initialAgent}
+      initialIntent={initialIntent}
     />
   );
 }
