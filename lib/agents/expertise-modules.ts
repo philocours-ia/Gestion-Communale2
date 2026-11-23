@@ -1,3 +1,9 @@
+import {
+  MIA_BIRTH_CERTIFICATE_INSTRUCTIONS,
+  MIA_BIRTH_CERTIFICATE_KEYWORDS,
+  MIA_CIVIL_BIRTH_RESPONSE_PROFILE,
+} from "@/lib/agents/mia-birth-certificates";
+
 export type MIAExpertiseModule = {
   id: string;
   label: string;
@@ -76,18 +82,11 @@ Aidez à problématiser, clarifier les notions, distinguer les thèses, construi
   },
   {
     id: "mia-civil",
-    label: "MIA · Accompagnement des demandes d’état civil",
+    label: "MIA · Actes de naissance (État civil)",
     status: "foundation",
     enabled: true,
-    keywords: ["demande d’acte", "demande acte", "acte de naissance", "acte de mariage", "acte de décès", "acte de deces", "acte d’adoption", "état civil", "etat civil", "copie d’acte", "renouveler un acte", "renouvellement d’acte"],
-    instructions: [
-      "COMPÉTENCE MIA — ACCOMPAGNEMENT DES DEMANDES D’ÉTAT CIVIL",
-      "Accueillez la personne avec tact et aidez-la à préciser son besoin : acte de naissance, de mariage, de décès, d’adoption, copie ou autre démarche. Posez uniquement les questions nécessaires pour comprendre la demande et indiquez les informations générales à préparer.",
-      "Ne demandez pas de publier dans le chat des numéros personnels complets, des pièces originales, des photos de documents confidentiels ou des informations sensibles qui ne sont pas nécessaires à l’orientation initiale.",
-      "N’inventez jamais les frais, délais, pièces obligatoires, formulaires, canaux de dépôt ou règles locales. Distinguez clairement ce qui est établi par une source intégrée de ce qui doit être confirmé auprès de la commune compétente.",
-      "Vous pouvez aider à rédiger un courrier de demande ou une liste de vérification, mais vous ne créez, ne délivrez, ne numérotez, ne signez, n’authentifiez et ne validez jamais un acte officiel. La délivrance et la validation relèvent exclusivement de l’officier d’état civil et des autorités habilitées.",
-      "Les anciennes options Acte d’État Civil Express, tarifs et coordonnées de paiement de l’interface CTD sont des fonctions historiques à auditer, et ne doivent pas être présentées comme un service actif de MIA."
-    ].join("\n")
+    keywords: MIA_BIRTH_CERTIFICATE_KEYWORDS,
+    instructions: MIA_BIRTH_CERTIFICATE_INSTRUCTIONS,
   },
   {
     id: "research",
@@ -190,14 +189,7 @@ const ASSISTANT_RESPONSE_PROFILES: Record<string, string> = {
   ].join("\n")
 };
 
-const MIA_CIVIL_RESPONSE_PROFILE = [
-  "IDENTITÉ — MIA, ACCOMPAGNEMENT DES DEMANDES D'ÉTAT CIVIL",
-  "Vous êtes MIA, une assistante d'orientation citoyenne, attentive et neutre. Vous aidez à comprendre la demande relative à un acte de naissance, de mariage, de décès, d'adoption, une copie ou une autre démarche d'état civil.",
-  "Commencez par identifier le type d'acte, la commune concernée et l'objet de la demande. Ne demandez que les renseignements nécessaires à cette première orientation. Ne demandez pas de publier dans le chat des numéros personnels complets, des originaux ou des photos de documents confidentiels.",
-  "N'inventez jamais les pièces obligatoires, les frais, les délais, les formulaires, les circuits de dépôt ou les règles locales. Distinguez les éléments établis par une source disponible des points à confirmer auprès de la commune compétente.",
-  "Vous pouvez préparer un courrier, un formulaire de demande non officiel ou une liste des pièces à vérifier. Vous ne délivrez, ne créez, ne numérotez, ne signez, n'authentifiez ni ne validez un acte officiel. Ces actes relèvent exclusivement de l'officier d'état civil et des autorités habilitées.",
-  "Ne présentez pas les anciennes fonctions, tarifs ou coordonnées de paiement de l'interface CTD comme des services actifs de MIA."
-].join("\n");
+const MIA_CIVIL_RESPONSE_PROFILE = MIA_CIVIL_BIRTH_RESPONSE_PROFILE;
 
 export function getAssistantProfileInstructions(
   assistantId: string = "workspace",
@@ -219,7 +211,12 @@ export function getExpertiseForRequest(
   const normalized = text.toLocaleLowerCase("fr");
   const findModule = (id: string) => MIA_EXPERTISE_MODULES.find(module => module.id === id && module.enabled);
   const isDrafting = ["rédige", "redige", "rédaction", "redaction", "lettre", "courrier", "rapport", "note de", "compte rendu", "formulaire"].some(term => normalized.includes(term));
-  const isCivil = ["acte de naissance", "acte de mariage", "acte de décès", "acte de deces", "état civil", "etat civil", "acte d’adoption", "acte d'adoption", "renouvellement d’acte"].some(term => normalized.includes(term));
+  const isCivilRequest = [
+    ...MIA_BIRTH_CERTIFICATE_KEYWORDS,
+    "acte de mariage", "acte de décès", "acte de deces",
+    "acte d’adoption", "acte d'adoption", "demande d’acte", "demande acte",
+    "copie d’acte", "copie d'acte"
+  ].some(term => normalized.includes(term));
   const isPhilosophy = ["philosophie", "dissertation", "problématique", "problematique", "notion philosophique", "auteur philosophique", "commentaire de texte"].some(term => normalized.includes(term));
 
   const selectedIds: string[] = [];
@@ -236,11 +233,22 @@ export function getExpertiseForRequest(
       selectedIds.push("felix-education-manager");
       break;
     case "mia":
-      if (assistantIntent === "civil" || isCivil) selectedIds.push("mia-civil");
-      else if (isPhilosophy) selectedIds.push("mia-philosophy");
-      else if (isDrafting) selectedIds.push("admin-drafting");
-      else selectedIds.push("mia-philosophy");
-      if (isDrafting && !selectedIds.includes("admin-drafting")) selectedIds.push("admin-drafting");
+      if (assistantIntent === "civil" || isCivilRequest) {
+        // In the civil route MIA is restricted to birth-certificate workflows only.
+        selectedIds.push("mia-civil");
+      } else if (isPhilosophy) {
+        selectedIds.push("mia-philosophy");
+      } else if (isDrafting) {
+        selectedIds.push("admin-drafting");
+      } else {
+        selectedIds.push("mia-philosophy");
+      }
+      if (
+        assistantIntent !== "civil" &&
+        !isCivilRequest &&
+        isDrafting &&
+        !selectedIds.includes("admin-drafting")
+      ) selectedIds.push("admin-drafting");
       break;
     case "research":
     case "library":
