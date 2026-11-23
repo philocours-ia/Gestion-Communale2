@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 
-function Icon({ name }: { name: "home" | "building" | "school" | "document" | "info" | "mail" | "shield" | "spark" }) {
+function Icon({ name }: { name: "home" | "building" | "school" | "document" | "info" | "mail" | "shield" | "spark" | "book" }) {
   const shared = { fill:"none", stroke:"currentColor", strokeWidth:1.8, strokeLinecap:"round" as const, strokeLinejoin:"round" as const };
   if (name==="home") return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7M5 9v12h14V9M9 21v-7h6v7" {...shared}/></svg>;
   if (name==="building") return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21h18M5 21V8l7-4 7 4v13M9 21v-8h6v8M9 9h.01M15 9h.01" {...shared}/></svg>;
@@ -11,7 +11,8 @@ function Icon({ name }: { name: "home" | "building" | "school" | "document" | "i
   if (name==="document") return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6zM14 3v5h5M9 12h6M9 16h6" {...shared}/></svg>;
   if (name==="info") return <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" {...shared}/><path d="M12 11v5M12 7h.01" {...shared}/></svg>;
   if (name==="mail") return <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" {...shared}/><path d="m4 7 8 6 8-6" {...shared}/></svg>;
-  if (name==="shield") return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 20 6v5c0 5-3.4 8.3-8 10-4.6-1.7-8-5-8-10V6zM8.5 12l2.2 2.2 4.8-5" {...shared}/></svg>;
+  if (name==="shield") return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 20 6v5c0 5-3.4 8.3-8 10-4.6-1.7-8-5-8-10V6zM8.5 12l2.2 2.2 4.8-5" {...shared}/> </svg>;
+  if (name==="book") return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A3.5 3.5 0 0 1 7.5 2H20v18H7.5A3.5 3.5 0 0 0 4 23zM4 5.5v17M8 6h8M8 10h8" {...shared}/></svg>;
   return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 1.8 6.2L20 10l-6.2 1.8L12 18l-1.8-6.2L4 10l6.2-1.8z" {...shared}/><path d="m19 16 .8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z" {...shared}/></svg>;
 }
 
@@ -52,7 +53,7 @@ export default function OmniaHome() {
       <div className="omnia-rail-separator"/>
       <nav className="omnia-rail-meta" aria-label="Informations">
         <button type="button" onClick={()=>setAboutOpen(true)}><Icon name="info"/>À propos</button>
-        <a href="mailto:contact@sygec-ia.app"><Icon name="mail"/>Contact</a>
+        <button type="button" onClick={()=>setAboutOpen(true)}><Icon name="mail"/>Contact</button>
         <Link href="/login"><Icon name="shield"/>Espace connecté</Link>
       </nav>
       <div className="omnia-rail-bottom"><div className="omnia-mada-mark">✦</div><strong>SYGEC-IA · OMNIA</strong><p>Une plateforme intelligente au service des projets, des savoirs et des citoyens.</p><span>ENSEMBLE, VERS UN AVENIR MEILLEUR</span></div>
