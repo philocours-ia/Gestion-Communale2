@@ -185,17 +185,17 @@
           </svg>
         </div>
         <div>
-          <div class="text-xs font-bold uppercase tracking-[0.2em] text-cyan-400">Intelligence plurielle • Gestion communale • Enseignement • État civil</div>
+          <div class="text-xs font-bold uppercase tracking-[0.2em] text-cyan-400">Gestion des collectivités territoriales décentralisées</div>
           <div class="text-lg font-extrabold tracking-tight text-white">SYGEC-IA <span class="text-cyan-300">•</span> OMNIA</div>
         </div>
       </div>
       <div class="flex items-center gap-2.5 flex-wrap">
         <button type="button" onclick="if(window.history.length > 1){window.history.back()}else{window.location.assign('/')}" aria-label="Revenir à la page précédente" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-blue-950/80 hover:bg-blue-900 border border-slate-500/50 text-slate-200 text-xs font-bold transition"><span aria-hidden="true">←</span><span>Précédente</span></button>
         <a href="/" aria-label="Revenir à la page d'accueil" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-cyan-500/15 hover:bg-cyan-500/25 border border-cyan-400/40 text-cyan-100 text-xs font-bold transition"><span aria-hidden="true">⌂</span><span>Accueil</span></a>
-        <button type="button" onclick="window.askOmniaAI && window.askOmniaAI('Présente-moi tes trois missions : gestion communale, enseignement et actes d\'état civil.', false)" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-blue-950/80 hover:bg-blue-900 border border-cyan-400/50 text-cyan-200 text-xs font-bold transition"><i data-lucide="sparkles" class="w-3.5 h-3.5 text-cyan-300"></i><span>Découvrir OMNIA</span></button>
-        <button id="btnOpenEtatCivilPublic" type="button" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white text-xs font-extrabold transition shadow-[0_0_22px_rgba(6,182,212,0.5)]"><i data-lucide="zap" class="w-4 h-4 text-cyan-100"></i><span>Acte d'État Civil Express</span><span class="px-1.5 py-0.5 rounded bg-slate-950/60 text-[10px] text-cyan-200">2 000 Ar</span></button>
+        <button type="button" onclick="window.askMioraAI && window.askMioraAI('Présente-moi les modules de gestion communale et explique-moi comment commencer.', false)" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-blue-950/80 hover:bg-blue-900 border border-cyan-400/50 text-cyan-200 text-xs font-bold transition"><i data-lucide="sparkles" class="w-3.5 h-3.5 text-cyan-300"></i><span>Découvrir MIORA</span></button>
+
         <a href="#acces-compte" class="sm:hidden inline-flex min-h-11 items-center justify-center rounded-xl border border-cyan-400/40 px-3 text-sm font-semibold text-cyan-100">Mon compte</a>
-        <div class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-950/70 border border-cyan-500/30 text-xs text-cyan-200"><span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>OMNIA Active • Administrer • Enseigner • Rédiger</div>
+        <div class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-950/70 border border-cyan-500/30 text-xs text-cyan-200"><span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>MIORA active • Gestion CTD</div>
       </div>
     </div>
 
@@ -203,36 +203,18 @@
     <div class="relative z-10 max-w-7xl w-full mx-auto px-6 py-10 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
       <!-- Colonne Gauche : Les trois missions d'OMNIA -->
       <div class="lg:col-span-7 space-y-6">
-        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-400/30 text-cyan-300 text-xs font-semibold"><i data-lucide="sparkles" class="w-3.5 h-3.5"></i>Gestion des CTD • Enseignement • Rédaction des actes</div>
-        <h2 class="text-3xl sm:text-5xl font-black tracking-tight leading-tight text-white">Une intelligence plurielle pour <span class="bg-gradient-to-r from-cyan-300 via-sky-400 to-blue-500 bg-clip-text text-transparent">gérer, enseigner et rédiger</span>.</h2>
-        <p class="text-sm sm:text-base text-slate-300 max-w-2xl leading-relaxed"><strong>OMNIA</strong> réunit trois expertises complémentaires : elle accompagne les communes dans la gestion et la comptabilité des CTD, agit comme une <strong>intelligence enseignante</strong> pour expliquer les notions, structurer les apprentissages et guider la formation, puis aide à préparer, rédiger et renouveler les actes d'état civil selon les modèles applicables. Les actes restent soumis à la vérification et à la validation des agents habilités.</p>
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
-          <button type="button" data-pillar="0" class="pillar-card text-left p-4 rounded-xl border border-cyan-400/40 bg-blue-950/60 hover:bg-blue-900/50 transition group min-h-[132px]"><div class="flex items-center gap-2.5 text-cyan-300 font-bold text-sm"><i data-lucide="landmark" class="w-4 h-4"></i>Gestion &amp; Comptabilité</div><p class="text-xs text-slate-300 mt-1">Budgets BP, BA, BR, CA, comptabilité CTD, procédures et contrôles financiers.</p></button>
-          <button type="button" data-pillar="1" class="pillar-card text-left p-4 rounded-xl border border-slate-700/80 bg-slate-900/60 hover:border-cyan-400/40 hover:bg-blue-950/50 transition group min-h-[132px]"><div class="flex items-center gap-2.5 text-sky-300 font-bold text-sm"><i data-lucide="graduation-cap" class="w-4 h-4"></i>Enseignement &amp; Formation</div><p class="text-xs text-slate-300 mt-1">Une intelligence enseignante : explications, cours structurés, exemples et exercices pour apprendre et se former.</p></button>
-          <button type="button" data-pillar="2" class="pillar-card text-left p-4 rounded-xl border border-slate-700/80 bg-slate-900/60 hover:border-cyan-400/40 hover:bg-blue-950/50 transition group min-h-[132px]"><div class="flex items-center gap-2.5 text-cyan-200 font-bold text-sm"><i data-lucide="file-check-2" class="w-4 h-4"></i>Actes &amp; État civil</div><p class="text-xs text-slate-300 mt-1">Préparer, rédiger et renouveler les actes de naissance, mariage, décès et adoption.</p></button>
+        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-400/30 text-cyan-300 text-xs font-semibold"><i data-lucide="landmark" class="w-3.5 h-3.5"></i>GESTION COMMUNALE · MIORA</div>
+        <h2 class="text-3xl sm:text-5xl font-black tracking-tight leading-tight text-white">Une gestion communale <span class="bg-gradient-to-r from-cyan-300 via-sky-400 to-blue-500 bg-clip-text text-transparent">plus claire et structurée</span>.</h2>
+        <p class="text-sm sm:text-base text-slate-300 max-w-2xl leading-relaxed"><strong>MIORA</strong> vous accompagne dans les budgets BP, BA, BR et CA, la comptabilité des CTD, les procédures, la gouvernance, les ressources humaines, le patrimoine et le suivi de la performance. Elle vous aide à vous orienter dans les modules de gestion communale.</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+          <div class="text-left p-4 rounded-xl border border-cyan-400/40 bg-blue-950/60 min-h-[132px]"><div class="flex items-center gap-2.5 text-cyan-300 font-bold text-sm"><i data-lucide="landmark" class="w-4 h-4"></i>Budgets &amp; comptabilité</div><p class="text-xs text-slate-300 mt-2">Budget primitif, budget additionnel, budget rectificatif, compte administratif, PCOP CTD et procédures communales.</p></div>
+          <div class="text-left p-4 rounded-xl border border-slate-700/80 bg-slate-900/60 min-h-[132px]"><div class="flex items-center gap-2.5 text-sky-300 font-bold text-sm"><i data-lucide="messages-square" class="w-4 h-4"></i>Votre assistante MIORA</div><p class="text-xs text-slate-300 mt-2">MIORA vous aide à comprendre les étapes, repérer le module approprié et organiser votre travail.</p></div>
         </div>
-        <div id="pillarDetailBanner" class="p-4 rounded-2xl bg-slate-950/80 border border-cyan-400/40 text-xs text-cyan-100 space-y-3 shadow-[0_0_24px_rgba(6,182,212,0.16)]">
-          <div class="flex items-center justify-between gap-2 flex-wrap">
-            <div class="flex items-center gap-2 font-bold text-cyan-300"><span class="w-6 h-6 rounded-full bg-cyan-500/20 border border-cyan-400/50 flex items-center justify-center"><i data-lucide="sparkles" class="w-3.5 h-3.5 text-cyan-300"></i></span><span>OMNIA : gérer • enseigner • rédiger</span></div>
-            <button type="button" onclick="window.askOmniaAI && window.askOmniaAI('Explique-moi comment tu peux m’aider à gérer, enseigner et rédiger les actes d’état civil.', false)" class="px-2.5 py-1 rounded-lg bg-cyan-500/20 hover:bg-cyan-500/30 border border-cyan-400/40 text-[11px] font-bold text-cyan-200 transition">Échanger avec OMNIA →</button>
-          </div>
-          <p id="pillarDetailText" class="text-slate-200 leading-relaxed">Bonjour ! Je suis <strong>OMNIA</strong>. Je réunis trois expertises : <strong>gérer</strong> la collectivité et sa comptabilité, <strong>enseigner et former</strong> grâce à des explications structurées, des exemples et des exercices, puis <strong>préparer, rédiger ou renouveler</strong> les actes d'état civil. Choisissez une mission pour la découvrir.</p>
-          <div class="flex flex-wrap gap-1.5">
-            <button type="button" data-ai-explain="ia" class="landing-ai-explain px-2.5 py-1.5 rounded-lg bg-blue-950 hover:bg-blue-900 border border-cyan-500/30 text-[11px] font-semibold text-cyan-200 transition">✨ Les 3 missions d'OMNIA</button>
-            <button type="button" data-ai-explain="budget" class="landing-ai-explain px-2.5 py-1.5 rounded-lg bg-blue-950 hover:bg-blue-900 border border-cyan-500/30 text-[11px] font-semibold text-cyan-200 transition">📊 Gestion &amp; comptabilité</button>
-            <button type="button" data-ai-explain="formation" class="landing-ai-explain px-2.5 py-1.5 rounded-lg bg-blue-950 hover:bg-blue-900 border border-cyan-500/30 text-[11px] font-semibold text-cyan-200 transition">🎓 Enseignement &amp; formation</button>
-            <button type="button" data-ai-explain="actes" class="landing-ai-explain px-2.5 py-1.5 rounded-lg bg-blue-950 hover:bg-blue-900 border border-cyan-500/30 text-[11px] font-semibold text-cyan-200 transition">📄 Actes &amp; État civil</button>
-          </div>
+        <div class="p-4 rounded-2xl bg-slate-950/80 border border-cyan-400/40 text-xs text-cyan-100 space-y-2">
+          <div class="font-bold text-cyan-300">Bienvenue dans l’espace de gestion des CTD.</div>
+          <p class="text-slate-200 leading-relaxed">Connectez-vous ou créez votre accès communal pour retrouver les outils de gestion. Les documents générés restent des projets à vérifier par les responsables et agents habilités.</p>
+          <button type="button" onclick="window.askMioraAI && window.askMioraAI('Aide-moi à commencer la gestion de ma commune.', true)" class="px-3 py-2 rounded-lg bg-cyan-500/20 hover:bg-cyan-500/30 border border-cyan-400/40 text-[11px] font-bold text-cyan-200 transition">Demander conseil à MIORA →</button>
         </div>
-        <div class="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-cyan-950/90 via-blue-950/90 to-slate-900/90 border-2 border-cyan-400/70 shadow-[0_0_28px_rgba(6,182,212,0.28)] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div class="space-y-1">
-            <div class="flex items-center gap-2 flex-wrap"><span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-cyan-400 text-slate-950 text-[10px] font-black uppercase tracking-wider"><i data-lucide="zap" class="w-3 h-3"></i>Service citoyen</span><span class="text-sm sm:text-base font-extrabold text-white">Renouveler un acte d'état civil</span></div>
-            <div class="text-xs text-cyan-100/90">Demande en ligne sans compte : Naissance, Mariage, Décès ou Adoption • Frais : <strong class="text-cyan-300">2 000 Ar</strong> • Transmission après vérification et validation par la commune.</div>
-          </div>
-          <button id="btnOpenEtatCivilPublic2" type="button" class="shrink-0 inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-gradient-to-r from-cyan-400 to-sky-400 hover:from-cyan-300 hover:to-sky-300 text-slate-950 font-black text-xs shadow-lg transition"><span>Faire une demande</span><i data-lucide="arrow-right" class="w-4 h-4"></i></button>
-        </div>
-      </div>
-
       <!-- Colonne Droite : Connexion & Inscription Payante -->
       <div id="acces-compte" tabindex="-1" class="lg:col-span-5 scroll-mt-3">
         <div class="electric-card rounded-2xl p-6 sm:p-7 space-y-5 relative overflow-hidden">
@@ -393,7 +375,7 @@
             <ul class="text-xs sm:text-sm text-slate-300 space-y-1.5">
               <li class="flex items-start gap-2"><span class="text-cyan-400 font-bold">•</span><span><strong>Fiabiliser les budgets &amp; clôtures :</strong> automatiser les tableaux d'équilibre, annexes et délibérations (BP, BA, BR, CA).</span></li>
               <li class="flex items-start gap-2"><span class="text-cyan-400 font-bold">•</span><span><strong>Garantir la conformité légale :</strong> contrôles automatiques (autofinancement 15 %, plafond élus 15 % CA, seuils marchés).</span></li>
-              <li class="flex items-start gap-2"><span class="text-cyan-400 font-bold">•</span><span><strong>Faciliter le service citoyen :</strong> demande rapide de renouvellement d'actes via <em>Acte d'État Civil Express</em>.</span></li>
+              <li class="flex items-start gap-2"><span class="text-cyan-400 font-bold">•</span><span><strong>Renforcer le pilotage communal :</strong> mieux suivre les ressources, le patrimoine, les opérations et les indicateurs de performance.</span></li><!-- Ancienne entrée du service citoyen déplacée vers MIA -->
             </ul>
           </div>
         </div>
@@ -422,23 +404,18 @@
               </ol>
             </div>
 
-            <!-- Parcours Citoyens -->
+            <!-- Parcours des responsables communaux -->
             <div class="p-4 rounded-xl bg-slate-950/60 border border-cyan-500/40 space-y-2.5">
               <div class="font-bold text-sm text-white flex items-center gap-2">
                 <span class="w-6 h-6 rounded-lg bg-cyan-500/20 border border-cyan-400/50 text-cyan-300 flex items-center justify-center text-xs font-black">2</span>
-                Pour tout Citoyen (Acte d'État Civil Express)
+                Pour les responsables et agents communaux
               </div>
               <ol class="space-y-1.5 text-slate-300 list-decimal list-inside">
-                <li><strong>Accès direct sans compte :</strong> Cliquez sur le bouton <strong>Acte d'État Civil Express</strong> ci-dessus.</li>
-                <li><strong>Dossier complet :</strong> Choisissez l'acte (<em>Naissance, Mariage, Décès, Adoption</em>), indiquez votre <strong>e-mail</strong>, joignez l'<strong>original (Image/PDF)</strong> et la preuve MVola de <strong>2 000 Ar</strong> (<span class="mono text-cyan-300">0385528349</span>).</li>
-                <li><strong>Récépissé &amp; Renvoi :</strong> Conservez votre numéro de récépissé ; l'acte renouvelé vous est renvoyé par e-mail après validation.</li>
+                <li>Vérifiez les informations de la commune et les paramètres administratifs avant de commencer.</li>
+                <li>Utilisez les modules budgétaires et comptables adaptés à votre étape de travail.</li>
+                <li>Conservez vos justificatifs et sauvegardes, puis faites vérifier les documents par les responsables habilités.</li>
               </ol>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <!-- ÉVALUATION DE L'APPLICATION (5 ÉTOILES) -->
     <div class="relative z-10 max-w-7xl w-full mx-auto px-6 pb-8">
       <div class="electric-card rounded-2xl p-6 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
@@ -507,7 +484,7 @@
               Régime CR1 / CU
             </span>
           </div>
-          <p class="text-xs text-slate-400">Gestion communale • Apprentissage assisté par IA • Actes d’état civil</p>
+          <p class="text-xs text-slate-400">Gestion communale • Comptabilité des CTD • Assistance MIORA</p>
         </div>
       </div>
 
@@ -1756,7 +1733,7 @@
     <div class="bg-white rounded-2xl border border-slate-200 shadow-2xl w-full max-w-6xl max-h-[92vh] flex flex-col overflow-hidden">
       <div class="bg-slate-900 text-white px-6 py-4 flex items-center justify-between">
         <div>
-          <h3 class="text-base font-bold">Espace Administrateur — Abonnements &amp; Atelier Actes d'État Civil Express</h3>
+Espace Administrateur — Abonnements &amp; Configuration technique
           <p class="text-xs text-cyan-300">Compte MVola : 0385528349 • Titulaire : Nasandratriniaina Julio</p>
         </div>
         <button id="btnCloseAdminModal" type="button" class="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white">
@@ -11397,6 +11374,7 @@ CREATE TABLE communes (
 
     function renderAdminModal() {
       const body = document.getElementById('adminModalBody');
+      if (adminModalTab !== 'adm_subs' && adminModalTab !== 'adm_supabase') adminModalTab = 'adm_subs';
       if (!body) return;
       const subs = getSubscriptions();
       const ecList = getEcDemandes();
@@ -11412,14 +11390,8 @@ CREATE TABLE communes (
           <button type="button" data-adm-tab="adm_subs" class="px-3.5 py-2 rounded-lg text-xs font-bold transition ${adminModalTab === 'adm_subs' ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}">
             1. Abonnements &amp; 2ème Commune (${pendingSubs} en attente)
           </button>
-          <button type="button" data-adm-tab="adm_ec_demandes" class="px-3.5 py-2 rounded-lg text-xs font-bold transition ${adminModalTab === 'adm_ec_demandes' ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}">
-            2. Acte d'État Civil Express — Demandes (${pendingEc} en attente)
-          </button>
-          <button type="button" data-adm-tab="adm_ec_redaction" class="px-3.5 py-2 rounded-lg text-xs font-bold transition ${adminModalTab === 'adm_ec_redaction' ? 'bg-blue-700 text-white' : 'bg-blue-50 text-blue-800 border border-blue-200 hover:bg-blue-100'}">
-            3. Atelier Rédaction &amp; Config Actes (${validatedEc.length} validé(s))
-          </button>
           <button type="button" data-adm-tab="adm_supabase" class="px-3.5 py-2 rounded-lg text-xs font-bold transition ${adminModalTab === 'adm_supabase' ? 'bg-emerald-700 text-white' : 'bg-emerald-50 text-emerald-800 border border-emerald-200 hover:bg-emerald-100'}">
-            4. Connexion Supabase
+            2. Connexion Supabase
           </button>
         </div>
       `;
@@ -12517,10 +12489,10 @@ ${getEcAdminConfig().officierNom}`);
           </div>
           <div class="min-w-0">
             <div class="flex items-center gap-1.5">
-              <span class="font-bold text-sm truncate">OMNIA — Intelligence plurielle</span>
+MIORA — Gestion CTD</span>
               <span class="w-2 h-2 rounded-full bg-emerald-400 shrink-0" title="En ligne"></span>
             </div>
-            <div id="assistantSubtitle" class="text-[11px] text-cyan-200/90 truncate">Gestion • Enseignement &amp; formation • Actes d'état civil</div>
+Budgets • Comptabilité • Administration
           </div>
         </div>
         <div class="flex items-center gap-1 shrink-0">
@@ -12548,7 +12520,7 @@ ${getEcAdminConfig().officierNom}`);
     <button id="btnAssistantFab" type="button" class="inline-flex items-center gap-2 px-4 py-3 rounded-full bg-gradient-to-r from-slate-900 via-blue-900 to-teal-700 hover:from-slate-800 hover:to-teal-600 text-white shadow-xl border border-cyan-400/40 text-xs font-bold transition transform hover:scale-[1.02]">
       <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
       <i data-lucide="message-circle-question" class="w-4 h-4 text-cyan-300"></i>
-      <span>OMNIA • Gestion, Formation &amp; État civil</span>
+MIORA • Gestion des CTD
     </button>
   </div>
 
@@ -12623,23 +12595,22 @@ ${getEcAdminConfig().officierNom}`);
       function updateAssistantContextUI() {
         const onLanding = isLandingVisible();
         if (onLanding) {
-          if (subtitle) subtitle.textContent = 'Accueil • Actes, Renouvellement & Inscription';
+          if (subtitle) subtitle.textContent = 'Accueil • Gestion communale et comptabilité';
           chipsBox.innerHTML = [
-            { q: "Rédiger un acte d'état civil", label: 'Rédiger un Acte' },
-            { q: 'Renouveler un acte existant', label: 'Renouveler un Acte' },
-            { q: "Comment demander un Acte d'État Civil Express ?", label: 'Tarif & MVola' },
-            { q: 'Comment inscrire ma Commune ?', label: 'Inscription Commune' }
+            { q: 'Comment démarrer la gestion de ma commune ?', label: 'Démarrer' },
+            { q: 'Comment préparer mon Budget Primitif ?', label: 'Budget primitif' },
+            { q: 'Quelles sont les étapes du Compte Administratif ?', label: 'Compte administratif' },
+            { q: 'Présente les principaux modules de MIORA.', label: 'Découvrir MIORA' }
           ].map(item => `<button type="button" data-aq="${item.q.replace(/"/g, '&quot;')}" class="asst-chip px-2.5 py-1 rounded-full bg-slate-100 hover:bg-teal-50 text-slate-700 hover:text-teal-800 border border-slate-200 text-[11px] font-semibold transition">${item.label}</button>`).join('');
         } else {
           const c = (typeof state !== 'undefined' && state.communes) ? (state.communes.find(x => x.id === state.activeCommuneId) || state.communes[0]) : null;
           const cat = (typeof CATEGORIES !== 'undefined' && typeof state !== 'undefined') ? CATEGORIES[state.activeLevel] : null;
-          if (subtitle) subtitle.textContent = c ? `${c.soa_libelle} • ${cat?.short || ''}` : 'Espace de gestion CTD';
+          if (subtitle) subtitle.textContent = c ? `${c.soa_libelle} • ${cat?.short || ''}` : 'Gestion communale · CTD';
           chipsBox.innerHTML = [
-            { q: "Rédiger un acte d'état civil", label: 'Rédiger un Acte' },
-            { q: 'Renouveler un acte existant', label: 'Renouveler un Acte' },
             { q: 'Quelle est ma prochaine étape ?', label: 'Prochaine étape' },
             { q: 'Vérifier équilibre et autofinancement 15%', label: 'Équilibre & 15%' },
-            { q: 'Indemnités des élus 6032', label: 'Élus (6032)' }
+            { q: 'Indemnités des élus 6032', label: 'Élus (6032)' },
+            { q: 'Comment ouvrir le Budget Primitif ?', label: 'Budget primitif' }
           ].map(item => `<button type="button" data-aq="${item.q.replace(/"/g, '&quot;')}" class="asst-chip px-2.5 py-1 rounded-full bg-slate-100 hover:bg-teal-50 text-slate-700 hover:text-teal-800 border border-slate-200 text-[11px] font-semibold transition">${item.label}</button>`).join('');
         }
         chipsBox.querySelectorAll('.asst-chip').forEach(b => {
@@ -12911,17 +12882,17 @@ ${getEcAdminConfig().officierNom}`);
         updateAssistantContextUI();
         if (isLandingVisible()) {
           appendMessage('bot', `
-            <div class="font-bold text-slate-900">Bonjour ! Je suis OMNIA, votre intelligence d'accompagnement.</div>
-            <p>Je vous accompagne dans trois domaines : la gestion et la comptabilité communales, l'enseignement et la formation, ainsi que la préparation, la rédaction et le renouvellement des actes d'état civil :</p>
+            <div class="font-bold text-slate-900">Bonjour ! Je suis MIORA, votre assistante de gestion des CTD.</div>
+            <p>Je vous aide à vous orienter dans l’espace communal et à comprendre les principaux modules :</p>
             <ul class="list-disc pl-4 space-y-1 text-slate-700">
-              <li><strong>Rédiger / Renouveler un Acte</strong> : je collecte vos informations étape par étape puis je génère l'acte officiel A4 Portrait.</li>
-              <li><strong>Acte d'État Civil Express (2 000 Ar)</strong> : préparez votre e-mail, la photo/PDF de l'acte original et la preuve MVola au <strong>0385528349</strong>.</li>
-              <li><strong>Accès Commune (40 000 Ar / session de 15 jours)</strong> : inscrivez votre collectivité pour accéder aux modules BP, BA, CA et Actes.</li>
+              <li><strong>Budgets :</strong> BP, BA et BR, avec leurs tableaux et pièces de travail.</li>
+              <li><strong>Compte Administratif :</strong> suivi de l’exécution, réalisations et résultats.</li>
+              <li><strong>Gestion communale :</strong> procédures, gouvernance, personnel, patrimoine et performance.</li>
             </ul>
+            <p class="text-[11px] text-slate-600">Les références et documents produits doivent être vérifiés avant toute utilisation officielle.</p>
           `, [
-            { label: 'Rédiger un Acte →', primary: true, onClick: startDraftingFlow },
-            { label: 'Renouveler un Acte →', onClick: () => startRenewalFlow('') },
-            { label: 'Demander un Acte Express →', onClick: () => { drawer.classList.add('hidden'); if (typeof openEcPublicModal === 'function') openEcPublicModal(); } }
+            { label: 'Accéder à l’inscription communale →', primary: true, onClick: () => document.getElementById('tabRegBtn')?.click() },
+            { label: 'Découvrir les étapes de gestion →', onClick: () => handleUserQuery('Aide-moi à démarrer la gestion de ma commune.') }
           ]);
           return;
         }
@@ -12941,18 +12912,13 @@ ${getEcAdminConfig().officierNom}`);
             : !prog.hasExec
               ? { label: "Saisir l'Exécution →", fn: () => { state.workflowStep = 'workspace'; state.activeModule = 'gouv-admin-fin'; state.gouvSub = 'execution'; saveState(); renderAll(); } }
               : { label: 'Ouvrir le Compte Administratif →', fn: () => { state.workflowStep = 'workspace'; state.activeModule = 'ca'; saveState(); renderAll(); } };
-
         appendMessage('bot', `
           <div class="font-bold text-slate-900">Point de situation — ${escHtml(c?.soa_libelle || 'Commune')} (${escHtml(cat.short)})</div>
           <div class="text-[11px] text-slate-600">Avancement comptable : <strong>${prog.pct} %</strong> • Contrôle Financier : <strong>${cat.cfRequis ? 'Requis (5j)' : 'Dispensé (CR2)'}</strong></div>
           <div class="space-y-1 pt-1">
             ${steps.map(s => `<div class="flex items-center gap-1.5 text-[11px] ${s.ok ? 'text-emerald-700 font-semibold' : 'text-slate-600'}"><span>${s.ok ? '✅' : '⬜'}</span><span>${s.label}</span></div>`).join('')}
           </div>
-        `, [
-          { label: nextAction.label, primary: true, onClick: nextAction.fn },
-          { label: "Rédiger un Acte d'État Civil →", onClick: startDraftingFlow },
-          { label: 'Renouveler un Acte →', onClick: () => startRenewalFlow('') }
-        ]);
+        `, [{ label: nextAction.label, primary: true, onClick: nextAction.fn }]);
       }
 
       function handleUserQuery(rawText) {
@@ -12960,6 +12926,13 @@ ${getEcAdminConfig().officierNom}`);
         if (!q) return;
         appendMessage('user', escHtml(q));
         const t = q.toLowerCase();
+        const civilRequest = /demande d.?acte|acte de naissance|acte de mariage|acte de décès|acte de deces|acte d.?adoption|copie d.?acte|renouvel(er|lement).*acte|rédiger.*acte|rediger.*acte/.test(t);
+        if (civilRequest) {
+          appendMessage('bot', `<div class="font-bold text-slate-900">Cette demande relève désormais de MIA.</div><p>Pour une demande d’acte d’état civil, retournez à la page d’accueil de SYGEC-IA et choisissez <strong>« Demande d’Acte d’état civil »</strong>. MIA vous accueillera et vous aidera à préciser votre démarche.</p>`, [
+            { label: 'Retourner à l’accueil et choisir MIA →', primary: true, onClick: () => window.location.assign('/') }
+          ]);
+          return;
+        }
 
         if (ecFlow && ecFlow.mode === 'draft' && !t.includes('renouvel') && !t.includes('checklist')) {
           advanceDraftFlow(q);
@@ -13072,10 +13045,7 @@ ${getEcAdminConfig().officierNom}`);
 
       closeBtn?.addEventListener('click', () => drawer.classList.add('hidden'));
       const landingExplainTexts = {
-        ia: "<strong>OMNIA, trois expertises complémentaires :</strong> j'accompagne la gestion et la comptabilité des CTD, j'enseigne et je forme en expliquant les notions et les méthodes, puis j'aide à préparer ou renouveler les actes d'état civil. Je ne remplace pas la responsabilité des agents et autorités habilités.",
-        budget: "<strong>Gestion &amp; comptabilité communales :</strong> je vous accompagne dans les budgets (BP, BA, BR), le Compte Administratif, le PCOP CTD, les procédures DGFAG, les contrôles et la préparation des documents de gestion.",
-        formation: "<strong>Enseignement &amp; formation :</strong> en tant qu'intelligence enseignante, je peux expliquer une notion, structurer un cours, décomposer une procédure, proposer des exemples et exercices, puis guider l'apprentissage de la comptabilité publique, du budget communal et des règles administratives.",
-        actes: "<strong>Actes &amp; État civil :</strong> je facilite la préparation, la rédaction et le renouvellement des actes de naissance, mariage, décès et adoption. Les demandes citoyennes sont instruites et validées par les agents communaux compétents avant transmission."
+        budget: "<strong>Gestion &amp; comptabilité communales :</strong> MIORA vous accompagne dans les budgets (BP, BA, BR), le Compte Administratif, le PCOP CTD, les procédures et les documents de gestion."
       };
       document.querySelectorAll('.landing-ai-explain').forEach(btn => {
         btn.addEventListener('click', () => {
