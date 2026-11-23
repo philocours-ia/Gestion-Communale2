@@ -161,7 +161,7 @@ export default function WorkspaceClient({ userEmail, userRole, initialAgent = "w
       <div className="sidebar-divider" />
       <div className="workspace-label">MENU PRINCIPAL</div>
       <nav className="side-nav" aria-label="Navigation principale">
-        {navigation.map((item) => item.id === "library" ? <a className="nav-item" href="/library" key={item.id}><span className="nav-marker">{item.marker}</span><span>{item.label}</span></a> : <button type="button" key={item.id} className={activeSection === item.id ? "nav-item active" : "nav-item"} onClick={() => setActiveSection(item.id)} aria-current={activeSection === item.id ? "page" : undefined}><span className="nav-marker">{item.marker}</span><span>{item.label}</span>{activeSection === item.id && <span className="nav-active-dot"/>}</button>)}
+        {navigation.map((item) => item.id === "library" ? <a className="nav-item" href="/library" key={item.id}><span className="nav-marker">{item.marker}</span><span>{item.label}</span></a> : <button type="button" key={item.id} className={activeSection === item.id ? "nav-item active" : "nav-item"} onClick={() => selectAgent(item.id)} aria-current={activeSection === item.id ? "page" : undefined}><span className="nav-marker">{item.marker}</span><span>{item.label}</span>{activeSection === item.id && <span className="nav-active-dot"/>}</button>)}
         {(userRole === "owner" || userRole === "admin") && <a className="nav-item" href="/admin"><span className="nav-marker">⚙</span><span>Administration</span></a>}
       </nav>
       <div className="sidebar-spacer"/>
