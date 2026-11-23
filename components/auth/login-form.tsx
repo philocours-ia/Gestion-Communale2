@@ -6,7 +6,7 @@ import { createClient } from "@/lib/supabase/client";
 import PageNavigation from "@/components/navigation/page-navigation";
 
 type Mode = "signin" | "signup";
-type AuthContext = "omnia" | "miora" | "felix" | "mia";
+export type AuthContext = "omnia" | "miora" | "felix" | "mia";
 
 const AUTH_CONTEXTS: Record<AuthContext, {
   eyebrow:string; signInTitle:string; signUpTitle:string; description:string;
