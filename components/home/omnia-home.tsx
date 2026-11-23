@@ -103,11 +103,11 @@ export default function OmniaHome() {
           </article>
 
           <article className="omnia-home-card teaching">
-            <span className="omnia-home-icon" aria-hidden="true">∑</span>
-            <small>MIORA Maths · Enseignement</small>
+            <span className="omnia-home-icon" aria-hidden="true">F</span>
+            <small>FELIX · Gestionnaire de cours</small>
             <h2>Enseignement</h2>
-            <p>Comprendre les notions, raisonner étape par étape, vérifier les calculs et s’exercer. Le parcours pédagogique démarre par les mathématiques.</p>
-            <Link href="/login?next=%2Fworkspace%3Fagent%3Dmaths">Accéder à l’espace pédagogique <span aria-hidden="true">↗</span></Link>
+            <p>Inscriptions, choix des séries, organisation des cours, publication du calendrier, comptabilité pédagogique et suivi transparent des progrès des apprenants.</p>
+            <Link href="/login?next=%2Fworkspace%3Fagent%3Dfelix">Accéder à l’espace FELIX <span aria-hidden="true">↗</span></Link>
           </article>
 
           <article className="omnia-home-card civil">
@@ -146,7 +146,7 @@ export default function OmniaHome() {
             <p>SYGEC-IA est un espace numérique qui réunit des outils de gestion des collectivités, d’apprentissage et d’accompagnement des démarches citoyennes. Son objectif est de rendre l’accès aux services plus clair, de guider chaque visiteur vers le bon interlocuteur numérique et de faciliter la préparation du travail.</p>
             <div className="omnia-home-modal-grid">
               <div className="omnia-home-modal-note"><strong>1. Gestion CTD</strong><span>MIORA accompagne les communes dans les opérations budgétaires, comptables et administratives.</span></div>
-              <div className="omnia-home-modal-note"><strong>2. Enseignement</strong><span>MIORA Maths propose des explications, méthodes, calculs et exercices guidés.</span></div>
+              <div className="omnia-home-modal-note"><strong>2. Enseignement</strong><span>FELIX gère les inscriptions, les séries, les cours, les calendriers, les paiements de la plateforme et le suivi pédagogique des apprenants.</span></div>
               <div className="omnia-home-modal-note"><strong>3. Demande d’acte civil</strong><span>MIA aide à préciser le besoin et à préparer la demande. L’officier d’état civil habilité reste seul responsable de la délivrance et de la validation de l’acte.</span></div>
               <div className="omnia-home-modal-note"><strong>Le rôle d’OMNIA</strong><span>OMNIA sert de point d’accueil et d’orientation entre les différents espaces spécialisés.</span></div>
             </div>

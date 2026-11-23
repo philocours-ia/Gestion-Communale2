@@ -8,7 +8,7 @@ type WorkspacePageProps = {
   searchParams: Promise<{ agent?: string | string[]; intent?: string | string[] }>;
 };
 
-const allowedAgents = ["workspace", "miora", "maths", "mia", "research", "education"] as const;
+const allowedAgents = ["workspace", "miora", "maths", "felix", "mia", "research", "education"] as const;
 
 export default async function WorkspacePage({ searchParams }: WorkspacePageProps) {
   const supabase = await createClient();
@@ -39,10 +39,11 @@ export default async function WorkspacePage({ searchParams }: WorkspacePageProps
   const agentValue = Array.isArray(params.agent) ? params.agent[0] : params.agent;
   const intentValue = Array.isArray(params.intent) ? params.intent[0] : params.intent;
   const initialIntent = intentValue === "civil" ? "civil" : undefined;
+  const requestedAgent = agentValue === "maths" || agentValue === "education" ? "felix" : agentValue;
   const initialAgent = initialIntent === "civil"
     ? "mia"
-    : allowedAgents.includes(agentValue as typeof allowedAgents[number])
-      ? agentValue as typeof allowedAgents[number]
+    : allowedAgents.includes(requestedAgent as typeof allowedAgents[number])
+      ? requestedAgent as typeof allowedAgents[number]
       : "workspace";
 
   return (

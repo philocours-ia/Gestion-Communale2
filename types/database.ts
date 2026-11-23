@@ -200,6 +200,410 @@ export type Database = {
         }
         Relationships: []
       }
+      education_courses: {
+        Row: {
+          created_at: string
+          created_by: string
+          description: string
+          id: string
+          level: string
+          series_code: string
+          status: string
+          subject: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          created_by: string
+          description?: string
+          id?: string
+          level: string
+          series_code: string
+          status?: string
+          subject: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          description?: string
+          id?: string
+          level?: string
+          series_code?: string
+          status?: string
+          subject?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "education_courses_series_code_fkey"
+            columns: ["series_code"]
+            isOneToOne: false
+            referencedRelation: "education_tracks"
+            referencedColumns: ["track_code"]
+          },
+        ]
+      }
+      education_enrollments: {
+        Row: {
+          contact_phone: string | null
+          created_at: string
+          guardian_consent_confirmed: boolean
+          id: string
+          level: string
+          review_note: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          school_year: string
+          series_code: string
+          status: string
+          student_name: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          contact_phone?: string | null
+          created_at?: string
+          guardian_consent_confirmed?: boolean
+          id?: string
+          level: string
+          review_note?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          school_year?: string
+          series_code: string
+          status?: string
+          student_name: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          contact_phone?: string | null
+          created_at?: string
+          guardian_consent_confirmed?: boolean
+          id?: string
+          level?: string
+          review_note?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          school_year?: string
+          series_code?: string
+          status?: string
+          student_name?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "education_enrollments_series_code_fkey"
+            columns: ["series_code"]
+            isOneToOne: false
+            referencedRelation: "education_tracks"
+            referencedColumns: ["track_code"]
+          },
+        ]
+      }
+      education_ledger: {
+        Row: {
+          amount_ariary: number
+          category: string
+          created_at: string
+          created_by: string | null
+          description: string
+          direction: string
+          entry_date: string
+          id: string
+          payment_id: string | null
+        }
+        Insert: {
+          amount_ariary: number
+          category: string
+          created_at?: string
+          created_by?: string | null
+          description: string
+          direction: string
+          entry_date?: string
+          id?: string
+          payment_id?: string | null
+        }
+        Update: {
+          amount_ariary?: number
+          category?: string
+          created_at?: string
+          created_by?: string | null
+          description?: string
+          direction?: string
+          entry_date?: string
+          id?: string
+          payment_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "education_ledger_payment_id_fkey"
+            columns: ["payment_id"]
+            isOneToOne: true
+            referencedRelation: "education_payments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      education_payments: {
+        Row: {
+          amount_ariary: number
+          created_at: string
+          enrollment_id: string
+          id: string
+          payment_method: string
+          period_month: string
+          proof_path: string
+          rejection_reason: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          status: string
+          transaction_reference: string | null
+          user_id: string
+        }
+        Insert: {
+          amount_ariary?: number
+          created_at?: string
+          enrollment_id: string
+          id?: string
+          payment_method?: string
+          period_month?: string
+          proof_path: string
+          rejection_reason?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+          transaction_reference?: string | null
+          user_id: string
+        }
+        Update: {
+          amount_ariary?: number
+          created_at?: string
+          enrollment_id?: string
+          id?: string
+          payment_method?: string
+          period_month?: string
+          proof_path?: string
+          rejection_reason?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+          transaction_reference?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "education_payment_user_matches_enrollment"
+            columns: ["enrollment_id", "user_id"]
+            isOneToOne: false
+            referencedRelation: "education_enrollments"
+            referencedColumns: ["id", "user_id"]
+          },
+          {
+            foreignKeyName: "education_payments_enrollment_id_fkey"
+            columns: ["enrollment_id"]
+            isOneToOne: false
+            referencedRelation: "education_enrollments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      education_progress: {
+        Row: {
+          activity_type: string
+          course_id: string | null
+          created_at: string
+          feedback: string | null
+          id: string
+          mastery_status: string
+          max_score: number | null
+          recorded_by: string
+          score: number | null
+          session_id: string | null
+          student_user_id: string
+        }
+        Insert: {
+          activity_type: string
+          course_id?: string | null
+          created_at?: string
+          feedback?: string | null
+          id?: string
+          mastery_status?: string
+          max_score?: number | null
+          recorded_by: string
+          score?: number | null
+          session_id?: string | null
+          student_user_id: string
+        }
+        Update: {
+          activity_type?: string
+          course_id?: string | null
+          created_at?: string
+          feedback?: string | null
+          id?: string
+          mastery_status?: string
+          max_score?: number | null
+          recorded_by?: string
+          score?: number | null
+          session_id?: string | null
+          student_user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "education_progress_course_id_fkey"
+            columns: ["course_id"]
+            isOneToOne: false
+            referencedRelation: "education_courses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "education_progress_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "education_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      education_sessions: {
+        Row: {
+          course_id: string
+          created_at: string
+          created_by: string
+          ends_at: string
+          id: string
+          location: string | null
+          meeting_url: string | null
+          starts_at: string
+          status: string
+          title: string
+        }
+        Insert: {
+          course_id: string
+          created_at?: string
+          created_by: string
+          ends_at: string
+          id?: string
+          location?: string | null
+          meeting_url?: string | null
+          starts_at: string
+          status?: string
+          title: string
+        }
+        Update: {
+          course_id?: string
+          created_at?: string
+          created_by?: string
+          ends_at?: string
+          id?: string
+          location?: string | null
+          meeting_url?: string | null
+          starts_at?: string
+          status?: string
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "education_sessions_course_id_fkey"
+            columns: ["course_id"]
+            isOneToOne: false
+            referencedRelation: "education_courses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      education_tickets: {
+        Row: {
+          created_at: string
+          enrollment_id: string
+          id: string
+          payment_id: string
+          status: string
+          ticket_code: string
+          user_id: string
+          valid_from: string
+          valid_until: string
+        }
+        Insert: {
+          created_at?: string
+          enrollment_id: string
+          id?: string
+          payment_id: string
+          status?: string
+          ticket_code: string
+          user_id: string
+          valid_from: string
+          valid_until: string
+        }
+        Update: {
+          created_at?: string
+          enrollment_id?: string
+          id?: string
+          payment_id?: string
+          status?: string
+          ticket_code?: string
+          user_id?: string
+          valid_from?: string
+          valid_until?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "education_tickets_enrollment_id_fkey"
+            columns: ["enrollment_id"]
+            isOneToOne: false
+            referencedRelation: "education_enrollments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "education_tickets_payment_id_fkey"
+            columns: ["payment_id"]
+            isOneToOne: true
+            referencedRelation: "education_payments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      education_tracks: {
+        Row: {
+          created_at: string
+          label: string
+          last_checked_at: string
+          levels: string[]
+          notes: string | null
+          source_url: string | null
+          status: string
+          track_code: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          label: string
+          last_checked_at?: string
+          levels: string[]
+          notes?: string | null
+          source_url?: string | null
+          status?: string
+          track_code: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          label?: string
+          last_checked_at?: string
+          levels?: string[]
+          notes?: string | null
+          source_url?: string | null
+          status?: string
+          track_code?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       knowledge_chunks: {
         Row: {
           article_refs: string[]
@@ -368,7 +772,9 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      is_education_manager: { Args: never; Returns: boolean }
+      is_education_staff: { Args: never; Returns: boolean }
+      is_omnia_admin: { Args: never; Returns: boolean }
     }
     Enums: {
       [_ in never]: never
