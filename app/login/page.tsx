@@ -1,11 +1,30 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import PageNavigation from "@/components/navigation/page-navigation";
 
 type Mode = "signin" | "signup";
+type AuthContext = "omnia" | "miora" | "felix" | "mia";
+
+const AUTH_CONTEXTS: Record<AuthContext, {
+  eyebrow:string; signInTitle:string; signUpTitle:string; description:string;
+  submitText:string; sideEyebrow:string; sideTitle:string; sideTag:string;
+}> = {
+  omnia:{eyebrow:"OMNIA · ACCÈS CENTRAL",signInTitle:"Bienvenue dans votre univers.",signUpTitle:"Ouvrez votre espace OMNIA.",description:"Connectez-vous pour retrouver vos assistants, vos conversations et vos espaces de travail.",submitText:"Entrer dans OMNIA",sideEyebrow:"UNE INTELLIGENCE PLURIELLE",sideTitle:"Une seule porte.\nMille possibilités.",sideTag:"OMNIA · SYGEC-IA"},
+  miora:{eyebrow:"MIORA · GESTION CTD",signInTitle:"Retrouvez votre espace communal.",signUpTitle:"Créez votre accès MIORA.",description:"Accédez à vos dossiers de gestion communale, budgets, tableaux et travaux administratifs.",submitText:"Accéder à MIORA",sideEyebrow:"GESTION DES COLLECTIVITÉS",sideTitle:"Structurer.\nPiloter. Agir.",sideTag:"MIORA · GESTION CTD"},
+  felix:{eyebrow:"FELIX · TERMINALE T12",signInTitle:"Retrouvez votre espace pédagogique.",signUpTitle:"Créez votre accès FELIX.",description:"Accédez exclusivement à Terminale T12 : parcours L, S et OSE, cours et suivi pédagogique.",submitText:"Accéder à FELIX",sideEyebrow:"ESPACE PÉDAGOGIQUE",sideTitle:"Comprendre.\nApprendre. Progresser.",sideTag:"FELIX · TERMINALE T12"},
+  mia:{eyebrow:"MIA · PHILOSOPHIE & ACCOMPAGNEMENT",signInTitle:"Retrouvez votre espace MIA.",signUpTitle:"Créez votre accès MIA.",description:"Accédez à votre espace de réflexion, de rédaction et d’accompagnement des démarches citoyennes.",submitText:"Accéder à MIA",sideEyebrow:"PENSER ET RÉDIGER",sideTitle:"Clarifier.\nArgumenter. Écrire.",sideTag:"MIA · ACCOMPAGNEMENT"}
+};
+
+function getAuthContextFromUrl(): AuthContext {
+  const next = new URLSearchParams(window.location.search).get("next") || "";
+  if (next.includes("agent=miora") || next.includes("gestion-communale")) return "miora";
+  if (next.includes("agent=felix") || next.includes("agent=education")) return "felix";
+  if (next.includes("agent=mia") || next.includes("intent=civil")) return "mia";
+  return "omnia";
+}
 
 function getPostLoginPath() {
   const raw = new URLSearchParams(window.location.search).get("next") || "/workspace";
@@ -22,6 +41,9 @@ function getPostLoginPath() {
 export default function LoginPage() {
   const router = useRouter();
   const [mode, setMode] = useState<Mode>("signin");
+  const [authContext, setAuthContext] = useState<AuthContext>("omnia");
+  useEffect(() => setAuthContext(getAuthContextFromUrl()), []);
+  const context = AUTH_CONTEXTS[authContext];
   const [displayName, setDisplayName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -84,7 +106,7 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="auth-page">
+    <main className={`auth-page auth-${authContext}`}>
       <section className="auth-card">
         <div className="auth-navigation-row"><PageNavigation /></div>
         <a className="brand auth-brand" href="/" aria-label="OMNIA, accueil">
@@ -92,10 +114,11 @@ export default function LoginPage() {
           <span className="brand-copy"><strong>OMNIA</strong><small>INTELLIGENCES EN SYNERGIE</small></span>
         </a>
 
+        <p className="auth-service-kicker">{context.eyebrow}</p>
         <div className="auth-intro">
           <p className="eyebrow">MALAGASY INTELLIGENT ASSISTANT</p>
-          <h1>{mode === "signin" ? "Bienvenue de nouveau." : "Bienvenue dans votre espace."}</h1>
-          <p>{mode === "signin" ? "Connectez-vous pour retrouver vos espaces OMNIA, MIORA, FELIX et MIA." : "Créez votre compte pour ouvrir votre espace de travail OMNIA."}</p>
+          <h1>{mode === "signin" ? context.signInTitle : context.signUpTitle}</h1>
+          <p>{context.description}</p>
         </div>
 
         <div className="auth-tabs" role="tablist" aria-label="Accès au compte">
@@ -123,7 +146,7 @@ export default function LoginPage() {
             {mode === "signup" && <small>Choisissez une phrase de passe longue et unique.</small>}
           </div>
           <button className="auth-submit" type="submit" disabled={busy}>
-            {busy ? "Veuillez patienter…" : mode === "signin" ? "Accéder à SYGEC-IA" : "Créer mon compte"}
+            {busy ? "Veuillez patienter…" : mode === "signin" ? context.submitText : "Créer mon compte"}
             {!busy && <span>→</span>}
           </button>
         </form>
@@ -140,11 +163,11 @@ export default function LoginPage() {
         <div className="auth-side-orbit orbit-b" />
         <div className="auth-side-content">
           <span className="auth-side-star">✦</span>
-          <p>UNE INTELLIGENCE PLURIELLE, EN DEUX LANGUES</p>
-          <h2>Gérer.<br />Enseigner. Rédiger.</h2>
-          <span className="auth-side-tag">FRANÇAIS · MALAGASY</span>
+          <p>{context.sideEyebrow}</p>
+          <h2>{context.sideTitle}</h2>
+          <span className="auth-side-tag">{context.sideTag}</span>
         </div>
-        <div className="auth-side-bottom">OMNIA · MALAGASY INTELLIGENT ASSISTANT</div>
+        <div className="auth-side-bottom">SYGEC-IA · PORTAIL PRIVÉ</div>
       </div>
     </main>
   );

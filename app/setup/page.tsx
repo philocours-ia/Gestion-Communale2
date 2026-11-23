@@ -2,7 +2,7 @@ import PageNavigation from "@/components/navigation/page-navigation";
 
 export default function SetupPage() {
   return (
-    <main className="auth-page">
+    <main className="auth-page auth-setup">
       <section className="auth-card setup-card">
         <div className="auth-navigation-row"><PageNavigation /></div>
         <div className="brand auth-brand">
@@ -15,8 +15,8 @@ export default function SetupPage() {
       </section>
       <aside className="auth-side">
         <div className="auth-side-orbit orbit-a" /><div className="auth-side-orbit orbit-b" />
-        <div className="auth-side-content"><span className="auth-side-star">✦</span><p>TOUTES LES INTELLIGENCES · UN SEUL UNIVERS</p><h2>La connaissance<br/>en synergie.</h2><span className="auth-side-tag">OMNIA</span></div>
-        <div className="auth-side-bottom">OMNIA · TOUTE L'INTELLIGENCE. UNE SEULE VISION.</div>
+        <div className="auth-side-content"><span className="auth-side-star">✦</span><p>TOUTES LES INTELLIGENCES · UN SEUL UNIVERS</p><h2>Un portail.<br/>Plusieurs intelligences.</h2><span className="auth-side-tag">OMNIA</span></div>
+        <div className="auth-side-bottom">SYGEC-IA · PORTAIL PRIVÉ</div>
       </aside>
     </main>
   );

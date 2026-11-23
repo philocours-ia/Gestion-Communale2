@@ -1,159 +1,125 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-const styles = [
-  ".omnia-home{min-height:100vh;color:#f7f8ff;background:radial-gradient(circle at 80% 0%,#283d75 0,transparent 32%),radial-gradient(circle at 0% 80%,#173e48 0,transparent 30%),linear-gradient(135deg,#0c1428,#111c36 58%,#0b1424);padding:28px clamp(18px,5vw,74px) 48px}",
-  ".omnia-home-inner{max-width:1180px;margin:0 auto}",
-  ".omnia-home-header{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}",
-  ".omnia-home-brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit}",
-  ".omnia-home-brand img{width:48px;height:48px;object-fit:contain}",
-  ".omnia-home-brand small{display:block;color:#9fb6eb;font-size:10px;letter-spacing:.2em;font-weight:800}",
-  ".omnia-home-brand strong{display:block;font-size:21px;letter-spacing:.1em}",
-  ".omnia-home-header-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}",
-  ".omnia-home-ghost,.omnia-home-login{min-height:44px;border-radius:12px;padding:10px 15px;font-size:12px;font-weight:800;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;border:1px solid #6f83ad;color:#e8edff;background:#152342;cursor:pointer}",
-  ".omnia-home-login{background:#4770d9;border-color:#4770d9;color:#fff}",
-  ".omnia-home-hero{padding:clamp(48px,8vw,90px) 0 34px;max-width:850px}",
-  ".omnia-home-eyebrow{color:#83ddd8;font-size:11px;font-weight:900;letter-spacing:.19em;text-transform:uppercase;margin:0 0 15px}",
-  ".omnia-home-hero h1{font-size:clamp(36px,6vw,66px);line-height:1.04;letter-spacing:-.055em;margin:0 0 18px}",
-  ".omnia-home-hero h1 span{color:#98b9ff}",
-  ".omnia-home-hero p{max-width:760px;color:#c4cde0;font-size:16px;line-height:1.8;margin:0}",
-  ".omnia-home-prompt{display:inline-flex;align-items:center;gap:8px;color:#d5e7ff;background:#1a2b4c;border:1px solid #5471a6;border-radius:999px;padding:8px 12px;margin-top:20px;font-size:11px;font-weight:800}",
-  ".omnia-home-choices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:0 0 46px}",
-  ".omnia-home-card{display:flex;flex-direction:column;align-items:flex-start;min-height:265px;border:1px solid #405476;border-radius:20px;padding:22px;background:linear-gradient(145deg,#18294b,#141f39);box-shadow:0 14px 36px #0308174d}",
-  ".omnia-home-card.teaching{background:linear-gradient(145deg,#282344,#1b203d);border-color:#615693}",
-  ".omnia-home-card.civil{background:linear-gradient(145deg,#143941,#172b3e);border-color:#387d80}",
-  ".omnia-home-icon{width:43px;height:43px;display:grid;place-items:center;border-radius:13px;background:#355483;color:#cfe3ff;font-size:21px;font-weight:900;margin-bottom:17px}",
-  ".teaching .omnia-home-icon{background:#554b7d;color:#e5ddff}.civil .omnia-home-icon{background:#276c6a;color:#c8fff1}",
-  ".omnia-home-card small{font-size:10px;letter-spacing:.13em;font-weight:900;color:#93c9ff;text-transform:uppercase}",
-  ".teaching small{color:#d0baff}.civil small{color:#9de8d9}",
-  ".omnia-home-card h2{font-size:22px;line-height:1.2;margin:9px 0;color:#fff}",
-  ".omnia-home-card p{font-size:13px;line-height:1.7;color:#c3cee1;margin:0 0 22px}",
-  ".omnia-home-card a{margin-top:auto;min-height:44px;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 14px;border-radius:10px;background:#4770d9;color:white;text-decoration:none;font-size:12px;font-weight:850}",
-  ".teaching a{background:#7865c4}.civil a{background:#238d82;color:#f7fffd}",
-  ".omnia-home-card a:hover,.omnia-home-login:hover{filter:brightness(1.12)}",
-  ".omnia-home-section-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:0 0 16px}",
-  ".omnia-home-section-heading h2{font-size:21px;margin:5px 0 0;letter-spacing:-.03em}",
-  ".omnia-home-section-heading p{font-size:10px;color:#9eacc8;letter-spacing:.14em;text-transform:uppercase;margin:0;font-weight:850}",
-  ".omnia-home-ai-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}",
-  ".omnia-home-ai{padding:17px;border-radius:15px;border:1px solid #344967;background:#111e36}",
-  ".omnia-home-ai strong{display:block;font-size:14px;margin-bottom:4px}",
-  ".omnia-home-ai small{display:block;color:#91b5ef;font-size:10px;font-weight:850;letter-spacing:.08em;margin-bottom:9px}",
-  ".omnia-home-ai p{color:#adbdd5;font-size:11px;line-height:1.65;margin:0}",
-  ".omnia-home-ai.omnia{border-color:#52669c}.omnia-home-ai.miora{border-color:#3c806e}.omnia-home-ai.mia{border-color:#635a9a}",
-  ".omnia-home-footer{margin-top:32px;padding-top:18px;border-top:1px solid #344463;color:#8797b4;font-size:11px;line-height:1.7}",
-  ".omnia-home-modal-backdrop{position:fixed;inset:0;z-index:1000;background:#050b18d9;display:grid;place-items:center;padding:18px}",
-  ".omnia-home-modal{width:min(720px,100%);max-height:min(86vh,820px);overflow:auto;border:1px solid #5d729d;border-radius:20px;background:#111d36;color:#f5f7ff;box-shadow:0 24px 80px #0009;padding:clamp(20px,4vw,30px)}",
-  ".omnia-home-modal-top{display:flex;align-items:flex-start;justify-content:space-between;gap:14px}",
-  ".omnia-home-modal h2{font-size:25px;line-height:1.2;margin:4px 0 12px}",
-  ".omnia-home-modal p{font-size:13px;line-height:1.75;color:#c5cee0}",
-  ".omnia-home-modal-close{width:44px;height:44px;flex:0 0 auto;border-radius:11px;border:1px solid #50648d;background:#1b2a49;color:#fff;font-size:22px;cursor:pointer}",
-  ".omnia-home-modal-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:18px}",
-  ".omnia-home-modal-note{padding:13px;border-radius:12px;border:1px solid #354b70;background:#172642}",
-  ".omnia-home-modal-note strong{display:block;font-size:12px;margin-bottom:5px}",
-  ".omnia-home-modal-note span{font-size:11px;color:#bdc9df;line-height:1.6}",
-  "@media(max-width:900px){.omnia-home-choices{grid-template-columns:1fr 1fr}.omnia-home-card:last-child{grid-column:1/-1}.omnia-home-ai-grid{grid-template-columns:1fr 1fr}}",
-  "@media(max-width:600px){.omnia-home{padding:18px 14px 32px}.omnia-home-choices,.omnia-home-ai-grid,.omnia-home-modal-grid{grid-template-columns:1fr}.omnia-home-card:last-child{grid-column:auto}.omnia-home-hero{padding-top:52px}.omnia-home-hero p{font-size:14px}.omnia-home-header-actions{width:100%}.omnia-home-header-actions>*{flex:1}.omnia-home-card{min-height:220px}}"
-].join("\n");
+function Icon({ name }: { name: "home" | "building" | "school" | "document" | "info" | "mail" | "shield" | "spark" }) {
+  const shared = { fill:"none", stroke:"currentColor", strokeWidth:1.8, strokeLinecap:"round" as const, strokeLinejoin:"round" as const };
+  if (name==="home") return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7M5 9v12h14V9M9 21v-7h6v7" {...shared}/></svg>;
+  if (name==="building") return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21h18M5 21V8l7-4 7 4v13M9 21v-8h6v8M9 9h.01M15 9h.01" {...shared}/></svg>;
+  if (name==="school") return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m2 9 10-5 10 5-10 5L2 9ZM6 12v5c3.5 3 8.5 3 12 0v-5M22 9v7" {...shared}/></svg>;
+  if (name==="document") return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6zM14 3v5h5M9 12h6M9 16h6" {...shared}/></svg>;
+  if (name==="info") return <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" {...shared}/><path d="M12 11v5M12 7h.01" {...shared}/></svg>;
+  if (name==="mail") return <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" {...shared}/><path d="m4 7 8 6 8-6" {...shared}/></svg>;
+  if (name==="shield") return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 20 6v5c0 5-3.4 8.3-8 10-4.6-1.7-8-5-8-10V6zM8.5 12l2.2 2.2 4.8-5" {...shared}/></svg>;
+  return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 1.8 6.2L20 10l-6.2 1.8L12 18l-1.8-6.2L4 10l6.2-1.8z" {...shared}/><path d="m19 16 .8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z" {...shared}/></svg>;
+}
+
+function RobotMascot() {
+  return <svg className="omnia-robot" viewBox="0 0 360 380" role="img" aria-label="Mascotte robot d’OMNIA">
+    <defs><linearGradient id="rb-metal" x1="0" y1="0" x2="1" y2="1"><stop stopColor="#f6fcff"/><stop offset=".5" stopColor="#7897ca"/><stop offset="1" stopColor="#1d3566"/></linearGradient><linearGradient id="rb-blue"><stop stopColor="#83f5ff"/><stop offset="1" stopColor="#1689ff"/></linearGradient><filter id="rb-glow"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+    <ellipse cx="180" cy="350" rx="110" ry="15" fill="#158fff" opacity=".25"/>
+    <path d="M92 322c-9-51 8-96 38-113h101c31 19 45 62 36 113l-17 24H110z" fill="url(#rb-metal)" stroke="#a1efff" strokeWidth="5"/>
+    <path d="M121 236c15-15 35-23 60-23s45 8 60 23l-11 78H132z" fill="#091630" stroke="#3daeff" strokeWidth="4"/>
+    <path d="M134 270q20-18 47-18t47 18l-47 28z" fill="url(#rb-blue)" filter="url(#rb-glow)"/>
+    <path d="M110 253 71 290l18 27 42-24M250 253l40 38-18 26-43-24" fill="url(#rb-metal)" stroke="#8be9ff" strokeWidth="6"/>
+    <path d="M113 116c0-49 28-82 67-82s67 33 67 82v65c0 42-26 68-67 68s-67-26-67-68z" fill="url(#rb-metal)" stroke="#b4f6ff" strokeWidth="5"/>
+    <path d="M130 125c0-34 21-55 50-55s50 21 50 55v46c0 33-18 51-50 51s-50-18-50-51z" fill="#07142b" stroke="#49bfff" strokeWidth="4"/>
+    <path d="M148 144q10-12 20 0M183 144q10-12 20 0" stroke="#72edff" strokeWidth="8" strokeLinecap="round" fill="none" filter="url(#rb-glow)"/>
+    <path d="M158 177q22 18 44 0" stroke="#72edff" strokeWidth="6" strokeLinecap="round" fill="none"/>
+    <path d="M180 34V10m-10 13 10-13 10 13" stroke="#8ceeff" strokeWidth="4" strokeLinecap="round" fill="none" filter="url(#rb-glow)"/>
+  </svg>;
+}
+
+const links = {
+  miora:"/login?next=%2Fworkspace%3Fagent%3Dmiora",
+  felix:"/login?next=%2Fworkspace%3Fagent%3Dfelix",
+  mia:"/login?next=%2Fworkspace%3Fagent%3Dmia%26intent%3Dcivil"
+};
 
 export default function OmniaHome() {
-  const [aboutOpen, setAboutOpen] = useState(false);
+  const [aboutOpen,setAboutOpen]=useState(false);
+  return <main className="omnia-shell">
+    <aside className="omnia-rail">
+      <Link href="/" className="omnia-rail-brand" aria-label="SYGEC-IA OMNIA, accueil"><img src="/omnia-logo.svg" alt=""/><span><small>SYGEC-IA</small><strong>OMNIA</strong><em>Intelligence • Service • Excellence</em></span></Link>
+      <p className="omnia-rail-label">NAVIGATION</p>
+      <nav className="omnia-rail-nav" aria-label="Navigation principale">
+        <Link href="/" className="active"><Icon name="home"/>Accueil</Link>
+        <Link href={links.miora}><Icon name="building"/>Gestion CTD<small>MIORA</small></Link>
+        <Link href={links.felix}><Icon name="school"/>Enseignement<small>FELIX · T12</small></Link>
+        <Link href={links.mia}><Icon name="document"/>Demande d’Acte d’État Civil<small>MIA</small></Link>
+      </nav>
+      <div className="omnia-rail-separator"/>
+      <nav className="omnia-rail-meta" aria-label="Informations">
+        <button type="button" onClick={()=>setAboutOpen(true)}><Icon name="info"/>À propos</button>
+        <a href="mailto:contact@sygec-ia.app"><Icon name="mail"/>Contact</a>
+        <Link href="/login"><Icon name="shield"/>Espace connecté</Link>
+      </nav>
+      <div className="omnia-rail-bottom"><div className="omnia-mada-mark">✦</div><strong>SYGEC-IA · OMNIA</strong><p>Une plateforme intelligente au service des projets, des savoirs et des citoyens.</p><span>ENSEMBLE, VERS UN AVENIR MEILLEUR</span></div>
+    </aside>
 
-  useEffect(() => {
-    if (!aboutOpen) return;
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setAboutOpen(false);
-    };
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
-  }, [aboutOpen]);
-
-  return (
-    <main className="omnia-home">
-      <style>{styles}</style>
-      <div className="omnia-home-inner">
-        <header className="omnia-home-header">
-          <Link href="/" className="omnia-home-brand" aria-label="SYGEC-IA OMNIA, accueil">
-            <img src="/omnia-logo.svg" alt="" />
-            <span><small>SYGEC-IA</small><strong>OMNIA</strong></span>
-          </Link>
-          <div className="omnia-home-header-actions">
-            <button type="button" className="omnia-home-ghost" onClick={() => setAboutOpen(true)} aria-haspopup="dialog" aria-expanded={aboutOpen}>
-              Comprendre la plateforme
-            </button>
-            <Link href="/login" className="omnia-home-login">Se connecter <span aria-hidden="true">→</span></Link>
-          </div>
-        </header>
-
-        <section className="omnia-home-hero">
-          <p className="omnia-home-eyebrow">Une plateforme · Des intelligences spécialisées</p>
-          <h1>Que souhaitez-vous faire <span>aujourd'hui&nbsp;?</span></h1>
-          <p>SYGEC-IA réunit trois portes d’entrée. Choisissez votre besoin : OMNIA vous oriente vers l’assistant adapté et vous accompagne dans votre parcours.</p>
-          <div className="omnia-home-prompt"><span aria-hidden="true">✦</span> OMNIA · Accueil et orientation intelligente</div>
-        </section>
-
-        <section className="omnia-home-choices" aria-label="Choisir un service">
-          <article className="omnia-home-card">
-            <span className="omnia-home-icon" aria-hidden="true">⌂</span>
-            <small>MIORA · Collectivités territoriales</small>
-            <h2>Gestion CTD</h2>
-            <p>Budgets, comptabilité publique locale, procédures, personnel, patrimoine et pilotage de la commune.</p>
-            <Link href="/gestion-communale.html">Entrer dans Gestion CTD <span aria-hidden="true">↗</span></Link>
-          </article>
-
-          <article className="omnia-home-card teaching">
-            <span className="omnia-home-icon" aria-hidden="true">F</span>
-            <small>FELIX · Terminale T12</small>
-            <h2>Enseignement</h2>
-            <p>Espace consacré exclusivement à la classe de Terminale T12 : parcours L, S et OSE, cours, calendrier, suivi pédagogique et comptabilité de la plateforme.</p>
-            <Link href="/login?next=%2Fworkspace%3Fagent%3Dfelix">Accéder à l’espace FELIX <span aria-hidden="true">↗</span></Link>
-          </article>
-
-          <article className="omnia-home-card civil">
-            <span className="omnia-home-icon" aria-hidden="true">▤</span>
-            <small>MIA · Accompagnement citoyen</small>
-            <h2>Demande d’Acte d’état civil</h2>
-            <p>Être accompagné pour identifier la démarche, préparer une demande et connaître les points à vérifier auprès de la commune.</p>
-            <Link href="/login?next=%2Fworkspace%3Fagent%3Dmia%26intent%3Dcivil">Être accompagné par MIA <span aria-hidden="true">↗</span></Link>
-          </article>
-        </section>
-
-        <section aria-labelledby="omnia-home-ai-heading">
-          <div className="omnia-home-section-heading">
-            <div><p>Les intelligences de la plateforme</p><h2 id="omnia-home-ai-heading">Chaque IA a son domaine d’expertise.</h2></div>
-          </div>
-          <div className="omnia-home-ai-grid">
-            <article className="omnia-home-ai omnia"><strong>OMNIA</strong><small>Orientation & orchestration</small><p>Accueille votre demande, identifie le besoin et vous dirige vers l’espace spécialisé approprié.</p></article>
-            <article className="omnia-home-ai miora"><strong>MIORA · Gestion CTD</strong><small>Administration communale</small><p>Budgets BP, BA, BR et CA, comptabilité CTD, procédures, ressources humaines, patrimoine et performance.</p></article>
-            <article className="omnia-home-ai"><strong>FELIX</strong><small>Terminale T12 · Gestion pédagogique</small><p>Gestion des parcours T12 L, T12 S et T12 OSE, des cours, du calendrier, du suivi transparent des apprenants et de la comptabilité de la plateforme.</p></article>
-            <article className="omnia-home-ai mia"><strong>MIA</strong><small>Philosophie, rédaction & état civil</small><p>Problématisation, argumentation, écriture structurée et accompagnement des demandes d’actes civils.</p></article>
-          </div>
-        </section>
-
-        <footer className="omnia-home-footer">
-          Les assistants aident à comprendre, organiser et préparer les démarches. Les actes d’état civil et les documents administratifs ne sont officiels qu’après contrôle et validation par les agents et autorités habilités.
-        </footer>
-      </div>
-
-      {aboutOpen && (
-        <div className="omnia-home-modal-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) setAboutOpen(false); }}>
-          <section className="omnia-home-modal" role="dialog" aria-modal="true" aria-labelledby="omnia-home-modal-title">
-            <div className="omnia-home-modal-top">
-              <div><p className="omnia-home-eyebrow">SYGEC-IA · OMNIA</p><h2 id="omnia-home-modal-title">Comprendre la plateforme</h2></div>
-              <button type="button" className="omnia-home-modal-close" onClick={() => setAboutOpen(false)} aria-label="Fermer la boîte de dialogue">×</button>
-            </div>
-            <p>SYGEC-IA est un espace numérique qui réunit des outils de gestion des collectivités, d’apprentissage et d’accompagnement des démarches citoyennes. Son objectif est de rendre l’accès aux services plus clair, de guider chaque visiteur vers le bon interlocuteur numérique et de faciliter la préparation du travail.</p>
-            <div className="omnia-home-modal-grid">
-              <div className="omnia-home-modal-note"><strong>1. Gestion CTD</strong><span>MIORA accompagne les communes dans les opérations budgétaires, comptables et administratives.</span></div>
-              <div className="omnia-home-modal-note"><strong>2. Enseignement</strong><span>FELIX gère les inscriptions, les séries, les cours, les calendriers, les paiements de la plateforme et le suivi pédagogique des apprenants.</span></div>
-              <div className="omnia-home-modal-note"><strong>3. Demande d’acte civil</strong><span>MIA aide à préciser le besoin et à préparer la demande. L’officier d’état civil habilité reste seul responsable de la délivrance et de la validation de l’acte.</span></div>
-              <div className="omnia-home-modal-note"><strong>Le rôle d’OMNIA</strong><span>OMNIA sert de point d’accueil et d’orientation entre les différents espaces spécialisés.</span></div>
-            </div>
-            <p>Les assistants ne remplacent ni les agents communaux, ni les enseignants, ni les autorités habilitées. Les informations réglementaires et les documents préparés doivent être vérifiés avant toute utilisation officielle.</p>
-          </section>
+    <div className="omnia-main">
+      <header className="omnia-topbar"><div><i/> UNE INTELLIGENCE PLURIELLE POUR GÉRER, ENSEIGNER ET RÉDIGER</div><Link href="/login" className="omnia-top-login"><Icon name="shield"/>Se connecter <b>↗</b></Link></header>
+      <section className="omnia-hero">
+        <div className="omnia-hero-copy">
+          <p className="omnia-eyebrow"><Icon name="spark"/> VOTRE UNIVERS NUMÉRIQUE</p>
+          <h1>SYGEC-IA <span>• OMNIA</span></h1>
+          <h2>La technologie au service de vos ambitions.</h2>
+          <p>Une intelligence centrale, des assistants spécialisés et des espaces de travail conçus pour transformer vos idées en actions structurées.</p>
+          <div className="omnia-hero-actions"><Link href="/login" className="omnia-primary-action">Entrer dans OMNIA <b>→</b></Link><button type="button" className="omnia-secondary-action" onClick={()=>setAboutOpen(true)}>Découvrir la plateforme</button></div>
+          <div className="omnia-hero-proof"><span><Icon name="shield"/> Espaces privés</span><span><Icon name="spark"/> Assistants spécialisés</span><span><Icon name="book"/> Ressources documentaires</span></div>
         </div>
-      )}
-    </main>
-  );
+        <div className="omnia-hero-art" aria-hidden="true">
+          <div className="omnia-city-skyline"><i/><i/><i/><i/><i/><i/><i/></div>
+          <svg className="omnia-lightning lightning-a" viewBox="0 0 120 210"><path d="M80 2 24 104h48L39 208l77-130H72z" fill="none" stroke="#65dfff" strokeWidth="4"/></svg>
+          <svg className="omnia-lightning lightning-b" viewBox="0 0 120 210"><path d="M80 2 24 104h48L39 208l77-130H72z" fill="none" stroke="#a28aff" strokeWidth="4"/></svg>
+          <div className="omnia-hero-orbit orbit-one"/><div className="omnia-hero-orbit orbit-two"/><RobotMascot/>
+          <div className="omnia-hero-caption"><span>OMNIA</span><strong>Votre guide intelligent</strong><small>Une porte d’entrée vers les bons outils.</small></div>
+        </div>
+      </section>
+
+      <section className="omnia-services" aria-labelledby="omnia-services-title">
+        <div className="omnia-section-head"><div><p>CHOISISSEZ VOTRE ESPACE</p><h2 id="omnia-services-title">Trois univers. Une seule plateforme.</h2></div><span>SYGEC-IA / SERVICES</span></div>
+        <div className="omnia-service-grid">
+          <Link className="omnia-service-card service-ctd" href={links.miora}>
+            <div className="omnia-service-top"><span className="omnia-service-icon"><Icon name="building"/></span><span className="omnia-service-code">01 / MIORA</span></div>
+            <p className="omnia-service-kicker">COLLECTIVITÉS TERRITORIALES</p><h3>Gestion CTD</h3>
+            <p className="omnia-service-description">Budgets, comptabilité communale, administration, ressources humaines, patrimoine et pilotage local.</p>
+            <span className="omnia-service-list"><b>✓</b> Documents structurés <b>✓</b> Appui administratif</span>
+            <span className="omnia-service-cta">Accéder à MIORA <b>→</b></span>
+          </Link>
+          <Link className="omnia-service-card service-school" href={links.felix}>
+            <div className="omnia-service-top"><span className="omnia-service-icon"><Icon name="school"/></span><span className="omnia-service-code">02 / FELIX</span></div>
+            <p className="omnia-service-kicker">ESPACE PÉDAGOGIQUE · TERMINALE T12</p><h3>Enseignement</h3>
+            <p className="omnia-service-description">Espace réservé à Terminale T12 : parcours L, S et OSE, cours, calendrier et suivi pédagogique.</p>
+            <span className="omnia-service-list"><b>✓</b> Cours et ressources <b>✓</b> Inscriptions et suivi</span>
+            <span className="omnia-service-cta">Accéder à FELIX <b>→</b></span>
+          </Link>
+          <Link className="omnia-service-card service-civil" href={links.mia}>
+            <div className="omnia-service-top"><span className="omnia-service-icon"><Icon name="document"/></span><span className="omnia-service-code">03 / MIA</span></div>
+            <p className="omnia-service-kicker">ACCOMPAGNEMENT CITOYEN</p><h3>Demande d’Acte d’État Civil</h3>
+            <p className="omnia-service-description">Clarifier une démarche, préparer une demande et identifier les points à confirmer auprès de la commune.</p>
+            <span className="omnia-service-list"><b>✓</b> Naissance, mariage, décès <b>✓</b> Orientation</span>
+            <span className="omnia-service-cta">Accéder à MIA <b>→</b></span>
+          </Link>
+        </div>
+      </section>
+
+      <section className="omnia-lower-grid">
+        <div className="omnia-intelligences"><div className="omnia-lower-heading"><span>✦</span><div><p>LES INTELLIGENCES SPÉCIALISÉES</p><h2>Chacune a sa mission.</h2></div></div>
+          <div className="omnia-agent-row"><div><i className="agent-omnia">✦</i><strong>OMNIA</strong><small>Accueil et orchestration</small></div><div><i className="agent-miora">⌂</i><strong>MIORA</strong><small>Gestion communale</small></div><div><i className="agent-felix">F</i><strong>FELIX</strong><small>Terminale T12</small></div><div><i className="agent-mia">◈</i><strong>MIA</strong><small>Philosophie et accompagnement</small></div></div>
+        </div>
+        <div className="omnia-assistant-teaser"><div className="omnia-assistant-avatar"><Icon name="spark"/></div><div><p>VOTRE GUIDE NUMÉRIQUE</p><h2>Besoin d’être orienté ?</h2><span>OMNIA vous aide à identifier l’espace adapté à votre demande.</span><Link href="/login?next=%2Fworkspace">Discuter avec OMNIA <b>→</b></Link></div></div>
+      </section>
+      <footer className="omnia-footer"><span>SYGEC-IA · OMNIA</span><span>Une intelligence plurielle pour gérer, enseigner et rédiger.</span><span>FR · MG</span></footer>
+    </div>
+
+    {aboutOpen && <div className="omnia-modal-backdrop" role="presentation" onClick={()=>setAboutOpen(false)}><section className="omnia-about-modal" role="dialog" aria-modal="true" aria-labelledby="omnia-about-title" onClick={e=>e.stopPropagation()}>
+      <button type="button" className="omnia-modal-close" onClick={()=>setAboutOpen(false)} aria-label="Fermer">×</button>
+      <p className="omnia-eyebrow"><Icon name="spark"/> À PROPOS DE SYGEC-IA</p><h2 id="omnia-about-title">Un portail. Plusieurs compétences.</h2>
+      <p>OMNIA accueille les visiteurs et oriente chaque demande vers une intelligence spécialisée : MIORA pour la gestion des CTD, FELIX pour l’espace pédagogique Terminale T12, et MIA pour la philosophie, la rédaction et l’accompagnement citoyen.</p>
+      <p>Les assistants aident à organiser, expliquer et préparer. Les documents et actes officiels restent soumis au contrôle des autorités habilitées.</p>
+      <Link href="/login" className="omnia-primary-action">Accéder à la plateforme <b>→</b></Link>
+    </section></div>}
+  </main>;
 }
